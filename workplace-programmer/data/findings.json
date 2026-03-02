@@ -338,5 +338,125 @@
     "finding": "Workers who have access to 'regenerative' spaces (quiet lounges, nature-connected areas, sensory-calm rooms) report 35% higher energy levels at end of day. These spaces need only 2-3% of total RSF to be effective but are absent from 70% of offices surveyed.",
     "confidence": "medium",
     "added": "2026-02-25"
+  },
+  {
+    "id": "hassell-wfs-2020-quality",
+    "topics": ["amenity-roi", "hybrid"],
+    "source": "Hassell",
+    "source_year": 2020,
+    "study": "Workplace Futures Survey 2020",
+    "finding": "Survey of 800 Australian office workers in Oct 2020. Better workplace quality correlates with improved performance in both office and home settings, but the impact of a good office is greater than a good home environment. 92% of workers nationally were open to office work; only 30% were in the office full-time.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2020-diversity",
+    "topics": ["hybrid", "density"],
+    "source": "Hassell",
+    "source_year": 2020,
+    "study": "Workplace Futures Survey 2020",
+    "finding": "No statistical difference in cultural outcomes (trust, belonging, unity) between home and office workers. Men, managers, and older employees showed greater desire to return to office. Only 19% of workers nationally wanted to work from home full-time. Companies are diverging into five distinct workplace models rather than converging on one.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2021-stated-vs-revealed",
+    "topics": ["hybrid", "density"],
+    "source": "Hassell",
+    "source_year": 2021,
+    "study": "Workplace Futures Survey 2021 — The Evolving Office",
+    "finding": "Survey of 2,300 workers across AU, SG, US, UK. When asked directly, workers preferred ~2-3 days WFH. But when shown detailed workplace scenarios in a preference test, they consistently chose options with MORE office time than their stated preference. Stated preferences undercount actual desire for office presence — design for revealed preference, not survey answers.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2021-amenities",
+    "topics": ["amenity-roi", "common"],
+    "source": "Hassell",
+    "source_year": 2021,
+    "study": "Workplace Futures Survey 2021 — The Evolving Office",
+    "finding": "Top 5 most-wanted workplace features: free lunch, shorter commute, more focused workspace, better meeting facilities, more collaborative space. Least wanted: on-site childcare, personal concierge, maker spaces. High-end amenities appeal to narrow demographics; universal basics (food, focus, commute) drive broader attendance.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2022-sweet-spot",
+    "topics": ["hybrid", "density"],
+    "source": "Hassell",
+    "source_year": 2022,
+    "study": "Workplace Futures Survey 2022 — The Magnetic Workplace",
+    "finding": "Survey of 2,500 workers across AU, CN, SG, US, UK. Employees spending 60-80% of their time in the office show higher engagement, sense of belonging, and trust than those in less frequently. This 3-4 day sweet spot is the design condition for hybrid offices — not the 2-day minimum many policies allow.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2022-mandates-resign",
+    "topics": ["hybrid", "amenity-roi"],
+    "source": "Hassell",
+    "source_year": 2022,
+    "study": "Workplace Futures Survey 2022 — The Magnetic Workplace",
+    "finding": "Companies requiring full-time office return experience higher resignation rates than those offering flexibility. The implication for space planning: designing an attractive, amenity-rich office that pulls people in voluntarily is more effective than mandating attendance in a mediocre space.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2023-renovation",
+    "topics": ["amenity-roi", "common"],
+    "source": "Hassell",
+    "source_year": 2023,
+    "study": "Workplace Futures Survey 2023 — Great Adaptations",
+    "finding": "Survey of 3,500 workers across AU, CN/HK, SG, US, UK, BE, NL. Companies that transformed their offices post-pandemic achieved 17% higher employee satisfaction than those that didn't. Full-time remote is declining, office-based work increasing, hybrid stable. HR and real estate teams need closer collaboration to align space strategy with people strategy.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2024-choice",
+    "topics": ["hybrid", "amenity-roi"],
+    "source": "Hassell",
+    "source_year": 2024,
+    "study": "Workplace Futures Survey 2024 — The Big Calm",
+    "finding": "Survey of 2,500 workers across AU, SG, HK, UK, US. Workers with agency to choose where they work are 20% more satisfied than those mandated. Mandated 5-day workers drop to 46% satisfaction. Workplace patterns stabilizing: 42-50% fully in office, 30-45% hybrid. First year of stability after 4 years of disruption.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2024-focus-gap",
+    "topics": ["focus", "common"],
+    "source": "Hassell",
+    "source_year": 2024,
+    "study": "Workplace Futures Survey 2024 — The Big Calm",
+    "finding": "Only 23% of workers feel they have enough space to focus without distraction; 35% feel they have enough collaboration space. Workers with adequate focus space report 24% higher satisfaction; those with enough collaboration space report 12% higher. Focus remains the bigger unmet need. Meeting rooms are being used as refuges for focused work.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2024-amenities",
+    "topics": ["amenity-roi", "common"],
+    "source": "Hassell",
+    "source_year": 2024,
+    "study": "Workplace Futures Survey 2024 — The Big Calm",
+    "finding": "Most-wanted amenities: free lunch (50%), gardens/green space (34%), good coffee/fresh air (33%), focus space (27%), ability to nap (18%). Least wanted: personal concierge (7%), doggy daycare (11%). Workers consistently prefer simple, universal basics over trendy perks across all survey years.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2025-mandates-fail",
+    "topics": ["hybrid", "amenity-roi"],
+    "source": "Hassell",
+    "source_year": 2025,
+    "study": "Workplace Futures Survey 2025 — The Mandate Mirage",
+    "finding": "Sixth annual survey. 52% of Australian employees work 5 days in office. Stricter RTO policies have 0% impact on actual attendance but reduce satisfaction by 14%. Companies providing no reasons for mandates see 41% lower compliance. Financial incentives increase compliance by 32%. Attendance remained flat year-on-year despite mandates.",
+    "confidence": "high",
+    "added": "2026-03-02"
+  },
+  {
+    "id": "hassell-wfs-2025-space-quality",
+    "topics": ["amenity-roi", "common"],
+    "source": "Hassell",
+    "source_year": 2025,
+    "study": "Workplace Futures Survey 2025 — The Mandate Mirage",
+    "finding": "Companies that recently renovated or upgraded their offices see 15% higher attendance than those that didn't — without mandates. 40% of workers in premier office spaces prefer working in-office over remote. Only 29% of Australian offices qualify as premier. Space quality is a stronger attendance driver than policy.",
+    "confidence": "high",
+    "added": "2026-03-02"
   }
 ]

@@ -72,7 +72,7 @@ Every recommendation includes research citations and tradeoff analysis. The full
 | `SKILL.md` | Persona, domain expertise, conversation flow, formatting rules |
 | `data/archetypes.json` | 10 benchmark office profiles (Dense Open at 65 SF/seat through Creative Agency at 233 SF/seat) |
 | `data/space-types.json` | 22 room and desk types with default SF and capacity |
-| `data/findings.json` | 31 research findings from JLL, CBRE, Gensler, VergeSense, Density, Leesman, Steelcase, Hassell |
+| `data/findings.json` | 43 research findings from JLL, CBRE, Gensler, VergeSense, Density, Leesman, Steelcase, Hassell (incl. 6 years of Hassell Workplace Futures Survey 2020–2025) |
 
 ## Customization
 

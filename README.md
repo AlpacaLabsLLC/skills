@@ -8,7 +8,7 @@
 
 ### [`/workplace-programmer`](./workplace-programmer)
 
-AI workplace strategy consultant that builds office space programs through conversation. Give it a headcount, square footage, and work policy — get area splits, room schedules, seat counts, and exportable reports backed by 10 archetypes, 31 research findings from JLL, CBRE, Gensler, and others.
+AI workplace strategy consultant that builds office space programs through conversation. Give it a headcount, square footage, and work policy — get area splits, room schedules, seat counts, and exportable reports backed by 10 archetypes, 43 research findings from JLL, CBRE, Gensler, Hassell (6 years of Workplace Futures Survey), and others.
 
 ### [`/zoning-analyzer`](./zoning-analyzer)
 
