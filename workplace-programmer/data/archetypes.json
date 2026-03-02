@@ -149,9 +149,9 @@
     "created_at": "2026-01-01T00:00:00Z"
   },
   {
-    "id": "partnership-room",
-    "name": "Partnership/ROOM",
-    "description": "Egalitarian layout with moderate private offices and strong collaborative meeting zones. Designed for partnerships, trading floors, and team-driven organizations.",
+    "id": "modular",
+    "name": "Modular",
+    "description": "Built around prefabricated and modular room systems — phone booths, meeting pods, focus pods, and demountable offices. High meeting allocation supports a plug-and-play room inventory. Suited for organizations that want flexibility to reconfigure without construction.",
     "sf_per_seat": 180,
     "area_splits": {
       "work": 18,
@@ -168,5 +168,48 @@
     "room_ratios": {},
     "source": "seed",
     "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "creative-agency-hybrid",
+    "name": "Creative Agency (Hybrid)",
+    "description": "Studio culture with heavy collaboration, pin-up/crit spaces, and hybrid attendance. Low work allocation offset by high meeting (enclosed crit rooms, client presentation) and generous common space. No private offices. Designed for agencies, design studios, and creative teams where peak occupancy is 40-60% of headcount.",
+    "sf_per_seat": 233,
+    "area_splits": {
+      "work": 26,
+      "meeting": 24,
+      "common": 17,
+      "circulation": 27,
+      "boh": 6
+    },
+    "private_office_pct": 0,
+    "desk_type_mix": {
+      "bench-60x36-adj": 70,
+      "bench-48x24": 30
+    },
+    "room_ratios": {},
+    "source": "program",
+    "created_at": "2026-03-02T00:00:00Z"
+  },
+  {
+    "id": "legal-modern-lean",
+    "name": "Legal (Modern/Lean)",
+    "description": "Density-optimized law firm with minimal private offices (10%), lean support staffing, and digital-first workflows. Maximizes attorney headcount by pushing work zone high and keeping common/BOH tight. 5-day in-office, no desk sharing. Suited for litigation boutiques, legal tech, and modern mid-size firms.",
+    "sf_per_seat": 164,
+    "area_splits": {
+      "work": 41,
+      "meeting": 17,
+      "common": 7,
+      "circulation": 27,
+      "boh": 8
+    },
+    "private_office_pct": 10,
+    "desk_type_mix": {
+      "bench-60x36": 82,
+      "private-office": 9,
+      "bench-48x24": 9
+    },
+    "room_ratios": {},
+    "source": "program",
+    "created_at": "2026-03-02T00:00:00Z"
   }
 ]
