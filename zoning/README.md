@@ -1,23 +1,17 @@
-# Zoning Analyzer
+# /zoning
 
-Zoning envelope analysis for lots in Maldonado, Uruguay as a [Claude Code](https://claude.ai/code) skill. Paste GIS JSON from the [Maldonado cadastral portal](https://ide.maldonado.gub.uy/) and get a full building envelope analysis based on the TONE regulations.
+Zoning envelope analyzer for lots in Maldonado, Uruguay as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Paste GIS JSON from the [Maldonado cadastral portal](https://ide.maldonado.gub.uy/) and get a full building envelope analysis based on the TONE (Texto Ordenado de Normas de Edificación) regulations.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 
 ## Install
 
 ```bash
-# From the root of this repo
-ln -s "$(pwd)/zoning" ~/.claude/skills/zoning
-```
-
-Or copy the directory:
-
-```bash
-cp -r zoning ~/.claude/skills/zoning
+git clone https://github.com/AlpacaLabsLLC/skills.git
+ln -s "$(pwd)/skills/zoning" ~/.claude/skills/zoning
 ```
 
 ## Usage
-
-In Claude Code:
 
 ```
 /zoning
@@ -31,7 +25,7 @@ Then paste the GIS JSON from the Maldonado ArcGIS cadastral portal. The skill:
 4. **Calculates the envelope** — height, setbacks, occupation factors (FOS/FOT), permitted building types
 5. **Presents the analysis** — structured markdown with tables and ASCII buildable-zone sketch
 
-## Sample output
+## Sample Output
 
 ```
 # Zoning Envelope Analysis — Padrón 17640, La Barra
@@ -88,6 +82,8 @@ Then paste the GIS JSON from the Maldonado ArcGIS cadastral portal. The skill:
 
 ## Coverage
 
+Normativa files are bundled for the following localities:
+
 | Locality | TONE Section | Zones | Status |
 |----------|-------------|-------|--------|
 | La Barra | Título III, Cap. II, Sector 1 | 1.1–1.6 | Complete |
@@ -97,27 +93,35 @@ Then paste the GIS JSON from the Maldonado ArcGIS cadastral portal. The skill:
 | Garzón | Título V, Cap. II, Sector 2 | 2.1 (3 subzones) | Complete |
 | Aiguá | Título V, Cap. II, Sector 2 | 2.2 (4 subzones) | Complete |
 | Pan de Azúcar | Título V, Cap. II, Sector 2 | 2.3 | Complete |
-| José Ignacio | Título III, Cap. III | — | Not yet |
+| José Ignacio | Título III, Cap. III | — | Partial |
 | Punta del Este | Título II, Cap. II, Sector 1 | — | Not yet |
 | Piriápolis | Título IV, Cap. II | — | Not yet |
 
-For unmapped localities, the skill fetches regulations from the [Digesto Departamental](https://digesto.maldonado.gub.uy/) and offers to save them locally.
+For unmapped localities, the skill fetches regulations from the [Digesto Departamental](https://digesto.maldonado.gub.uy/) and offers to save them locally for future use.
 
-## File structure
+## File Structure
 
 ```
-normativa/
-├── location-map.md                    # nomloccat → TONE sector/zone mapping
-├── titulo-ii-cap-ii-sector-2.md       # Maldonado (5 zones, 14 subzones)
-├── titulo-iii-cap-ii-sector-1.md      # La Barra y Manantiales (6 zones)
-├── titulo-iii-cap-iii-sector-2.md     # José Ignacio (partial)
-├── titulo-v-cap-i-sector-1.md         # San Carlos (5 zones)
-└── titulo-v-cap-ii-sector-2.md        # Garzón, Aiguá, Pan de Azúcar
+zoning/
+├── SKILL.md                              # Skill instructions and workflow
+└── normativa/
+    ├── location-map.md                   # nomloccat → TONE sector/zone mapping
+    ├── titulo-ii-cap-ii-sector-2.md      # Maldonado (5 zones, 14 subzones)
+    ├── titulo-iii-cap-ii-sector-1.md     # La Barra & Manantiales (6 zones)
+    ├── titulo-iii-cap-iii-sector-2.md    # José Ignacio (partial)
+    ├── titulo-v-cap-i-sector-1.md        # San Carlos (5 zones)
+    └── titulo-v-cap-ii-sector-2.md       # Garzón, Aiguá, Pan de Azúcar
 ```
 
-## Data source
+## Customization
 
-All normativa content is public regulatory text from the [Digesto Departamental de Maldonado](https://digesto.maldonado.gub.uy/), Volume V — TONE. No warranty of completeness or accuracy — always verify with the Intendencia for permit applications.
+- **Add a locality** — create a new `normativa/titulo-*.md` file with the zone regulations, and add the mapping in `normativa/location-map.md`
+- **Update regulations** — edit the normativa files when TONE amendments are published in the Digesto
+- **Change output format** — edit the presentation section in `SKILL.md`
+
+## Data Source
+
+All normativa content is public regulatory text from the [Digesto Departamental de Maldonado](https://digesto.maldonado.gub.uy/), Volume V — TONE. No warranty of completeness or accuracy — always verify with the Intendencia de Maldonado for permit applications.
 
 ## License
 

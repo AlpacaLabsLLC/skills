@@ -1,44 +1,40 @@
-# Workplace Programmer
+# /workplace-programmer
 
-AI workplace strategy consultant for [Claude Code](https://claude.ai/code). Builds office space programs through conversation — area splits, room schedules, seat counts, and reports — backed by real industry research.
+AI workplace strategy consultant for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Builds office space programs through conversation — area splits, room schedules, seat counts, and exportable reports — backed by industry research from JLL, CBRE, Gensler, VergeSense, and others.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 
 ## Install
 
 ```bash
-# From the root of this repo
-ln -s "$(pwd)/workplace-programmer" ~/.claude/skills/workplace-programmer
-```
-
-Or copy the directory:
-
-```bash
-cp -r workplace-programmer ~/.claude/skills/workplace-programmer
+git clone https://github.com/AlpacaLabsLLC/skills.git
+ln -s "$(pwd)/skills/workplace-programmer" ~/.claude/skills/workplace-programmer
 ```
 
 ## Usage
-
-In Claude Code:
 
 ```
 /workplace-programmer 30,000 RSF tech company, 200 people, 3 days hybrid
 ```
 
-Or start with no context:
+Or start with no context and let the skill ask discovery questions:
 
 ```
 /workplace-programmer
 ```
 
-The skill works through four conversation phases:
+### Conversation Flow
 
-1. **Discover** — Learns about your organization while sharing relevant research (JLL occupancy data, Gensler workspace surveys, VergeSense room analytics)
-2. **Synthesize** — Generates custom area splits across five zones (work, meeting, common, circulation, BOH)
-3. **Detail** — Proposes seat types, conference room schedules, and support spaces with SF calculations
-4. **Refine** — Handles adjustments with explicit tradeoff analysis
+The skill works through four phases:
 
-## Sample output
+1. **Discover** — asks about your organization, headcount, work policy, and culture while sharing relevant research (e.g., JLL occupancy benchmarks, Gensler workspace surveys)
+2. **Synthesize** — generates area splits across five zones: Work, Meeting, Common, Circulation, and BOH
+3. **Detail** — proposes seat types, conference room schedules, and support spaces with square footage calculations
+4. **Refine** — handles adjustments with explicit tradeoff analysis ("adding 2 large conference rooms means removing 10 desks")
 
-Mid-conversation, the skill produces recommendations like:
+## Sample Output
+
+Mid-conversation, the skill produces structured recommendations:
 
 ```
 Based on your 30,000 RSF hybrid tech office with 200 people on a 3-day
@@ -60,7 +56,7 @@ concurrent on peak days — we're designing for that mid-week peak,
 not full capacity.
 ```
 
-Program state saves to `program.json` in your working directory:
+The program state saves to `program.json` in your working directory:
 
 ```json
 {
@@ -86,30 +82,29 @@ Program state saves to `program.json` in your working directory:
     { "name": "Medium Conference (6p)", "count": 3, "sf_each": 225, "sf_total": 675 },
     { "name": "Small Huddle (4p)", "count": 5, "sf_each": 100, "sf_total": 500 },
     { "name": "Phone Booth", "count": 8, "sf_each": 25, "sf_total": 200 }
-  ],
-  "total_sf": 30000,
-  "sf_per_seat": 150
+  ]
 }
 ```
 
 Ask for a report and the skill writes `report.md` and `report.csv` with the full breakdown.
 
-## What's included
+## What's Included
 
-- **8 seed archetypes** — Dense Open Office (65 SF/seat) through Legal Services (300 SF/seat)
-- **22 space types** — Desks, conference rooms, phone booths, support spaces with default SF and capacity
-- **31 research findings** — From JLL, CBRE, Gensler, VergeSense, Density, Leesman, Steelcase, Hassell, and peer-reviewed studies
+| File | Purpose |
+|------|---------|
+| `SKILL.md` | Persona, domain expertise, conversation flow, formatting rules |
+| `data/archetypes.json` | 8 benchmark office profiles (Dense Open at 65 SF/seat through Legal at 300 SF/seat) |
+| `data/space-types.json` | 22 room and desk types with default SF and capacity |
+| `data/findings.json` | 31 research findings from JLL, CBRE, Gensler, VergeSense, Density, Leesman, Steelcase, Hassell |
 
 ## Customization
 
-| File | What it controls |
-|------|-----------------|
-| `SKILL.md` | Persona, domain expertise, conversation flow, formatting |
-| `data/archetypes.json` | Benchmark office profiles with area splits and desk mixes |
-| `data/space-types.json` | Room and desk catalog with default SF and capacity |
-| `data/findings.json` | Research findings the AI cites during recommendations |
+Edit any file to adapt the skill for your practice:
 
-Edit any of these to adapt the skill for your practice.
+- **Change the persona** — edit the identity section in `SKILL.md`
+- **Add archetypes** — append entries to `data/archetypes.json` (e.g., a healthcare or lab archetype)
+- **Update research** — add findings to `data/findings.json` with source, date, and topic tags
+- **Add space types** — extend `data/space-types.json` with your firm's standard room catalog
 
 ## License
 
