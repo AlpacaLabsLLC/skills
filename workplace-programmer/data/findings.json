@@ -1,0 +1,342 @@
+[
+  {
+    "id": "jll-density-2024",
+    "topics": ["hybrid", "density"],
+    "source": "JLL",
+    "source_year": 2024,
+    "study": "Global Occupancy Planning Benchmark",
+    "finding": "Target density moving from 165 to 132 SF/person as hybrid becomes standard. Seat-sharing ratios rising to 1.3 people per seat. Average office utilization at 54%, still below pre-pandemic 61%.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "jll-hybrid-allocation-2024",
+    "topics": ["hybrid", "density"],
+    "source": "JLL",
+    "source_year": 2024,
+    "study": "Global Occupancy Planning Benchmark",
+    "finding": "Organizations with 3+ day hybrid policies allocating 15-20% less space to individual work zones compared to pre-pandemic baselines, redistributing to collaboration and amenity space.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "cbre-occupancy-2024",
+    "topics": ["hybrid", "density"],
+    "source": "CBRE",
+    "source_year": 2024,
+    "study": "US Office Occupancy Report",
+    "finding": "US office occupancy stabilized at 50-60% of pre-pandemic levels in 2024. Tuesday-Thursday peak at 60-70% occupancy, Monday and Friday at 30-40%. This mid-week peak is the new design condition.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "cbre-portfolio-2024",
+    "topics": ["hybrid", "density"],
+    "source": "CBRE",
+    "source_year": 2024,
+    "study": "Global Workplace & Occupancy Insights",
+    "finding": "60% of companies plan to reduce portfolio size over the next 3 years. Average target SF/person dropping from 190 to 150 SF/person across industries. Desk-sharing ratios moving from 1:1 to 1.5:1.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "vergesense-rooms-2024",
+    "topics": ["meeting-rooms", "utilization"],
+    "source": "VergeSense",
+    "source_year": 2024,
+    "study": "Workplace Intelligence Report",
+    "finding": "87% of meeting room usage is groups of 4 or fewer, but rooms sized for 4+ make up 80% of room inventory. Huddle rooms have 12% of supply but 38% of demand. Average meeting room utilization is only 33%.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "vergesense-phantom-bookings-2024",
+    "topics": ["meeting-rooms", "utilization"],
+    "source": "VergeSense",
+    "source_year": 2024,
+    "study": "Workplace Intelligence Report",
+    "finding": "30-40% of booked meeting rooms go unused (phantom bookings). Sensor data shows actual utilization is 40-50% lower than calendar data suggests. This means room counts based on booking data will over-provision.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "density-room-right-sizing-2024",
+    "topics": ["meeting-rooms"],
+    "source": "Density",
+    "source_year": 2024,
+    "study": "Workplace Analytics Benchmark",
+    "finding": "Optimal room mix is approximately 40% small (2-4 person), 35% medium (5-8 person), 25% large (8+ person). Most offices are inverted: 20% small, 30% medium, 50% large. Right-sizing the mix increases effective meeting capacity by 25-35% without adding rooms.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "density-peak-occupancy-2024",
+    "topics": ["density", "utilization"],
+    "source": "Density",
+    "source_year": 2024,
+    "study": "Workplace Analytics Benchmark",
+    "finding": "Peak occupancy typically occurs Tuesday-Wednesday, 10am-2pm. Design for 85th percentile peak, not maximum capacity — designing for 100% peak wastes 15-25% of space for events that occur <5% of the time.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "leesman-abw-2023",
+    "topics": ["abw", "neighborhoods"],
+    "source": "Leesman",
+    "source_year": 2023,
+    "study": "The World's Best Workplaces",
+    "finding": "Activity-based working (ABW) environments score 12-18% higher on employee satisfaction than traditional assigned seating — but only when paired with acoustic management and enough focus settings. ABW without quiet zones scores worse than assigned desks.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "leesman-neighborhoods-2023",
+    "topics": ["neighborhoods", "abw"],
+    "source": "Leesman",
+    "source_year": 2023,
+    "study": "Workplace Effectiveness Research",
+    "finding": "Team neighborhoods (clusters of 15-40 people with dedicated collaboration and focus zones) outperform both fully open ABW and traditional assigned plans. Employees report 22% higher sense of belonging and 15% better focus.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "leesman-variety-2023",
+    "topics": ["abw", "focus"],
+    "source": "Leesman",
+    "source_year": 2023,
+    "study": "The World's Best Workplaces",
+    "finding": "Workplaces offering 10+ different setting types score 20% higher on overall effectiveness. The threshold for high performance: at least 3 types of focus settings, 3 types of collaboration settings, and dedicated social/recharge spaces.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "steelcase-privacy-2024",
+    "topics": ["acoustics", "focus"],
+    "source": "Steelcase",
+    "source_year": 2024,
+    "study": "Global Workplace Report",
+    "finding": "76% of workers say they need more private spaces for focused work. The #1 complaint in open offices is acoustic distraction, cited by 58% of workers. Providing a 1:15 ratio of enclosed focus rooms to open desks significantly reduces complaints.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "steelcase-enclosed-demand-2024",
+    "topics": ["acoustics", "focus"],
+    "source": "Steelcase",
+    "source_year": 2024,
+    "study": "Global Workplace Report",
+    "finding": "Demand for enclosed spaces has increased 50% since 2019. Phone booths and focus pods are the fastest-growing space type in new office designs. Recommended ratio: 1 phone booth per 10-15 open desks, 1 focus room per 20-25 open desks.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "steelcase-neighborhoods-2024",
+    "topics": ["neighborhoods"],
+    "source": "Steelcase",
+    "source_year": 2024,
+    "study": "Work Better Research",
+    "finding": "Neighborhood-based planning with 20-40 person clusters shows 30% improvement in team cohesion scores and 18% improvement in cross-functional collaboration versus open floor plans or fully assigned seating.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "steelcase-amenity-roi-2024",
+    "topics": ["amenity-roi", "common"],
+    "source": "Steelcase",
+    "source_year": 2024,
+    "study": "Workplace Futures",
+    "finding": "Companies investing 15%+ of their floor area in amenity/social space report 25% higher in-office attendance rates. The ROI breaks even at ~12% common allocation; below that, employees report the office offers no advantage over home.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "gensler-workplace-2024",
+    "topics": ["focus", "collaboration"],
+    "source": "Gensler",
+    "source_year": 2024,
+    "study": "US Workplace Survey",
+    "finding": "Workers spend 57% of their time on focused individual work and 27% on collaboration. But 60% of office space is designed for collaboration. This mismatch explains why focus space is the #1 unmet need in post-pandemic offices.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "gensler-high-performing-2024",
+    "topics": ["focus", "abw"],
+    "source": "Gensler",
+    "source_year": 2024,
+    "study": "US Workplace Survey",
+    "finding": "High-performing workplaces balance individual focus and collaboration equally. They provide 4x more variety in work settings than average offices. The top-scoring offices allocate 35-40% of usable space to individual work modes.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "gensler-amenity-2024",
+    "topics": ["amenity-roi", "common"],
+    "source": "Gensler",
+    "source_year": 2024,
+    "study": "US Workplace Survey",
+    "finding": "Offices with above-average amenity investment (cafe, lounge, wellness) see 33% higher voluntary in-office attendance. The most effective amenity spaces double as informal collaboration zones — a cafe with good acoustics and power outlets works harder than a pure social lounge.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "gensler-experience-2024",
+    "topics": ["amenity-roi"],
+    "source": "Gensler",
+    "source_year": 2024,
+    "study": "US Workplace Survey",
+    "finding": "The #1 reason employees come to the office is to collaborate with colleagues (68%), followed by socializing (45%) and access to better technology (38%). 'Assigned desk' ranks 7th. Designing for collaboration and community drives more attendance than providing assigned seats.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "hassell-abw-2023",
+    "topics": ["abw", "focus"],
+    "source": "Hassell",
+    "source_year": 2023,
+    "study": "Activity-Based Working Research",
+    "finding": "Successful ABW requires a minimum 0.7 settings per person (not 1:1 seats) with at least 30% enclosed or semi-enclosed settings. Below this threshold, ABW feels like hot-desking without choice. The ideal ratio is 0.8-0.9 settings per person.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "hassell-focus-zones-2023",
+    "topics": ["focus", "acoustics"],
+    "source": "Hassell",
+    "source_year": 2023,
+    "study": "Activity-Based Working Research",
+    "finding": "Quiet zones in ABW environments need physical separation (not just signage) to be effective. Acoustic separation of NC-35 or better between focus and collaboration zones is essential. Libraries-style quiet floors see 40% higher satisfaction than open-plan quiet zones.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "bernstein-open-plan-2018",
+    "topics": ["open-vs-private", "collaboration-myth"],
+    "source": "Bernstein & Turban",
+    "source_year": 2018,
+    "study": "The Impact of the 'Open' Workspace on Human Collaboration (Royal Society)",
+    "finding": "Transitioning from cubicles to open plan reduced face-to-face interaction by 70% and increased email/messaging by 50%. Open offices don't increase collaboration — they decrease it. People compensate for lost privacy by withdrawing into digital communication.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "bernstein-boundaries-2018",
+    "topics": ["open-vs-private", "acoustics"],
+    "source": "Bernstein & Turban",
+    "source_year": 2018,
+    "study": "The Impact of the 'Open' Workspace on Human Collaboration (Royal Society)",
+    "finding": "Workers in open plans use headphones, avoid eye contact, and find private corners to concentrate — creating 'virtual walls' to replace physical ones. This suggests that spatial boundaries serve an essential cognitive function that cannot be eliminated, only displaced.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "jasa-noise-productivity-2020",
+    "topics": ["acoustics"],
+    "source": "JASA",
+    "source_year": 2020,
+    "study": "Journal of the Acoustical Society of America",
+    "finding": "Background noise levels above 55 dBA reduce cognitive performance on complex tasks by 15-25%. Open offices typically measure 60-70 dBA. Sound masking systems (targeting 42-48 dBA) restore most lost productivity. Every 10 dB reduction correlates with ~10% improvement in focus task performance.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "steelcase-acoustic-zones-2024",
+    "topics": ["acoustics", "neighborhoods"],
+    "source": "Steelcase",
+    "source_year": 2024,
+    "study": "Acoustic Privacy Research",
+    "finding": "Three-zone acoustic planning (loud/medium/quiet) with physical separation and graduated noise levels is more effective than uniform sound masking. The transition zones between acoustic levels should be buffer areas (circulation, storage) not workspaces.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "density-timeline-historical",
+    "topics": ["density-timeline"],
+    "source": "Industry aggregate",
+    "source_year": 2024,
+    "study": "Historical density benchmarks",
+    "finding": "Office density evolution: 2000s average 250 SF/person → 2010s compressed to 150-175 SF/person (open plan trend) → 2015-2019 further compressed to 125-150 SF/person → Post-2020 rebounding to 150-190 SF/person as hybrid reduces simultaneous occupancy but increases per-person allocation.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "jll-density-trajectory-2024",
+    "topics": ["density-timeline", "hybrid"],
+    "source": "JLL",
+    "source_year": 2024,
+    "study": "Future of Work Report",
+    "finding": "The pre-pandemic compression trend (fewer SF per person) has reversed. While total portfolio sizes are shrinking, SF per assigned person is increasing because fewer people are in on any given day. Net effect: less total space, more space per person present.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "leesman-collaboration-myth-2023",
+    "topics": ["collaboration-myth", "open-vs-private"],
+    "source": "Leesman",
+    "source_year": 2023,
+    "study": "Workplace Effectiveness Research",
+    "finding": "Only 28% of workers say open-plan offices effectively support collaborative work. The highest-rated collaboration environments are purpose-built team rooms and project spaces — not open floor plates. Informal collaboration happens best in social/common spaces, not at desks.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "gensler-innovation-2024",
+    "topics": ["collaboration-myth", "focus"],
+    "source": "Gensler",
+    "source_year": 2024,
+    "study": "US Workplace Survey",
+    "finding": "Innovation scores correlate most strongly with access to individual focus space (r=0.64), not collaboration space (r=0.31). The best ideas come from alternating deep focus with short, intentional collaboration — not constant open-plan exposure. Offices that support both modes equally score highest on innovation metrics.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "vergesense-room-size-2024",
+    "topics": ["meeting-rooms"],
+    "source": "VergeSense",
+    "source_year": 2024,
+    "study": "Meeting Room Analytics",
+    "finding": "Large conference rooms (10+ capacity) are used at intended capacity only 18% of the time. The median group size in a 10-person room is 3-4 people. Converting one 10-person room into two 4-person huddles increases bookable meeting hours by 60-80%.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "cbre-flex-space-2024",
+    "topics": ["hybrid", "abw"],
+    "source": "CBRE",
+    "source_year": 2024,
+    "study": "Global Workplace & Occupancy Insights",
+    "finding": "Companies implementing flex/unassigned seating report 20-30% space savings vs assigned models at the same headcount. Success requires desk-to-person ratios of 0.6-0.8:1 (not lower) and robust neighborhood zoning so teams still have home territory.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "hassell-wellness-2023",
+    "topics": ["amenity-roi", "common"],
+    "source": "Hassell",
+    "source_year": 2023,
+    "study": "Workplace Wellness Research",
+    "finding": "Dedicated wellness spaces (quiet rooms, stretching areas, outdoor access) correlate with 15% lower reported stress and 20% higher workplace satisfaction. Even modest interventions — a single quiet room, biophilic elements, natural light optimization — show measurable impact.",
+    "confidence": "medium",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "gensler-hybrid-design-2024",
+    "topics": ["hybrid", "meeting-rooms"],
+    "source": "Gensler",
+    "source_year": 2024,
+    "study": "Hybrid Workplace Design Guide",
+    "finding": "Hybrid work increases demand for video-enabled meeting rooms by 40-60% compared to pre-pandemic. Every meeting room should be video-capable. Small 1-2 person video rooms (phone booths with screens) are the highest-demand space type in hybrid offices, needing a 1:8 ratio to open desks.",
+    "confidence": "high",
+    "added": "2026-02-25"
+  },
+  {
+    "id": "steelcase-regenerative-2024",
+    "topics": ["amenity-roi", "focus"],
+    "source": "Steelcase",
+    "source_year": 2024,
+    "study": "Global Workplace Report",
+    "finding": "Workers who have access to 'regenerative' spaces (quiet lounges, nature-connected areas, sensory-calm rooms) report 35% higher energy levels at end of day. These spaces need only 2-3% of total RSF to be effective but are absent from 70% of offices surveyed.",
+    "confidence": "medium",
+    "added": "2026-02-25"
+  }
+]

@@ -1,0 +1,172 @@
+[
+  {
+    "id": "dense-open-office",
+    "name": "Dense Open Office",
+    "description": "Maximizes seat count in minimal space with open benching and hot desks. Best for high-density tech teams, call centers, or organizations prioritizing collaboration over privacy.",
+    "sf_per_seat": 65,
+    "area_splits": {
+      "work": 46,
+      "meeting": 12,
+      "common": 10,
+      "circulation": 27,
+      "boh": 5
+    },
+    "private_office_pct": 2,
+    "desk_type_mix": {
+      "bench-48x24": 80,
+      "hot-desking": 20
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "traditional-office",
+    "name": "Traditional Office",
+    "description": "Balanced mix of open and private workspaces with standard benching and workstations. Suitable for corporate environments with moderate privacy needs.",
+    "sf_per_seat": 150,
+    "area_splits": {
+      "work": 35,
+      "meeting": 16,
+      "common": 15,
+      "circulation": 27,
+      "boh": 7
+    },
+    "private_office_pct": 20,
+    "desk_type_mix": {
+      "bench-60x36": 75,
+      "workstation-6x6": 25
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "private-office-predominant",
+    "name": "Private Office Predominant",
+    "description": "Majority private offices with supporting open work areas. Ideal for executives, senior leadership floors, or roles requiring high confidentiality.",
+    "sf_per_seat": 250,
+    "area_splits": {
+      "work": 23,
+      "meeting": 20,
+      "common": 20,
+      "circulation": 27,
+      "boh": 10
+    },
+    "private_office_pct": 60,
+    "desk_type_mix": {
+      "bench-60x36": 75,
+      "workstation-6x6": 25
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "tech-creative",
+    "name": "Tech/Creative",
+    "description": "Flexible, activity-based workspace with adjustable desks and collaborative zones. Designed for product teams, designers, and engineering groups that value agility.",
+    "sf_per_seat": 115,
+    "area_splits": {
+      "work": 31,
+      "meeting": 22,
+      "common": 18,
+      "circulation": 27,
+      "boh": 2
+    },
+    "private_office_pct": 5,
+    "desk_type_mix": {
+      "bench-60x36-adj": 53,
+      "bench-48x24": 32,
+      "hot-desking": 15
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "professional-services",
+    "name": "Professional Services",
+    "description": "Structured layout balancing client-facing meeting spaces with individual focus areas. Suited for consulting, accounting, and advisory firms.",
+    "sf_per_seat": 220,
+    "area_splits": {
+      "work": 33,
+      "meeting": 18,
+      "common": 16,
+      "circulation": 27,
+      "boh": 6
+    },
+    "private_office_pct": 30,
+    "desk_type_mix": {
+      "bench-60x36": 57,
+      "workstation-6x6": 43
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "legal-services",
+    "name": "Legal Services",
+    "description": "Heavy private office allocation with generous support and meeting areas. Tailored for law firms, judiciary offices, and compliance-heavy organizations.",
+    "sf_per_seat": 300,
+    "area_splits": {
+      "work": 36,
+      "meeting": 20,
+      "common": 5,
+      "circulation": 27,
+      "boh": 12
+    },
+    "private_office_pct": 50,
+    "desk_type_mix": {
+      "bench-60x36": 50,
+      "workstation-6x6": 50
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "co-working",
+    "name": "Co-Working",
+    "description": "Maximum shared amenities with flexible hot-desking and minimal assigned seats. Perfect for co-working operators, incubators, and shared workspace providers.",
+    "sf_per_seat": 75,
+    "area_splits": {
+      "work": 13,
+      "meeting": 22,
+      "common": 30,
+      "circulation": 27,
+      "boh": 8
+    },
+    "private_office_pct": 0,
+    "desk_type_mix": {
+      "hot-desking": 67,
+      "bench-48x24": 22,
+      "bench-60x36": 11
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "partnership-room",
+    "name": "Partnership/ROOM",
+    "description": "Egalitarian layout with moderate private offices and strong collaborative meeting zones. Designed for partnerships, trading floors, and team-driven organizations.",
+    "sf_per_seat": 180,
+    "area_splits": {
+      "work": 18,
+      "meeting": 25,
+      "common": 20,
+      "circulation": 27,
+      "boh": 10
+    },
+    "private_office_pct": 15,
+    "desk_type_mix": {
+      "bench-60x36-adj": 47,
+      "workstation-6x6": 53
+    },
+    "room_ratios": {},
+    "source": "seed",
+    "created_at": "2026-01-01T00:00:00Z"
+  }
+]
