@@ -10,6 +10,10 @@
 
 AI workplace strategy consultant that builds office space programs through conversation. Give it a headcount, square footage, and work policy — get area splits, room schedules, seat counts, and exportable reports backed by 10 archetypes, 43 research findings from JLL, CBRE, Gensler, Hassell (6 years of Workplace Futures Survey), and others.
 
+### [`/occupancy-calculator`](./occupancy-calculator)
+
+IBC occupancy load calculator. Describe your building or paste a room schedule — get per-area occupant loads from IBC Table 1004.5, with gross vs net area handling, use group classification, egress requirements, and exportable reports. Supports IBC 2021 with NYC Building Code variant notes. Integrates with `/workplace-programmer` to calculate occupancy from existing space programs.
+
 ### [`/zoning-analyzer`](./zoning-analyzer)
 
 Zoning envelope analyzer for lots in Maldonado, Uruguay. Paste GIS JSON from the [municipal cadastral portal](https://ide.maldonado.gub.uy/), get a full building envelope analysis — zone determination, setbacks, height limits, FOS/FOT, and an ASCII buildable-area sketch — all referenced to the TONE regulations.
@@ -30,6 +34,7 @@ cd skills
 
 # Symlink the skills you want (recommended — stays in sync with updates)
 ln -s "$(pwd)/workplace-programmer" ~/.claude/skills/workplace-programmer
+ln -s "$(pwd)/occupancy-calculator" ~/.claude/skills/occupancy-calculator
 ln -s "$(pwd)/zoning-analyzer" ~/.claude/skills/zoning-analyzer
 ln -s "$(pwd)/product-spec-bulk-fetch" ~/.claude/skills/product-spec-bulk-fetch
 ln -s "$(pwd)/product-spec-bulk-cleanup" ~/.claude/skills/product-spec-bulk-cleanup
@@ -39,6 +44,7 @@ Then in Claude Code:
 
 ```
 /workplace-programmer 30,000 RSF tech company, 200 people, 3 days hybrid
+/occupancy-calculator 50,000 SF office building, 3 floors
 /zoning-analyzer
 /product-spec-bulk-fetch https://www.hermanmiller.com/products/seating/lounge-chairs/eames-lounge-chair/
 /product-spec-bulk-cleanup ~/Documents/ffe-schedule.csv

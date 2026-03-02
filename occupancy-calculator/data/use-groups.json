@@ -1,0 +1,128 @@
+[
+  {
+    "group": "A-1",
+    "name": "Assembly — Fixed Seating",
+    "description": "Assembly uses with fixed seating intended for the production and viewing of performing arts or motion pictures.",
+    "examples": ["movie theaters", "concert halls", "TV studios with audience"]
+  },
+  {
+    "group": "A-2",
+    "name": "Assembly — Food/Drink",
+    "description": "Assembly uses intended for food and/or drink consumption.",
+    "examples": ["restaurants", "bars", "banquet halls", "nightclubs", "casinos"]
+  },
+  {
+    "group": "A-3",
+    "name": "Assembly — Worship, Recreation, Other",
+    "description": "Assembly uses intended for worship, recreation, or amusement not classified as A-1 or A-2.",
+    "examples": ["churches", "libraries", "museums", "courtrooms", "galleries", "bowling alleys", "gyms", "funeral parlors", "lecture halls"]
+  },
+  {
+    "group": "A-4",
+    "name": "Assembly — Indoor Sporting",
+    "description": "Assembly uses intended for viewing indoor sporting events and activities with spectator seating.",
+    "examples": ["arenas", "skating rinks", "swimming pools", "tennis courts"]
+  },
+  {
+    "group": "A-5",
+    "name": "Assembly — Outdoor",
+    "description": "Assembly uses intended for participation in or viewing outdoor activities.",
+    "examples": ["stadiums", "grandstands", "bleachers", "amusement parks"]
+  },
+  {
+    "group": "B",
+    "name": "Business",
+    "description": "Office, professional, or service-type transactions. Includes outpatient medical and educational above 12th grade.",
+    "examples": ["offices", "banks", "clinics", "beauty salons", "post offices", "professional services", "universities"]
+  },
+  {
+    "group": "E",
+    "name": "Educational",
+    "description": "Use by 6 or more persons through 12th grade, and day care for more than 5 children older than 2½.",
+    "examples": ["schools", "classrooms", "day care centers", "kindergarten"]
+  },
+  {
+    "group": "F-1",
+    "name": "Factory Industrial — Moderate Hazard",
+    "description": "Factory uses that are not classified as F-2.",
+    "examples": ["furniture factories", "printing plants", "textile mills", "woodworking shops"]
+  },
+  {
+    "group": "F-2",
+    "name": "Factory Industrial — Low Hazard",
+    "description": "Factory uses involving noncombustible or low-hazard materials.",
+    "examples": ["glass factories", "ice plants", "metal fabrication", "foundries"]
+  },
+  {
+    "group": "H",
+    "name": "High Hazard",
+    "description": "Manufacturing, processing, generation, or storage of materials that constitute a physical or health hazard.",
+    "examples": ["semiconductor fabs (H-5)", "chemical plants", "explosives storage", "hazardous materials"]
+  },
+  {
+    "group": "I-1",
+    "name": "Institutional — Supervised",
+    "description": "Housing more than 16 persons who are capable of self-preservation, on a 24-hour basis.",
+    "examples": ["assisted living", "group homes", "halfway houses", "residential board and care"]
+  },
+  {
+    "group": "I-2",
+    "name": "Institutional — Medical/Incapable",
+    "description": "Medical care on a 24-hour basis for more than 5 persons who are not capable of self-preservation.",
+    "examples": ["hospitals", "nursing homes", "psychiatric hospitals"]
+  },
+  {
+    "group": "I-3",
+    "name": "Institutional — Restrained",
+    "description": "More than 5 persons are under restraint or security.",
+    "examples": ["prisons", "jails", "detention centers", "reformatories"]
+  },
+  {
+    "group": "I-4",
+    "name": "Institutional — Day Care",
+    "description": "Day care for more than 5 persons of any age.",
+    "examples": ["adult day care", "child day care"]
+  },
+  {
+    "group": "M",
+    "name": "Mercantile",
+    "description": "Display and sale of merchandise. Includes wholesale stores accessible to the public.",
+    "examples": ["department stores", "drug stores", "markets", "retail stores", "motor fuel stations"]
+  },
+  {
+    "group": "R-1",
+    "name": "Residential — Transient",
+    "description": "Sleeping units where occupants are primarily transient (less than 30 days).",
+    "examples": ["hotels", "motels", "boarding houses"]
+  },
+  {
+    "group": "R-2",
+    "name": "Residential — Permanent",
+    "description": "Sleeping units or more than 2 dwelling units where occupants are primarily permanent.",
+    "examples": ["apartments", "condominiums", "dormitories", "monasteries"]
+  },
+  {
+    "group": "R-3",
+    "name": "Residential — Small",
+    "description": "One- and two-family dwellings and their accessory structures.",
+    "examples": ["single-family homes", "duplexes", "townhouses"]
+  },
+  {
+    "group": "S-1",
+    "name": "Storage — Moderate Hazard",
+    "description": "Storage that is not classified as S-2.",
+    "examples": ["warehouses", "furniture storage", "lumber yards", "tire storage"]
+  },
+  {
+    "group": "S-2",
+    "name": "Storage — Low Hazard",
+    "description": "Storage of noncombustible materials.",
+    "examples": ["parking garages", "metal storage", "glass storage"]
+  },
+  {
+    "group": "U",
+    "name": "Utility / Miscellaneous",
+    "description": "Not classified in any specific group, and not a significant hazard to public safety.",
+    "examples": ["agricultural buildings", "barns", "carports", "fences", "greenhouses", "sheds"]
+  }
+]
