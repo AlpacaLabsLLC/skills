@@ -26,6 +26,10 @@ Bulk FF&E product spec extractor. Feed it a list of product page URLs — get a 
 
 FF&E schedule normalizer. Takes a messy furniture schedule — mixed casing, combined dimensions, Spanish material names, inconsistent categories — and cleans it into consistent, procurement-ready data. Pairs with `/product-spec-bulk-fetch` for a full fetch → cleanup pipeline.
 
+### [`/product-image-processor`](./product-image-processor)
+
+Batch product image processor. Read image URLs from a Google Sheet, download at full resolution, normalize sizing (max 2000px, PNG), and remove backgrounds via rembg — saving output at each stage. Pairs with `/product-spec-bulk-fetch` for a full spec → image pipeline.
+
 ## Quick Start
 
 ```bash
@@ -38,6 +42,7 @@ ln -s "$(pwd)/occupancy-calculator" ~/.claude/skills/occupancy-calculator
 ln -s "$(pwd)/zoning-analyzer" ~/.claude/skills/zoning-analyzer
 ln -s "$(pwd)/product-spec-bulk-fetch" ~/.claude/skills/product-spec-bulk-fetch
 ln -s "$(pwd)/product-spec-bulk-cleanup" ~/.claude/skills/product-spec-bulk-cleanup
+ln -s "$(pwd)/product-image-processor" ~/.claude/skills/product-image-processor
 ```
 
 Then in Claude Code:
@@ -48,6 +53,7 @@ Then in Claude Code:
 /zoning-analyzer
 /product-spec-bulk-fetch https://www.hermanmiller.com/products/seating/lounge-chairs/eames-lounge-chair/
 /product-spec-bulk-cleanup ~/Documents/ffe-schedule.csv
+/product-image-processor
 ```
 
 ## What Are Claude Code Skills?
