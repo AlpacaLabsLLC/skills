@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desert Sanctuary — Color Palette</title>
+<style>
+  :root {
+    /* Primary */
+    --deep-terracotta: #A0522D;
+    --sun-baked-clay: #C17A4A;
+    --warm-sandstone: #D4A574;
+
+    /* Secondary */
+    --dried-sage: #8B9A6B;
+    --canyon-shadow: #6B5B4F;
+    --dusty-rose: #C49E8C;
+
+    /* Neutral */
+    --desert-linen: #F2EBE0;
+    --warm-parchment: #E8DDD0;
+    --dusk-charcoal: #3B3332;
+
+    /* Accent */
+    --turquoise-spring: #5A9E96;
+    --golden-hour: #D4943A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--desert-linen);
+    color: var(--dusk-charcoal);
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 3.5rem;
+    border-bottom: 2px solid var(--warm-sandstone);
+    padding-bottom: 2rem;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--deep-terracotta);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  header .prompt {
+    font-size: 0.95rem;
+    color: var(--canyon-shadow);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  header .strategy {
+    font-size: 1.05rem;
+    color: var(--dusk-charcoal);
+    max-width: 680px;
+  }
+
+  /* Section titles */
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--deep-terracotta);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--canyon-shadow);
+    margin-bottom: 1rem;
+  }
+
+  /* Color group */
+  .color-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .swatch {
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--warm-parchment);
+    box-shadow: 0 1px 4px rgba(59, 51, 50, 0.08);
+  }
+
+  .swatch-color {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0.85rem 1rem;
+  }
+
+  .swatch-color .name {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .swatch-info {
+    padding: 0.85rem 1rem 1rem;
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .swatch-info .hex {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .swatch-info .codes {
+    color: var(--canyon-shadow);
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 0.78rem;
+  }
+
+  .swatch-info .use {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--dusk-charcoal);
+  }
+
+  .use-label {
+    font-weight: 600;
+    color: var(--canyon-shadow);
+  }
+
+  /* Pairings */
+  .pairings-section {
+    margin-bottom: 3rem;
+  }
+
+  .pairings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pairing {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(59, 51, 50, 0.08);
+  }
+
+  .pairing-demo {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .pairing-demo .demo-heading {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .pairing-demo .demo-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .pairing-demo .demo-button {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+
+  .pairing-meta {
+    background: var(--warm-parchment);
+    padding: 0.7rem 1.25rem;
+    font-size: 0.78rem;
+    color: var(--canyon-shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .pairing-meta .ratio {
+    font-weight: 600;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  }
+
+  .pass { color: var(--dried-sage); font-weight: 700; }
+  .fail { color: var(--deep-terracotta); font-weight: 700; }
+
+  /* Harmony strip */
+  .harmony-section {
+    margin-bottom: 3rem;
+  }
+
+  .harmony-strip {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--warm-parchment);
+    border-radius: 10px;
+  }
+
+  .harmony-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(59, 51, 50, 0.15);
+    position: relative;
+    transition: transform 0.15s ease;
+  }
+
+  .harmony-dot:hover {
+    transform: scale(1.15);
+  }
+
+  .harmony-dot .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dusk-charcoal);
+    color: var(--desert-linen);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  }
+
+  .harmony-dot:hover .tooltip {
+    display: block;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--warm-sandstone);
+    font-size: 0.78rem;
+    color: var(--canyon-shadow);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 2rem 1rem; }
+    header h1 { font-size: 1.75rem; }
+    .swatches { grid-template-columns: 1fr; }
+    .pairings-grid { grid-template-columns: 1fr; }
+    .swatch-color { height: 90px; }
+  }
+
+  @media print {
+    .container { max-width: 100%; padding: 1rem; }
+    .swatch, .pairing { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <h1>Desert Sanctuary</h1>
+    <p class="prompt">"warm earth tones for a desert spa"</p>
+    <p class="strategy">An analogous palette grounded in terracotta and sandstone, balanced with dried sage and a single turquoise accent drawn from desert spring water. The neutrals are tinted warm to reinforce the sun-baked atmosphere while maintaining comfortable reading contrast.</p>
+  </header>
+
+  <!-- Primary -->
+  <section class="color-group">
+    <h3>Primary</h3>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#A0522D; color:#F2EBE0;">
+          <span class="name">Deep Terracotta</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#A0522D</div>
+          <div class="codes">RGB 160, 82, 45 &nbsp;&middot;&nbsp; HSL 19&deg;, 56%, 40%</div>
+          <div class="use"><span class="use-label">Use:</span> Headings, primary brand color, borders</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C17A4A; color:#F2EBE0;">
+          <span class="name">Sun-Baked Clay</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#C17A4A</div>
+          <div class="codes">RGB 193, 122, 74 &nbsp;&middot;&nbsp; HSL 24&deg;, 48%, 52%</div>
+          <div class="use"><span class="use-label">Use:</span> Secondary headings, warm surfaces, hover states</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D4A574; color:#3B3332;">
+          <span class="name">Warm Sandstone</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#D4A574</div>
+          <div class="codes">RGB 212, 165, 116 &nbsp;&middot;&nbsp; HSL 31&deg;, 52%, 64%</div>
+          <div class="use"><span class="use-label">Use:</span> Card surfaces, dividers, secondary backgrounds</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary -->
+  <section class="color-group">
+    <h3>Secondary</h3>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#8B9A6B; color:#F2EBE0;">
+          <span class="name">Dried Sage</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#8B9A6B</div>
+          <div class="codes">RGB 139, 154, 107 &nbsp;&middot;&nbsp; HSL 89&deg;, 19%, 51%</div>
+          <div class="use"><span class="use-label">Use:</span> Success states, nature-evoking accents, tags</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#6B5B4F; color:#F2EBE0;">
+          <span class="name">Canyon Shadow</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#6B5B4F</div>
+          <div class="codes">RGB 107, 91, 79 &nbsp;&middot;&nbsp; HSL 26&deg;, 15%, 36%</div>
+          <div class="use"><span class="use-label">Use:</span> Secondary text, captions, subtle labels</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C49E8C; color:#3B3332;">
+          <span class="name">Dusty Rose</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#C49E8C</div>
+          <div class="codes">RGB 196, 158, 140 &nbsp;&middot;&nbsp; HSL 19&deg;, 32%, 66%</div>
+          <div class="use"><span class="use-label">Use:</span> Hover backgrounds, soft highlight, input borders</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neutral -->
+  <section class="color-group">
+    <h3>Neutral</h3>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F2EBE0; color:#3B3332;">
+          <span class="name">Desert Linen</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#F2EBE0</div>
+          <div class="codes">RGB 242, 235, 224 &nbsp;&middot;&nbsp; HSL 37&deg;, 43%, 91%</div>
+          <div class="use"><span class="use-label">Use:</span> Page background, light surfaces</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E8DDD0; color:#3B3332;">
+          <span class="name">Warm Parchment</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#E8DDD0</div>
+          <div class="codes">RGB 232, 221, 208 &nbsp;&middot;&nbsp; HSL 33&deg;, 33%, 86%</div>
+          <div class="use"><span class="use-label">Use:</span> Card backgrounds, alternate surfaces, table rows</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3B3332; color:#F2EBE0;">
+          <span class="name">Dusk Charcoal</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#3B3332</div>
+          <div class="codes">RGB 59, 51, 50 &nbsp;&middot;&nbsp; HSL 7&deg;, 8%, 21%</div>
+          <div class="use"><span class="use-label">Use:</span> Body text, primary foreground</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accent -->
+  <section class="color-group">
+    <h3>Accent</h3>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#5A9E96; color:#F2EBE0;">
+          <span class="name">Turquoise Spring</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#5A9E96</div>
+          <div class="codes">RGB 90, 158, 150 &nbsp;&middot;&nbsp; HSL 173&deg;, 27%, 49%</div>
+          <div class="use"><span class="use-label">Use:</span> CTAs, links, focus rings, interactive elements</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D4943A; color:#3B3332;">
+          <span class="name">Golden Hour</span>
+        </div>
+        <div class="swatch-info">
+          <div class="hex">#D4943A</div>
+          <div class="codes">RGB 212, 148, 58 &nbsp;&middot;&nbsp; HSL 35&deg;, 66%, 53%</div>
+          <div class="use"><span class="use-label">Use:</span> Warnings, highlights, promotional badges</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example Pairings -->
+  <section class="pairings-section">
+    <h2>Example Pairings</h2>
+    <div class="pairings-grid">
+
+      <!-- Pairing 1: Body text on page background -->
+      <div class="pairing">
+        <div class="pairing-demo" style="background:#F2EBE0; color:#3B3332;">
+          <div class="demo-heading" style="color:#A0522D;">Welcome to the Spa</div>
+          <div class="demo-body">Experience tranquility in the heart of the desert. Our treatments blend ancient techniques with modern wellness, using locally sourced botanicals and mineral-rich spring water.</div>
+        </div>
+        <div class="pairing-meta">
+          <span>Dusk Charcoal on Desert Linen</span>
+          <span class="ratio">10.8:1 <span class="pass">AA Pass</span></span>
+        </div>
+      </div>
+
+      <!-- Pairing 2: Heading on parchment -->
+      <div class="pairing">
+        <div class="pairing-demo" style="background:#E8DDD0; color:#3B3332;">
+          <div class="demo-heading" style="color:#A0522D;">Our Signature Rituals</div>
+          <div class="demo-body">Each ritual is a journey through layered sensations — the warmth of desert stone, the coolness of sage-infused mist, the gentle rhythm of therapeutic touch.</div>
+        </div>
+        <div class="pairing-meta">
+          <span>Deep Terracotta heading on Warm Parchment</span>
+          <span class="ratio">4.6:1 <span class="pass">AA Pass</span></span>
+        </div>
+      </div>
+
+      <!-- Pairing 3: CTA button -->
+      <div class="pairing">
+        <div class="pairing-demo" style="background:#F2EBE0; color:#3B3332;">
+          <div class="demo-body">Ready to begin your journey? Reserve your session today and let the desert restore you.</div>
+          <div class="demo-button" style="background:#5A9E96; color:#F2EBE0;">Book Your Session</div>
+        </div>
+        <div class="pairing-meta">
+          <span>Desert Linen on Turquoise Spring (button)</span>
+          <span class="ratio">3.5:1 <span class="pass">AA Large</span></span>
+        </div>
+      </div>
+
+      <!-- Pairing 4: Dark background -->
+      <div class="pairing">
+        <div class="pairing-demo" style="background:#3B3332; color:#F2EBE0;">
+          <div class="demo-heading" style="color:#D4A574;">Evening Ceremonies</div>
+          <div class="demo-body">As the sun sets over the mesa, join us for guided meditation under the open sky. The stillness of the desert amplifies every breath.</div>
+        </div>
+        <div class="pairing-meta">
+          <span>Desert Linen on Dusk Charcoal</span>
+          <span class="ratio">10.8:1 <span class="pass">AA Pass</span></span>
+        </div>
+      </div>
+
+      <!-- Pairing 5: Accent link text -->
+      <div class="pairing">
+        <div class="pairing-demo" style="background:#F2EBE0; color:#3B3332;">
+          <div class="demo-body">Discover our seasonal treatments, crafted to align with the rhythms of the desert. <span style="color:#5A9E96; text-decoration:underline; font-weight:600;">View the full menu &rarr;</span></div>
+        </div>
+        <div class="pairing-meta">
+          <span>Turquoise Spring link on Desert Linen</span>
+          <span class="ratio">3.8:1 <span class="pass">AA Large</span></span>
+        </div>
+      </div>
+
+      <!-- Pairing 6: Canyon Shadow secondary text -->
+      <div class="pairing">
+        <div class="pairing-demo" style="background:#F2EBE0; color:#6B5B4F;">
+          <div class="demo-heading" style="color:#3B3332; font-size:1rem;">Treatment Details</div>
+          <div class="demo-body" style="font-size:0.85rem;">Duration: 90 minutes &nbsp;&middot;&nbsp; Includes consultation &nbsp;&middot;&nbsp; Seasonal botanicals &nbsp;&middot;&nbsp; Post-treatment tea ceremony</div>
+        </div>
+        <div class="pairing-meta">
+          <span>Canyon Shadow on Desert Linen</span>
+          <span class="ratio">5.0:1 <span class="pass">AA Pass</span></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Harmony Strip -->
+  <section class="harmony-section">
+    <h2>Harmony Strip</h2>
+    <div class="harmony-strip">
+      <div class="harmony-dot" style="background:#A0522D;"><span class="tooltip">#A0522D Deep Terracotta</span></div>
+      <div class="harmony-dot" style="background:#C17A4A;"><span class="tooltip">#C17A4A Sun-Baked Clay</span></div>
+      <div class="harmony-dot" style="background:#D4A574;"><span class="tooltip">#D4A574 Warm Sandstone</span></div>
+      <div class="harmony-dot" style="background:#8B9A6B;"><span class="tooltip">#8B9A6B Dried Sage</span></div>
+      <div class="harmony-dot" style="background:#6B5B4F;"><span class="tooltip">#6B5B4F Canyon Shadow</span></div>
+      <div class="harmony-dot" style="background:#C49E8C;"><span class="tooltip">#C49E8C Dusty Rose</span></div>
+      <div class="harmony-dot" style="background:#F2EBE0;"><span class="tooltip">#F2EBE0 Desert Linen</span></div>
+      <div class="harmony-dot" style="background:#E8DDD0;"><span class="tooltip">#E8DDD0 Warm Parchment</span></div>
+      <div class="harmony-dot" style="background:#3B3332;"><span class="tooltip">#3B3332 Dusk Charcoal</span></div>
+      <div class="harmony-dot" style="background:#5A9E96;"><span class="tooltip">#5A9E96 Turquoise Spring</span></div>
+      <div class="harmony-dot" style="background:#D4943A;"><span class="tooltip">#D4943A Golden Hour</span></div>
+    </div>
+  </section>
+
+  <footer>
+    Generated by <strong>/color-palette-generator</strong> &nbsp;&middot;&nbsp; 11 colors &nbsp;&middot;&nbsp; Prompt: "warm earth tones for a desert spa"
+  </footer>
+
+</div>
+</body>
+</html>
