@@ -89,7 +89,7 @@ Then in Claude Code:
 /design-brief-builder 15,000 SF coworking space in Brooklyn, 200 members, mixed use
 /email-drafter RFI to the GC — the reflected ceiling plan doesn't match the mechanical drawings at grid line 4
 /redline-punch-list paint scuffed in room 201, ceiling tile missing in corridor, exit sign out in stairwell B
-/site-analysis-generator 888 Brannan St, San Francisco CA
+/site-analysis-generator 250 Hudson St, New York NY
 /slide-deck-generator Q1 results for our consulting practice — revenue up 40%, 3 new clients
 /spec-writer porcelain tile, LVT flooring, painted gypsum board, acoustic ceiling tile, solid surface countertops
 /workplace-programmer 30,000 RSF tech company, 200 people, 3 days hybrid

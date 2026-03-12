@@ -181,7 +181,7 @@ The `.slide.centered .content h2` rule tightens the heading's bottom margin so t
 ```html
 <!-- White statement -->
 <div class="slide">
-    <div class="statement">Airbnb is a LAWA organization so why do we have offices.</div>
+    <div class="statement">We talk about flexibility but design for predictability.</div>
 </div>
 
 <!-- Dark statement -->
