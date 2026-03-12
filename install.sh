@@ -5,7 +5,7 @@ SKILLS_DIR="${HOME}/.claude/skills"
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ALL_SKILLS=(
-  alpa-presentation
+  create-design-deck
   occupancy-calculator
   product-image-processor
   product-spec-bulk-cleanup

@@ -1,11 +1,11 @@
-# ALPA Presentation
+# Create Design Deck
 
-A Claude Code skill that generates self-contained HTML slide decks using the ALPA (Alpaca Labs) design system.
+A Claude Code skill that generates self-contained HTML slide decks with an editorial design system.
 
 ## Usage
 
 ```
-/alpa-presentation
+/create-design-deck
 ```
 
 Provide a topic, outline, data, or document and the skill produces a single `.html` file you can open in any browser — no dependencies, no build step.
@@ -118,4 +118,4 @@ The default accent is warm yellow (`#E8B517`). Override `--accent` in the CSS `:
 
 ## Related
 
-- `/airbnb-presentation` — Same engine with Airbnb branding (Cereal font, rausch pink accent)
+- Fork the skill and swap fonts, colors, and the brand mark for your own design system
