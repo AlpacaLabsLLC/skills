@@ -131,10 +131,43 @@ Write the analysis to a markdown file at `~/Documents/environmental-analysis-[lo
 - [Note where a professional survey or geotech report would be needed]
 ```
 
+## Preferred Sources
+
+Only use governmental, university, or non-profit data sources. Never cite commercial websites (e.g., Weather Spark, Current Results, weather.com, climate-data.org).
+
+### Climate
+| Source | URL | Data |
+|--------|-----|------|
+| NOAA Climate Normals | ncei.noaa.gov/products/land-based-station/us-climate-normals | Temperature, precipitation, wind — 30-year normals |
+| NWS Local Climate Data | weather.gov/wrh/Climate | Station-specific records, extremes, heating/cooling degree days |
+| NOAA Solar Calculator | gml.noaa.gov/grad/solcalc/ | Sun angles, sunrise/sunset by date and coordinates |
+| DOE Building Energy Codes | energycodes.gov/climate-zones | ASHRAE climate zones by county |
+| NREL Solar Resource | nsrdb.nrel.gov | Solar radiation data by location |
+
+### Natural Features & Hazards
+| Source | URL | Data |
+|--------|-----|------|
+| FEMA Flood Map Service | msc.fema.gov | Flood zone designation by address |
+| USGS Earthquake Hazards | earthquake.usgs.gov | Seismic hazard maps, design values, fault data |
+| USGS National Map | apps.nationalmap.gov/viewer/ | Elevation, topography |
+| NRCS Web Soil Survey | websoilsurvey.nrcs.usda.gov | Soil types, properties, engineering classifications |
+| EPA Superfund/Brownfields | epa.gov/enviro | Contamination sites, cleanup status |
+| EPA NEPAssist | epa.gov/nepa/nepassist | Environmental screening by location |
+| NWI Wetlands Mapper | fws.gov/program/national-wetlands-inventory | Wetlands, water bodies |
+| USGS StreamStats | streamstats.usgs.gov | Watershed, drainage, hydrology |
+
+### International
+| Source | URL | Data |
+|--------|-----|------|
+| WMO World Weather | worldweather.wmo.int | Climate normals for non-US cities |
+| NOAA Global Climate Normals | ncei.noaa.gov/products/wmo-climate-normals | International station data |
+| USGS Global Seismic Hazard | earthquake.usgs.gov/hazards/hazmaps/global/ | Global seismic risk |
+
 ## Guidelines
 
 - **Be factual.** Every claim should come from a search result. If you cannot find data, say "Not found in public sources" rather than guessing.
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
+- **Only use governmental, university, or non-profit sources.** Do not cite commercial weather sites, real estate platforms, or ad-supported data aggregators.
 - **Be concise.** Use tables for quantitative data, bullet points for lists, short paragraphs for context. No filler.
 - **Flag gaps.** The Gaps & Caveats section is mandatory. Always note what a desk study cannot replace (site visit, survey, geotech).
 - **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.

@@ -105,10 +105,28 @@ Write the analysis to a markdown file at `~/Documents/mobility-analysis-[locatio
 - [Note where Walk Score data is approximate]
 ```
 
+## Preferred Sources
+
+Only use governmental, transit authority, or non-profit data sources. Never cite commercial websites (e.g., Google Maps travel times, Yelp, commercial real estate sites).
+
+| Source | URL | Data |
+|--------|-----|------|
+| MTA (NYC) | mta.info | Subway/bus maps, routes, stations |
+| NYC DOT | nyc.gov/dot | Bike lanes, street infrastructure, traffic data |
+| NJ Transit | njtransit.com | Commuter rail, bus |
+| LIRR / Metro-North | mta.info | Commuter rail schedules, stations |
+| NYC Open Data — Subway Stations | data.cityofnewyork.us | Station locations, entrances, ADA access |
+| NYC Open Data — Bike Routes | data.cityofnewyork.us | Protected lanes, bike network |
+| Walk Score | walkscore.com | Walk/Transit/Bike scores (non-profit methodology) |
+| FAA Airport Data | faa.gov | Airport locations, codes |
+| USDOT BTS | transtats.bts.gov | National transportation statistics |
+| Local transit agencies | Varies | For non-NYC sites, search for the local transit authority |
+
 ## Guidelines
 
 - **Be factual.** Every claim should come from a search result. If you cannot find data, say "Not found in public sources" rather than guessing.
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
+- **Only use governmental, transit authority, or non-profit sources.** Do not cite commercial mapping or real estate platforms.
 - **Be concise.** Use tables for quantitative data, bullet points for lists. No filler.
 - **Include distances.** Always state walking distance in miles/km and estimated walk time for transit stops.
 - **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.

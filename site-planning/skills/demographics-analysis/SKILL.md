@@ -114,10 +114,35 @@ Write the analysis to a markdown file at `~/Documents/demographics-analysis-[loc
 - [Note geographic boundary differences between sources]
 ```
 
+## Preferred Sources
+
+Only use governmental, university, or non-profit data sources. Never cite commercial websites (e.g., Zillow, Redfin, RentCafe, Niche, Point2Homes, Neighborhood Scout).
+
+| Source | URL | Data |
+|--------|-----|------|
+| US Census Bureau | data.census.gov | Population, income, age, race, housing — Decennial Census and ACS |
+| Census QuickFacts | census.gov/quickfacts | Summary demographics by place, county, ZIP |
+| BLS Local Area Unemployment | bls.gov/lau/ | Unemployment rates by county/metro |
+| BLS Occupational Employment | bls.gov/oes/ | Employment by industry and occupation |
+| HUD User | huduser.gov | Fair market rents, housing affordability, CHAS data |
+| NYU Furman Center | furmancenter.org | NYC neighborhood-level housing and demographic profiles |
+| NYC Open Data | data.cityofnewyork.us | NYC-specific datasets (housing, permits, demographics) |
+| FRED (St. Louis Fed) | fred.stlouisfed.org | Median income, home prices, economic indicators by metro |
+| National Center for Education Statistics | nces.ed.gov | Educational attainment by geography |
+| CDC PLACES | cdc.gov/places/ | Health and socioeconomic indicators by census tract |
+
+### International
+| Source | URL | Data |
+|--------|-----|------|
+| World Bank Open Data | data.worldbank.org | Country-level demographics, economics |
+| UN Data | data.un.org | Population, urbanization, development indicators |
+| National statistics agencies | Varies | Each country's census/statistics bureau |
+
 ## Guidelines
 
 - **Be factual.** Every claim should come from a search result. If you cannot find data, say "Not found in public sources" rather than guessing.
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
+- **Only use governmental, university, or non-profit sources.** Do not cite commercial real estate platforms, ad-supported aggregators, or crowd-sourced neighborhood sites.
 - **Be concise.** Use tables for quantitative data, bullet points for lists. No filler.
 - **Note data vintage.** Always state the year/source of demographic data (e.g., "2020 Census" or "ACS 2019-2023").
 - **Compare to benchmarks.** Always compare income, prices, and growth to metro and national figures.

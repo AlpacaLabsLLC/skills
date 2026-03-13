@@ -119,10 +119,35 @@ Write the analysis to a markdown file at `~/Documents/neighborhood-history-[loca
 - [Flag where a site visit would add context]
 ```
 
+## Preferred Sources
+
+Only use governmental, university, museum, or non-profit data sources. Never cite commercial websites (e.g., Brownstoner, CityRealty, StreetEasy, real estate blogs).
+
+| Source | URL | Data |
+|--------|-----|------|
+| NYC LPC Designation Reports | nyc.gov/landmarks | Historic district reports, individual landmark designations |
+| NYC LPC LAMP | nyclpc.maps.arcgis.com | Landmarks and historic districts map |
+| National Register of Historic Places | nps.gov/subjects/nationalregister | Federal historic designations |
+| NYC DCP Community Profiles | communityprofiles.planning.nyc.gov | Land use, development activity by community district |
+| NYC DCP ZoLa | zola.planning.nyc.gov | Zoning, land use, special districts |
+| NYC Open Data — Permits | data.cityofnewyork.us | Building permits, new construction filings |
+| National Park Service | nps.gov | Historic places, cultural landscapes |
+| Library of Congress / HABS | loc.gov/pictures/collection/hh/ | Historic American Buildings Survey |
+| Municipal archives | Varies | City/county historical records |
+| University archives | Varies | Local history collections, urban studies |
+| Wikipedia | wikipedia.org | Neighborhood history (verify claims against primary sources) |
+
+### International
+| Source | URL | Data |
+|--------|-----|------|
+| UNESCO World Heritage | whc.unesco.org | World Heritage sites and tentative lists |
+| National heritage agencies | Varies | Each country's historic preservation authority |
+
 ## Guidelines
 
 - **Be factual.** Every claim should come from a search result. If you cannot find data, say "Not found in public sources" rather than guessing.
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
+- **Only use governmental, university, museum, or non-profit sources.** Do not cite commercial real estate sites, neighborhood blogs, or ad-supported aggregators.
 - **Be concise.** Use tables for quantitative data, bullet points for lists, short paragraphs for narrative. No filler.
 - **Be specific about distance.** State distances to landmarks, transit, and commercial corridors in miles/km.
 - **Name architectural styles.** Use correct terminology (Italianate, Neo-Grec, Federal, Art Deco, etc.) when describing building stock.
