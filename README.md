@@ -29,17 +29,7 @@ claude install github:AlpacaLabsLLC/skills-for-architects/programming
 claude install github:AlpacaLabsLLC/skills-for-architects
 ```
 
-### Manual Install (symlink)
-
-```bash
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-cd skills-for-architects
-./install.sh                        # all skills
-./install.sh workplace-programmer   # just one
-./install.sh --list                 # see what's available
-```
-
-Skills are symlinked into `~/.claude/skills/` so they stay in sync when you `git pull`.
+Skills are symlinked into `~/.claude/skills/` so they stay in sync when you update.
 
 ## All Commands
 
