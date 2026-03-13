@@ -1,0 +1,12 @@
+{
+  "name": "specifications-data",
+  "version": "1.0.0",
+  "description": "FF&E specifications and data skills — bulk product spec extraction, cleanup, image processing, PDF parsing, spec writing, and redline review.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["specifications", "FF&E", "product-data", "CSI", "MasterFormat", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}

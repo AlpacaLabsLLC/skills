@@ -1,0 +1,12 @@
+{
+  "name": "creative-presenting",
+  "version": "1.0.0",
+  "description": "Creative and presentation skills — HTML slide deck generation with an editorial design system and color palette creation.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["presentations", "slides", "color-palette", "design", "HTML", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}

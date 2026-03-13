@@ -1,0 +1,12 @@
+{
+  "name": "site-planning-zoning",
+  "version": "1.0.0",
+  "description": "Site planning and zoning skills — site analysis research, zoning envelope calculations, and design brief generation.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["zoning", "site-analysis", "design-brief", "land-use", "entitlements", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}
