@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**14 skills** and **3 commands** across **6 plugins** for architects, designers, and AEC professionals.
+**13 skills** and **3 commands** across **6 plugins** for architects, designers, and AEC professionals.
 
 ## What Are Skills and Commands?
 
@@ -18,7 +18,7 @@
 |--------|--------|----------|-------------|
 | [programming](./programming) | 2 | 1 | Workplace strategy: space programs, occupancy loads, IBC compliance. |
 | [site-planning](./site-planning) | 2 | 1 | Site research, analysis, and design brief building. |
-| [zoning-analysis](./zoning-analysis) | 2 | — | Buildable envelope analysis from zoning regulations and GIS data. |
+| [zoning-analysis](./zoning-analysis) | 1 | — | Buildable envelope analysis from zoning regulations and GIS data. |
 | [specifications](./specifications) | 2 | — | CSI outline specs and construction punch lists. |
 | [data-management](./data-management) | 4 | 1 | FF&E spec extraction, cleanup, and image processing. |
 | [presentations](./presentations) | 2 | — | Slide deck generation and color palette creation. |
@@ -67,7 +67,6 @@ Skills are symlinked into `~/.claude/skills/` so they stay in sync when you upda
 
 | Skill | Description |
 |-------|-------------|
-| [`/zoning-analysis-uruguay`](./zoning-analysis/skills/zoning-analysis-uruguay) | Buildable envelope analysis for lots in Maldonado, Uruguay — setbacks, heights, FOS/FOT from TONE regulations. |
 | [`/zoning-analysis-nyc`](./zoning-analysis/skills/zoning-analysis-nyc) | Buildable envelope analysis for lots in New York City — FAR, height, setbacks, use groups from PLUTO data and the Zoning Resolution. |
 
 ### Specifications

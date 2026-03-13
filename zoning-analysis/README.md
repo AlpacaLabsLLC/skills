@@ -6,7 +6,6 @@ Zoning analysis skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 
 | Skill | Description |
 |-------|-------------|
-| [zoning-analysis-uruguay](skills/zoning-analysis-uruguay/) | Buildable envelope analysis for lots in Maldonado, Uruguay — setbacks, heights, FOS/FOT from TONE regulations. |
 | [zoning-analysis-nyc](skills/zoning-analysis-nyc/) | Buildable envelope analysis for lots in New York City — FAR, height, setbacks, use groups from PLUTO data and the Zoning Resolution. |
 
 ## Install
