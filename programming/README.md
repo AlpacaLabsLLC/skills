@@ -18,8 +18,7 @@ Architectural programming skills for Claude Code — occupancy load calculations
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-# Then symlink individual skills or install the full plugin
+claude install github:AlpacaLabsLLC/skills-for-architects/programming
 ```
 
 ## License

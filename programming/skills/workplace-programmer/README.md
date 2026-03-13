@@ -2,13 +2,12 @@
 
 AI workplace strategy consultant for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Builds office space programs through conversation — area splits, room schedules, seat counts, and exportable reports — backed by industry research from JLL, CBRE, Gensler, VergeSense, and others.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/workplace-programmer" ~/.claude/skills/workplace-programmer
+claude install github:AlpacaLabsLLC/skills-for-architects/programming
 ```
 
 ## Usage

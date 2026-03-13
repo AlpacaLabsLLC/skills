@@ -2,13 +2,12 @@
 
 Construction punch list generator for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it field notes, photos, or a walkthrough description — get a structured punch list with CSI divisions, trade assignments, priority levels, and summary statistics.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/redline-punch-list" ~/.claude/skills/redline-punch-list
+claude install github:AlpacaLabsLLC/skills-for-architects/specifications
 ```
 
 ## Usage

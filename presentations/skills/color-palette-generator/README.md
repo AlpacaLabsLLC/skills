@@ -2,13 +2,12 @@
 
 Generates harmonious color palettes from descriptions, moods, images, or reference brands for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Outputs a self-contained HTML file with visual swatches, color codes, contrast ratios, and example pairings.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/color-palette-generator" ~/.claude/skills/color-palette-generator
+claude install github:AlpacaLabsLLC/skills-for-architects/presentations
 ```
 
 ## Usage

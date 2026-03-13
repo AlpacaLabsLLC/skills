@@ -12,8 +12,7 @@ Presentation skills for Claude Code — editorial slide decks and color palette 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-# Then symlink individual skills or install the full plugin
+claude install github:AlpacaLabsLLC/skills-for-architects/presentations
 ```
 
 ## License

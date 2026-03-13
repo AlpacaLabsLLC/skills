@@ -2,13 +2,12 @@
 
 Batch product image processor for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Read image URLs from a Google Sheet, download at full resolution, normalize sizing, and remove backgrounds — saving output at each stage.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/product-image-processor" ~/.claude/skills/product-image-processor
+claude install github:AlpacaLabsLLC/skills-for-architects/data-management
 ```
 
 ### Dependencies

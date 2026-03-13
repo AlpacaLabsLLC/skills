@@ -2,13 +2,12 @@
 
 Bulk FF&E product spec extractor for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it a list of product page URLs — get a standardized schedule with names, dimensions, materials, pricing, and images extracted from each page using AI.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/product-spec-bulk-fetch" ~/.claude/skills/product-spec-bulk-fetch
+claude install github:AlpacaLabsLLC/skills-for-architects/data-management
 ```
 
 ## Usage

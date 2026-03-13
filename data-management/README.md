@@ -21,8 +21,7 @@ Product data management skills for Claude Code — FF&E product research, spec e
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-# Then symlink individual skills or install the full plugin
+claude install github:AlpacaLabsLLC/skills-for-architects/data-management
 ```
 
 ## License

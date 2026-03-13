@@ -12,8 +12,7 @@ Construction specification skills for Claude Code — CSI MasterFormat spec writ
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-# Then symlink individual skills or install the full plugin
+claude install github:AlpacaLabsLLC/skills-for-architects/specifications
 ```
 
 ## License

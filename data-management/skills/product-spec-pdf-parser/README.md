@@ -2,13 +2,12 @@
 
 PDF product spec parser for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it price books, fact sheets, or spec sheets — get a standardized FF&E schedule with names, variants, SKUs, dimensions, materials, and pricing extracted using AI.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/product-spec-pdf-parser" ~/.claude/skills/product-spec-pdf-parser
+claude install github:AlpacaLabsLLC/skills-for-architects/data-management
 ```
 
 ### Dependencies

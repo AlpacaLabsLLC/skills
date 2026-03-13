@@ -2,13 +2,12 @@
 
 IBC occupancy load calculator for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Describe your building — get per-area occupant loads from IBC Table 1004.5, gross vs net area handling, egress requirements, and exportable reports.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/occupancy-calculator" ~/.claude/skills/occupancy-calculator
+claude install github:AlpacaLabsLLC/skills-for-architects/programming
 ```
 
 ## Usage

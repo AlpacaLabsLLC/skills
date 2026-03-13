@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**16 skills** and **3 commands** across **6 plugins** for architects, designers, and AEC professionals.
+**17 skills** and **3 commands** across **6 plugins** for architects, designers, and AEC professionals.
 
 ## What Are Skills and Commands?
 
@@ -20,7 +20,7 @@
 | [site-planning](./site-planning) | 5 | 1 | Site research, analysis, and design brief building. |
 | [zoning-analysis](./zoning-analysis) | 1 | — | Buildable envelope analysis from zoning regulations and GIS data. |
 | [specifications](./specifications) | 2 | — | CSI outline specs and construction punch lists. |
-| [data-management](./data-management) | 4 | 1 | FF&E spec extraction, cleanup, and image processing. |
+| [data-management](./data-management) | 5 | 1 | FF&E product research, spec extraction, cleanup, and image processing. |
 | [presentations](./presentations) | 2 | — | Slide deck generation and color palette creation. |
 
 ## Quick Start
@@ -83,6 +83,7 @@ Skills are symlinked into `~/.claude/skills/` so they stay in sync when you upda
 
 | Skill | Description |
 |-------|-------------|
+| [`/product-research`](./data-management/skills/product-research) | Product research companion — captures and organizes products into a persistent library as you browse. |
 | [`/product-spec-bulk-fetch`](./data-management/skills/product-spec-bulk-fetch) | Extract FF&E specs from product URLs at scale — names, dimensions, materials, pricing, images. |
 | [`/product-spec-bulk-cleanup`](./data-management/skills/product-spec-bulk-cleanup) | Normalize messy FF&E schedules — casing, dimensions, materials, categories, deduplication. |
 | [`/product-spec-pdf-parser`](./data-management/skills/product-spec-pdf-parser) | Extract FF&E specs from PDFs — price books, fact sheets, spec sheets into standardized schedules. |

@@ -2,13 +2,12 @@
 
 CSI outline specification writer for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it a materials list, product schedule, or project description — get structured outline specs organized by MasterFormat 2020 divisions.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/spec-writer" ~/.claude/skills/spec-writer
+claude install github:AlpacaLabsLLC/skills-for-architects/specifications
 ```
 
 ## Usage

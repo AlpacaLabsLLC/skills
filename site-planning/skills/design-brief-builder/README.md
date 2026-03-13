@@ -2,13 +2,12 @@
 
 Turns vague client requirements into structured design briefs for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Covers program, adjacencies, design criteria, technical requirements, and open questions — ready for schematic design.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../../LICENSE)
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-ln -s "$(pwd)/skills/design-brief-builder" ~/.claude/skills/design-brief-builder
+claude install github:AlpacaLabsLLC/skills-for-architects/site-planning
 ```
 
 ## Usage
