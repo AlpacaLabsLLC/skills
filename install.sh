@@ -5,19 +5,19 @@ SKILLS_DIR="${HOME}/.claude/skills"
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ALL_SKILLS=(
-  creative/color-palette-generator
-  creative/slide-deck-generator
-  planning/design-brief-builder
-  planning/site-analysis-generator
-  planning/zoning-analyzer
   programming/occupancy-calculator
   programming/workplace-programmer
-  specifications/product-image-processor
-  specifications/product-spec-bulk-cleanup
-  specifications/product-spec-bulk-fetch
-  specifications/product-spec-pdf-parser
-  specifications/redline-punch-list
-  specifications/spec-writer
+  site-planning-zoning/design-brief-builder
+  site-planning-zoning/site-analysis-generator
+  site-planning-zoning/zoning-analyzer
+  specifications-data/product-image-processor
+  specifications-data/product-spec-bulk-cleanup
+  specifications-data/product-spec-bulk-fetch
+  specifications-data/product-spec-pdf-parser
+  specifications-data/redline-punch-list
+  specifications-data/spec-writer
+  creative-presenting/color-palette-generator
+  creative-presenting/slide-deck-generator
 )
 
 usage() {
