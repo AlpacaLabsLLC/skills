@@ -1,6 +1,6 @@
 # Site Planning
 
-Site planning skills for Claude Code — site research and design brief generation.
+Site planning skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — site research, analysis, and design brief building.
 
 ## Skills
 
@@ -14,12 +14,12 @@ Site planning skills for Claude Code — site research and design brief generati
 | Command | Description |
 |---------|-------------|
 | [site-due-diligence](commands/site-due-diligence.md) | Full site due diligence — site analysis followed by zoning envelope calculation |
+| [site-due-diligence-nyc](commands/site-due-diligence-nyc.md) | NYC site due diligence — site analysis followed by PLUTO zoning envelope |
 
 ## Install
 
 ```bash
-git clone https://github.com/AlpacaLabsLLC/skills.git
-# Then symlink individual skills or install the full plugin
+claude install github:AlpacaLabsLLC/skills-for-architects/site-planning
 ```
 
 ## License
