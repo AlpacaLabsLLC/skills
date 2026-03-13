@@ -50,22 +50,7 @@ Search for climate data for the city/region:
 - **Humidity**: Average relative humidity by season
 - **Design temperatures**: Heating and cooling design day temperatures if available (ASHRAE 99.6% / 0.4%)
 
-### 2. Zoning & Land Use
-
-Search for zoning information for the specific address or area:
-- **Zoning designation**: Current zoning code/district
-- **Permitted uses**: What's allowed by right vs. conditional use
-- **Density**: Allowed dwelling units per acre or equivalent
-- **Height limits**: Maximum building height in feet/meters and stories
-- **Setbacks**: Front, side, rear required setbacks
-- **FAR / FOS**: Floor area ratio and/or floor occupation factor
-- **Lot coverage**: Maximum impervious surface or building footprint percentage
-- **Parking**: Required parking ratios for the project type
-- **Special overlays**: Historic districts, design review, coastal zones, environmental overlays
-
-For US sites, try the city's municipal code or zoning map viewer. For international sites, search for the local planning authority's regulations.
-
-### 3. Transit & Access
+### 2. Transit & Access
 
 Search for transportation data near the site:
 - **Public transit**: Nearest bus stops, metro/subway stations, commuter rail — with walking distance
@@ -74,7 +59,7 @@ Search for transportation data near the site:
 - **Airport**: Nearest commercial airport and approximate drive time
 - **Pedestrian infrastructure**: Sidewalks, bike lanes, trails nearby
 
-### 4. Demographics & Market
+### 3. Demographics & Market
 
 Search for demographic data for the census tract, ZIP code, or municipality:
 - **Population**: Current population and density (per sq mi or sq km)
@@ -84,7 +69,7 @@ Search for demographic data for the census tract, ZIP code, or municipality:
 - **Housing**: Median home price, rental rates if relevant to project type
 - **Employment**: Major employers nearby, unemployment rate, dominant industries
 
-### 5. Neighborhood Context
+### 4. Neighborhood Context
 
 Search for information about the immediate surroundings:
 - **Adjacent land uses**: What's north, south, east, west of the site
@@ -94,7 +79,7 @@ Search for information about the immediate surroundings:
 - **Planned development**: Major projects approved or under construction in the area
 - **Safety**: General crime context if publicly available
 
-### 6. Natural Features & Hazards
+### 5. Natural Features & Hazards
 
 Search for environmental and topographic data:
 - **Topography**: Elevation, slope, general terrain description
@@ -121,9 +106,6 @@ Use this structure:
 | Metric | Value |
 |--------|-------|
 | Climate zone | [ASHRAE] / [Köppen] |
-| Zoning | [designation] |
-| Max height | [height] |
-| FAR | [ratio] |
 | Walk Score | [score] |
 | Flood zone | [zone] |
 | Median HH income | [amount] |
@@ -134,23 +116,19 @@ Use this structure:
 
 [Findings organized with tables and bullet points]
 
-## 2. Zoning & Land Use
+## 2. Transit & Access
 
 [Findings organized with tables and bullet points]
 
-## 3. Transit & Access
+## 3. Demographics & Market
 
 [Findings organized with tables and bullet points]
 
-## 4. Demographics & Market
-
-[Findings organized with tables and bullet points]
-
-## 5. Neighborhood Context
+## 4. Neighborhood Context
 
 [Narrative description with key facts]
 
-## 6. Natural Features & Hazards
+## 5. Natural Features & Hazards
 
 [Findings organized with tables and bullet points]
 
