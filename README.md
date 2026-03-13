@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**13 skills** and **4 commands** across **6 plugins** for architects, designers, and AEC professionals.
+**13 skills** and **3 commands** across **6 plugins** for architects, designers, and AEC professionals.
 
 ## What Are Skills and Commands?
 
@@ -44,7 +44,6 @@ Skills are symlinked into `~/.claude/skills/` so they stay in sync when you upda
 | Command | Plugin | Description |
 |---------|--------|-------------|
 | `/space-program` | programming | Build a complete space program — occupancy loads then workplace programming. |
-| `/site-due-diligence` | site-planning | Full site due diligence — site analysis followed by zoning envelope. |
 | `/site-due-diligence-nyc` | site-planning | NYC site due diligence — site analysis followed by PLUTO zoning envelope. |
 | `/spec-package` | data-management | Full FF&E pipeline — fetch specs, clean data, process images. |
 

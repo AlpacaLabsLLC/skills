@@ -13,7 +13,6 @@ Site planning skills for [Claude Code](https://docs.anthropic.com/en/docs/claude
 
 | Command | Description |
 |---------|-------------|
-| [site-due-diligence](commands/site-due-diligence.md) | Full site due diligence — site analysis followed by zoning envelope calculation |
 | [site-due-diligence-nyc](commands/site-due-diligence-nyc.md) | NYC site due diligence — site analysis followed by PLUTO zoning envelope |
 
 ## Install
