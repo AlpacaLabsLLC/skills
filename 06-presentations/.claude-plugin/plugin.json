@@ -1,0 +1,12 @@
+{
+  "name": "06-presentations",
+  "version": "1.0.0",
+  "description": "Presentation skills — HTML slide deck generation with editorial design and color palette creation.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["presentations", "slides", "color-palette", "design", "HTML", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}

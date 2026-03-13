@@ -1,0 +1,12 @@
+{
+  "name": "04-specifications",
+  "version": "1.0.0",
+  "description": "Construction specification skills — CSI MasterFormat spec writing and redline punch list generation.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["specifications", "CSI", "MasterFormat", "punch-list", "redline", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}

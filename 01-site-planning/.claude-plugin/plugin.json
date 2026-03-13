@@ -1,0 +1,12 @@
+{
+  "name": "01-site-planning",
+  "version": "1.0.0",
+  "description": "Site planning skills — site analysis research and design brief generation for architectural projects.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["site-analysis", "design-brief", "site-planning", "due-diligence", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}

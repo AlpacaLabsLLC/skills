@@ -1,0 +1,12 @@
+{
+  "name": "03-programming",
+  "version": "1.0.0",
+  "description": "Architectural programming skills — occupancy load calculations (IBC) and workplace space programming with industry benchmarks.",
+  "author": {
+    "name": "ALPA",
+    "url": "https://alpa.llc"
+  },
+  "keywords": ["programming", "occupancy", "IBC", "workplace", "space-planning", "architecture"],
+  "homepage": "https://alpa.llc/skills",
+  "license": "MIT"
+}
