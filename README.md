@@ -1,16 +1,77 @@
 # Skills for Architects
 
-> Agentic skills, commands, and plugins for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — from site research to zoning, programming, specifications, and creative delivery.
+> Agentic skills, commands, and plugins for Claude — use with [Claude Desktop (Cowork)](https://claude.ai/download) or [Claude Code](https://docs.anthropic.com/en/docs/claude-code). From site research to zoning, programming, specifications, and creative delivery.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **17 skills** and **3 commands** across **6 plugins** for architects, designers, and AEC professionals.
+
+## Prerequisites
+
+- **Claude Desktop** (recommended) or **Claude Code CLI**
+- A [Claude subscription](https://claude.ai) (Pro, Team, or Enterprise)
+- **Git** — to clone this repo and stay in sync
 
 ## What Are Skills and Commands?
 
 - **Skills** are domain knowledge units (nouns). They teach Claude about a design topic — like calculating occupancy loads, analyzing zoning envelopes, or writing CSI specs.
 - **Commands** are workflows (verbs). They chain multiple skills together to accomplish a task — like running a full FF&E extraction pipeline or complete site due diligence.
 - **Plugins** are the containers. Each groups related skills and commands by topic.
+
+## Quick Start
+
+### Option A: Claude Desktop (Cowork) — recommended
+
+Clone the repo and symlink the skills you want:
+
+```bash
+# Clone
+git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git ~/skills-for-architects
+
+# Symlink all skills at once
+for plugin in ~/skills-for-architects/0*/skills/*/; do
+  ln -s "$plugin" ~/.claude/skills/$(basename "$plugin")
+done
+
+# Verify — open Claude Desktop and type:
+/skills
+```
+
+To update later:
+
+```bash
+cd ~/skills-for-architects && git pull
+```
+
+Symlinks stay in sync automatically.
+
+### Option B: Claude Code (CLI)
+
+```bash
+# Install a single plugin
+claude install github:AlpacaLabsLLC/skills-for-architects/01-site-planning
+
+# Or install all plugins
+claude install github:AlpacaLabsLLC/skills-for-architects
+```
+
+Skills are symlinked into `~/.claude/skills/` so they stay in sync when you update.
+
+## Where to Start
+
+Pick your task, run the skill:
+
+| I need to... | Run this | Plugin |
+|--------------|----------|--------|
+| Research a new site | `/environmental-analysis 123 Main St` | Site Planning |
+| Understand neighborhood context | `/neighborhood-history 123 Main St` | Site Planning |
+| Check NYC zoning | `/zoning-analysis-nyc 123 Main St` | Zoning Analysis |
+| Build a space program | `/workplace-programmer` | Programming |
+| Calculate occupancy loads | `/occupancy-calculator` | Programming |
+| Write CSI specs | `/spec-writer` | Specifications |
+| Find FF&E products | `/product-research` | Materials Research |
+| Generate a slide deck | `/slide-deck-generator Q1 results` | Presentations |
+| Full NYC site due diligence | `/site-due-diligence-nyc 123 Main St` | Site Planning |
 
 ## Plugins
 
@@ -24,22 +85,6 @@ Organized by project lifecycle — from site research through delivery.
 | 4 | [04-specifications](./04-specifications) | 2 | — | CSI outline specs and construction punch lists. |
 | 5 | [05-materials-research](./05-materials-research) | 5 | 1 | FF&E product research, spec extraction, cleanup, and image processing. |
 | 6 | [06-presentations](./06-presentations) | 2 | — | Slide deck generation and color palette creation. |
-
-## Quick Start
-
-### Install a Single Plugin
-
-```bash
-claude install github:AlpacaLabsLLC/skills-for-architects/01-site-planning
-```
-
-### Install All Plugins
-
-```bash
-claude install github:AlpacaLabsLLC/skills-for-architects
-```
-
-Skills are symlinked into `~/.claude/skills/` so they stay in sync when you update.
 
 ## All Commands
 
@@ -100,11 +145,17 @@ Skills are symlinked into `~/.claude/skills/` so they stay in sync when you upda
 
 ## Contributing
 
-Have a skill for the built environment? Open a PR. Each skill needs:
+Want to add a skill for the built environment? Here's how:
 
-1. A `SKILL.md` with clear instructions and domain knowledge
-2. A `README.md` with install, usage, and sample output
-3. Any supporting data files in a `data/` or `zoning-rules/` directory
+1. **Fork** this repo
+2. Create your skill in the appropriate plugin folder (or propose a new plugin)
+3. Each skill needs:
+   - A `SKILL.md` with clear instructions and domain knowledge
+   - A `README.md` with install, usage, and sample output
+   - Any supporting data files in a `data/` or `zoning-rules/` directory
+4. Open a **pull request** — describe what the skill does, how you tested it, and sample output
+
+For guidance on organizing skills across a team, read [Distributing Skills to Teams](https://alpa.llc/articles/distributing-skills-to-teams).
 
 ## License
 
@@ -113,3 +164,5 @@ MIT — see [LICENSE](LICENSE).
 ---
 
 Built by [ALPA](https://alpa.llc) — research, strategy, and technology for the built environment.
+
+**Read more:** [Claude Code Cheat Sheet for Architects](https://alpa.llc/articles/claude-code-cheat-sheet) · [Distributing Skills to Teams](https://alpa.llc/articles/distributing-skills-to-teams)
