@@ -1,6 +1,6 @@
 ---
 name: product-data-cleanup
-description: Clean up an FF&E schedule — normalize casing, dimensions, units, language, materials, and formatting for consistency. Use when the user asks to "clean up the schedule", fix inconsistent product data, or standardize an FF&E sheet.
+description: Clean a local FF&E CSV schedule by normalizing casing, dimensions, units, language, materials, and formatting. Use when asked to clean, fix, or standardize product data.
 allowed-tools:
   - Read
   - Write
@@ -9,24 +9,21 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-data-cleanup — Product Data Normalizer
+# /as:product-data-cleanup — Product Data Normalizer
 
 Takes a messy FF&E schedule and normalizes everything: casing, dimensions, units, language, materials vocabulary, currency formatting, and duplicates. Outputs a clean, consistent, spec-ready schedule.
 
-Operates on the **master Google Sheet** — the same 33-column schema used by all product skills. Also works on standalone CSV files and pasted tables.
+Persistent cleanup operates on the nearest project's `product-library.csv`. Pasted tables may be previewed in Markdown but are not another persistent format.
 
 ## Input
 
 The user provides a schedule in one of these ways:
 
-1. **Master Google Sheet** — the shared product library. Provide spreadsheet ID or URL.
-2. **File path** — a `.csv`, `.tsv`, `.xlsx` export, or `.md` file
-3. **Pasted table** — markdown or tab-separated data in the message
+1. **Project library** — the nearest `product-library.csv` under an ancestor containing `PROJECT.md`.
+2. **CSV file path** — import only after its exact 33-column header is validated.
+3. **Pasted table** — preview a proposed canonical mapping before any persistence.
 
 If the input format is unclear, ask.
 
@@ -164,9 +161,7 @@ Scan all rows and produce a summary:
 ```
 
 ### Step 3: Confirm scope
-Ask: **"Apply all fixes, or select which ones?"**
-
-If the user wants to be selective, let them pick from the list. Otherwise, apply all.
+The issue summary is the change preview. Present selectable cleanup groups directly through the single confirmation gate; do not ask the same question first in prose.
 
 ### Step 4: Apply fixes
 Process every row through the active cleanup rules. Track every change made.
@@ -184,17 +179,12 @@ Report:
 ```
 
 ### Step 6: Save
-Ask: **"Save where?"**
-Options:
-- **Overwrite original file** (if local file input)
-- **Save as new file** (default: append `-clean` to filename)
-- **Write to Google Sheet** (same sheet or new one)
-- **Just show the table** — leave in conversation
+Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. For multiple changed rows, materialize the complete proposed 33-column CSV as a temporary or user-visible review file, validate that candidate, preview the whole change once, and use the single confirmation gate. After approval, invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" import product --project <project-root> --source <review.csv>` exactly once for one atomic replacement; never loop `update`. A genuinely single-record edit may instead invoke the same plugin-root helper's `update` command once with one uniquely matching stable field. Never overwrite an arbitrary input or hand-edit `product-library.csv`.
 
 ## Edge Cases
 
 - **Mixed-language schedule**: Detect dominant language per column, normalize to one language
 - **Merged cells or irregular formatting**: Flag and ask user how to handle
-- **Extra columns not in schema**: Preserve them as-is at the end, don't delete
+- **Extra columns not in schema**: Reject persistence and preview how they would map to canonical fields
 - **Empty rows**: Remove silently
 - **Header detection**: Auto-detect header row (first row with text that matches known field names). If uncertain, ask.

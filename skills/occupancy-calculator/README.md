@@ -1,4 +1,4 @@
-# /occupancy-calculator
+# /as:occupancy-calculator
 
 IBC occupancy load calculator for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Describe your building — get per-area occupant loads from IBC Table 1004.5, gross vs net area handling, egress requirements, and exportable reports.
 
@@ -16,29 +16,25 @@ Every report cites the code edition, table, and a public link to the source.
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/occupancy-calculator ~/.claude/skills/occupancy-calculator
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/occupancy-calculator 50,000 SF office building, 3 floors
+/as:occupancy-calculator 50,000 SF office building, 3 floors
 ```
 
 Or describe a mixed-use building:
 
 ```
-/occupancy-calculator ground floor retail (8,000 SF) + 4 floors office (40,000 SF)
+/as:occupancy-calculator ground floor retail (8,000 SF) + 4 floors office (40,000 SF)
 ```
 
 Or start with no context:
 
 ```
-/occupancy-calculator
+/as:occupancy-calculator
 ```
 
 ### Conversation Flow
@@ -69,7 +65,7 @@ The café is only 4% of the floor area but contributes **30% of the occupant loa
 
 ## Workplace Programmer Integration
 
-If a `program.json` file exists in the working directory (from `/workplace-programmer`), the skill offers to calculate occupancy directly from the room schedule — mapping conference rooms to assembly factors, open desks to business, kitchens to commercial kitchen, and storage to accessory.
+If a `program.json` file exists in the working directory (from `/as:workplace-programmer`), the skill offers to calculate occupancy directly from the room schedule — mapping conference rooms to assembly factors, open desks to business, kitchens to commercial kitchen, and storage to accessory.
 
 ## What's Included
 

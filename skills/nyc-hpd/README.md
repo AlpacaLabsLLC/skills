@@ -1,4 +1,4 @@
-# /nyc-hpd
+# /as:nyc-hpd
 
 HPD violations, complaints, and building registration lookup for NYC residential buildings as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries Housing Preservation & Development data — only applies to residential building classes (A, B, C, D, R, S). No API key required.
 
@@ -9,19 +9,15 @@ HPD violations, complaints, and building registration lookup for NYC residential
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-hpd ~/.claude/skills/nyc-hpd
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-hpd 1055 Bergen Street, Brooklyn
-/nyc-hpd 3012120065          (BBL)
-/nyc-hpd 3030348             (BIN)
+/as:nyc-hpd 1055 Bergen Street, Brooklyn
+/as:nyc-hpd 3012120065          (BBL)
+/as:nyc-hpd 3030348             (BIN)
 ```
 
 The skill:

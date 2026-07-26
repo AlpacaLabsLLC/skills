@@ -21,9 +21,9 @@ Then use the output as the `src` value:
 <img src="data:image/jpeg;base64,/9j/4AAQ..." alt="Description" />
 ```
 
-## Using /resize-images output
+## Using /as:resize-images output
 
-If the user ran `/resize-images` before this skill, the `resized-slides/` folder contains images already sized for the slide canvas:
+If the user ran `/as:resize-images` before this skill, the `resized-slides/` folder contains images already sized for the slide canvas:
 
 - `*-slides-wide.jpg` — 1920×1080 (16:9) — use for full-bleed and image-grid slides
 - `*-slides-standard.jpg` — 1024×768 (4:3) — use only if the user asked for a 4:3 deck
@@ -40,4 +40,4 @@ Use `src=""` with a descriptive `alt` attribute as a placeholder. Note the place
 
 ## File size note
 
-Base64-encoding large images increases HTML file size. If the user provides many high-res images, warn them: "Embedding N images will produce a large HTML file (~X MB). Consider running `/resize-images` first (choose the slides output when it asks which sizes you need) to reduce file size before embedding."
+Base64-encoding large images increases HTML file size. If the user provides many high-res images, warn them: "Embedding N images will produce a large HTML file (~X MB). Consider running `/as:resize-images` first (choose the slides output when it asks which sizes you need) to reduce file size before embedding."

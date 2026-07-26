@@ -1,6 +1,8 @@
-# /product-pair
+# /as:product-pair
 
 Suggest complementary products that pair well with a given item — side tables for sofas, task lights for desks, etc. for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+
+Results are shown in Markdown; selected pairings can be appended to the nearest project's `product-library.csv` after approval.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,17 +11,13 @@ Suggest complementary products that pair well with a given item — side tables 
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/product-pair ~/.claude/skills/product-pair
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/product-pair
+/as:product-pair
 ```
 
 ## What's Included

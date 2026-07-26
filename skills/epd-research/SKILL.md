@@ -11,14 +11,11 @@ allowed-tools:
   - WebFetch
   - WebSearch
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /epd-research — EPD Research
+# /as:epd-research — EPD Research
 
-Receives a brief describing a material or product category, searches the web for matching EPDs (Environmental Product Declarations), and returns a curated shortlist sorted by environmental impact. Selected EPDs are saved to the EPD Google Sheet — the same one used by `/epd-parser` and the other EPD skills.
+Receives a brief describing a material or product category, searches the web for matching EPDs (Environmental Product Declarations), and returns a curated shortlist sorted by environmental impact. The shortlist is file-free by default; selected EPDs are persisted only on explicit request.
 
 ## How It Works
 
@@ -31,7 +28,7 @@ Presents candidates sorted by GWP (lowest first)
         |
 User picks winners
         |
-Saved to EPD Google Sheet (42-column schema)
+Optionally saved to project-local epd-library.csv
 ```
 
 ## Step 1: Take the Brief
@@ -160,27 +157,21 @@ Which ones should I save to your EPD library?
 - **Note system boundary differences** — if some are cradle-to-gate and others cradle-to-grave, call it out
 - **Distinguish EPD types** — product-specific vs. industry-average matters for LEED
 
-## Step 4: Save to Sheet
+## Step 4: Optional persistence
 
-When the user picks EPDs ("save 1, 3, and 5"), write them to the EPD Google Sheet using the 42-column schema.
-
-### Connecting to the sheet
-
-If not already connected, ask for the Google Sheet ID or URL. This is a **separate spreadsheet** from the FF&E product library — EPD data has a different schema.
-
-### Row format
-
-Write to the 42-column EPD schema. Set:
+Do not create a file merely because the user selects or compares candidates. When the user explicitly asks to save candidates, use the canonical contract in [`schema/epd-schema.md`](../../schema/epd-schema.md); never use the 33-column FF&E schema. Set:
 - `Parsed At` — current ISO timestamp
 - `Source` — `epd-research`
 - `Notes` — the "Why" reasoning from the presentation + any caveats
 - `Tags` — from brief context (e.g., "4000-psi, northeast, project-name")
 - `LEED Eligible` — based on EPD type and verification status
 
+Resolve the nearest ancestor containing `PROJECT.md` and target `<project-root>/epd-library.csv`. Preview the complete selected batch, target, and initialize-or-append action. Use one confirmation gate without a duplicate prose confirmation. Serialize all approved records as one JSON array. After approval, use `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" init epd` if needed, then invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append epd --row-json <batch.json>` exactly once. Never append in a per-record loop. The helper validates the complete CSV and writes the whole batch atomically. If no project root exists, keep the shortlist in conversation and offer `/as:project init`.
+
 ### After saving
 
 ```
-Saved 3 EPDs to your library (rows 12-14).
+Saved 3 EPDs to your project's epd-library.csv.
 Tagged: 4000-psi, northeast
 
 Want me to compare these? Or search for more options?
@@ -192,13 +183,13 @@ The user may want to refine:
 
 - **"Any with lower GWP?"** — search for supplementary cementitious material (SCM) blends, newer EPDs
 - **"What about precast?"** — expand to related product categories
-- **"Compare #1 and #2"** — hand off to `/epd-compare`
-- **"Write spec language for #1's GWP as the max threshold"** — hand off to `/epd-to-spec`
+- **"Compare #1 and #2"** — hand off to `/as:epd-compare`
+- **"Write spec language for #1's GWP as the max threshold"** — hand off to `/as:epd-to-spec`
 - **"Find the PDF for #3 so I can parse the full data"** — search for downloadable EPD document
 
 ## GWP Baseline Policy
 
-This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/epd-research` — never guess a baseline.
+This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/as:epd-research` — never guess a baseline.
 
 ## Conversation Style
 
@@ -212,4 +203,4 @@ This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd
 - **EC3 (Building Transparency) requires an API key.** EC3 is the largest EPD database, but all data is behind authenticated API access — `site:buildingtransparency.org` web searches will not return results. If the user hasn't configured EC3 API credentials, tell them: *"EC3 has the largest EPD database but requires a free API key from buildingtransparency.org (professional account with a business email). I'll search program operator registries and manufacturer sites directly instead."* Then proceed with the other sources listed above — UL, NSF, Environdec, IBU, SCS, ASTM, and manufacturer sustainability pages all publish EPDs publicly.
 - **EPD validity matters.** A 2019 EPD based on EN 15804+A1 is less useful than a 2024 EPD based on +A2. Prefer newer EPDs when available.
 - **Regional EPDs are more useful than national averages.** A plant-specific EPD from a nearby facility is more valuable for a project than a company-wide average.
-- **This skill finds EPDs. `/epd-parser` extracts full data from the PDFs.** If the user wants deep data from a found EPD, download the PDF and run `/epd-parser`.
+- **This skill finds EPDs. `/as:epd-parser` extracts full data from the PDFs.** If the user wants deep data from a found EPD, download the PDF and run `/as:epd-parser`.

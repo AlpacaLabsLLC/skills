@@ -1,6 +1,6 @@
 ---
 name: epd-compare
-description: Compare 2+ products side-by-side on environmental impact metrics — normalizes declared units, checks system boundary alignment, and flags LEED MRc2 compliance. Use when the user asks to "compare EPDs", weigh embodied carbon between products, or check which option has lower GWP.
+description: Compare EPD products on normalized GWP and other impacts while checking declared units, system boundaries, and LEED eligibility. Use for side-by-side EPD comparison.
 allowed-tools:
   - Read
   - Write
@@ -9,27 +9,24 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__list_sheets
 ---
 
-# /epd-compare — EPD Comparator
+# /as:epd-compare — EPD Comparator
 
 Compare 2 or more products side-by-side on environmental impact metrics. Validates comparability (declared units, system boundaries, PCR alignment), generates comparison tables with percentage deltas, and checks LEED v4.1 MRc2 eligibility.
 
-This skill **reads** from the EPD Google Sheet but does **not write** to it. Output is a markdown comparison report.
+This skill reads EPD records but does not persist or modify them. Fields follow [`schema/epd-schema.md`](../../schema/epd-schema.md), which is distinct from the FF&E product schema. Output is a markdown comparison report.
 
 ## Input
 
 The user provides EPD data in one of these ways:
 
-1. **Sheet row references** — "compare rows 5, 8, and 12" from the EPD Google Sheet
-2. **Inline data** — pasted product names with GWP values
-3. **File path** — a CSV or markdown file with EPD data
-4. **From prior skills** — "compare the EPDs I just parsed/found" (uses data from the current conversation)
-5. **Mixed** — "compare this PDF I just parsed against what's in the sheet"
+1. **Inline data** — pasted product names with GWP values
+2. **File path** — a canonical `epd-library.csv` or markdown file with EPD data
+3. **From prior skills** — "compare the EPDs I just parsed/found" (uses structured data from the current conversation)
+4. **Mixed** — combine pasted, prior, and canonical local CSV records
 
-If the user doesn't specify a source, ask: **"Where is the EPD data? Sheet rows, pasted values, or from earlier in this conversation?"**
+If the user doesn't specify a source, first use structured EPD data from the current conversation. Otherwise ask for pasted values or an EPD CSV path. When reading `epd-library.csv`, validate it with `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate epd`; reject FF&E-shaped or malformed files. Validation is read-only; never invoke `init`, `import`, `append`, or `update`.
 
 ## Workflow
 
@@ -127,7 +124,7 @@ Use `—` for missing data. Never fill in missing values.
 
 Include an industry average baseline **only if it is citable** — either the user provides one (e.g., an industry-average EPD or a published baseline document) or you can attach a named source and publication year, per the GWP Baseline Policy below. Label the baseline row with its source and year.
 
-If no citable baseline is at hand, ask: **"Do you have an industry-average EPD or published baseline for this material category? If so, share it and I'll include it in the comparison. We're working on EC3 API integration that will automate baseline lookups — for now, provide an EPD or use `/epd-research` to find one."**
+If no citable baseline is at hand, ask: **"Do you have an industry-average EPD or published baseline for this material category? If so, share it and I'll include it in the comparison. We're working on EC3 API integration that will automate baseline lookups — for now, provide an EPD or use `/as:epd-research` to find one."**
 
 If no citable baseline is available, omit the "vs. Industry Avg" column entirely rather than guessing.
 
@@ -189,8 +186,8 @@ After saving:
 Comparison saved to [path].
 
 Next steps:
-- /epd-to-spec — generate spec language using ECOPact's GWP (242) as the threshold
-- /epd-research — find more options to compare
+- /as:epd-to-spec — generate spec language using ECOPact's GWP (242) as the threshold
+- /as:epd-research — find more options to compare
 ```
 
 ## Edge Cases
@@ -203,11 +200,11 @@ Next steps:
 
 ## GWP Baseline Policy
 
-This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/epd-research` — never guess a baseline.
+This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/as:epd-research` — never guess a baseline.
 
 ## Notes
 
-- **This skill reads, not writes.** It does not add rows to the EPD Google Sheet. It produces a comparison report as a markdown file.
+- **This skill reads, not writes.** It does not add records to `epd-library.csv`. It produces a comparison report as a markdown file.
 - **Baselines follow the GWP Baseline Policy above.** Cited source + publication year required; uncited from-memory numbers banned. EC3 API integration is in progress and will automate baseline lookups.
 - **GWP (A1-A3) is the primary metric** for most comparisons and LEED. Other indicators (ODP, AP, EP) provide a fuller picture but GWP drives most specification decisions.
-- **Suggest next skills.** After comparison, the natural next steps are `/epd-to-spec` (to write spec language) or `/epd-research` (to find alternatives).
+- **Suggest next skills.** After comparison, the natural next steps are `/as:epd-to-spec` (to write spec language) or `/as:epd-research` (to find alternatives).

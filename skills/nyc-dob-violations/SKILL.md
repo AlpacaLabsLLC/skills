@@ -1,6 +1,6 @@
 ---
 name: nyc-dob-violations
-description: Look up open and resolved DOB and ECB violations for any NYC building, with class, status, and penalty detail. Use when the user asks whether a building has violations, stop-work orders, or outstanding ECB penalties. NYC only; for housing-code violations use /nyc-hpd.
+description: Look up open and resolved DOB and ECB violations for any NYC building, with class, status, and penalty detail. Use when the user asks whether a building has violations, stop-work orders, or outstanding ECB penalties. NYC only; for housing-code violations use /as:nyc-hpd.
 allowed-tools:
   - WebFetch
   - Write
@@ -8,16 +8,16 @@ allowed-tools:
   - Bash
 ---
 
-# /nyc-dob-violations — DOB & ECB Violations
+# /as:nyc-dob-violations — DOB & ECB Violations
 
 Look up DOB violations and ECB (Environmental Control Board) violations for any NYC building. Flags open violations prominently. No API key required.
 
 ## Usage
 
 ```
-/nyc-dob-violations 120 Broadway, Manhattan
-/nyc-dob-violations 1000770001          (BBL)
-/nyc-dob-violations 1001389             (BIN)
+/as:nyc-dob-violations 120 Broadway, Manhattan
+/as:nyc-dob-violations 1000770001          (BBL)
+/as:nyc-dob-violations 1001389             (BIN)
 ```
 
 ## Steps 1–2: Parse Input & Resolve BBL/BIN

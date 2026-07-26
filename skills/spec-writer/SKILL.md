@@ -1,6 +1,6 @@
 ---
 name: spec-writer
-description: CSI outline specification writer — takes a materials or products list and generates structured specs with MasterFormat divisions, performance criteria, and acceptable manufacturers. Use when the user asks to "write a spec", produce outline specifications, or format a materials list into CSI sections.
+description: Turn a material or product list into CSI MasterFormat outline specifications with three-part sections and review flags. Use to write specs; use epd-to-spec for embodied-carbon requirements.
 allowed-tools:
   - Read
   - Write
@@ -10,13 +10,13 @@ allowed-tools:
   - Grep
 ---
 
-# /spec-writer — CSI Outline Specification Writer
+# /as:spec-writer — CSI Outline Specification Writer
 
 Takes a materials list, product schedule, or project description and produces outline specifications organized by CSI MasterFormat 2020 divisions. Output is a structured `.md` file ready for review by a senior specifier.
 
-## Project Dossier
+## Project context
 
-If `PROJECT.md` exists in the working directory, read it before fetching — the **Decisions** index and `decisions/` records hold material and product choices already made — specs must reflect them, not re-litigate them. After completing, note the produced spec sections in the dossier if a **Program** or **Code** entry references them. Update values in place (the dossier holds current state, not history), every entry with a source and date. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+If `PROJECT.md` exists in the working directory, read it and scan `decisions/*.md` directly for material and product choices already made; specs must reflect decided records rather than re-litigate them. After completing, offer referenced spec sections to `/as:project update`, with source and date. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Input
 
@@ -197,3 +197,15 @@ Sections flagged for review: [count]
 - **Materials outside covered divisions**: Note the limitation and provide the best-fit section. Example: "Elevator cab finishes are typically specified under Division 14 — Conveying Equipment, which is outside the scope of this skill. Consider coordinating with the elevator vendor."
 - **Duplicate materials**: Consolidate under one section. Do not create separate sections for "latex paint — walls" and "latex paint — ceilings" — combine under 09 91 00 with both applications noted.
 - **Very long lists (20+ materials)**: Process all of them. Give a progress update after every 5 sections written.
+
+## Final Step: Disclaimer + Marker (required)
+
+Outline specifications can contain regulatory and life-safety requirements and may be issued for professional review. End every specification output shown in chat or saved to a file with the canonical block from `rules/professional-disclaimer.md`, followed by one blank line and the marker, exactly as follows:
+
+```markdown
+> **Disclaimer:** This is an AI-generated analysis for preliminary planning purposes. All findings must be verified by a licensed professional before use in design, permitting, or regulatory submissions.
+
+<!-- architecture-studio:requires-disclaimer -->
+```
+
+The marker appears exactly once as the final line. `[REVIEW REQUIRED]` flags do not replace this disclaimer.

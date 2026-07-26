@@ -1,6 +1,6 @@
 ---
 name: csv-to-sif
-description: Convert a CSV or Excel FF&E product list to SIF (Standard Interchange Format) for dealer and procurement systems. Use when the user asks to "convert to SIF", export a schedule for a dealer, or produce a .sif file from a spreadsheet. For the reverse direction use /sif-to-csv.
+description: Export a project's FF&E product-library CSV as dealer-system SIF. Use to produce a .sif schedule; use sif-to-csv for the reverse direction.
 allowed-tools:
   - Read
   - Write
@@ -11,9 +11,9 @@ allowed-tools:
   - AskUserQuestion
 ---
 
-# /csv-to-sif — CSV to SIF Converter
+# /as:csv-to-sif — CSV to SIF Converter
 
-Converts a CSV, Excel, or Google Sheets product list into a SIF (Standard Interchange Format) file for import into dealer and procurement systems like Hedberg, CAP, CET, Cyncly Worksheet, ProjectMatrix, Studio Webware, and Design Manager.
+Converts the nearest project's `product-library.csv` into a SIF output file for dealer and procurement systems such as Hedberg, CAP, CET, Cyncly Worksheet, ProjectMatrix, Studio Webware, and Design Manager.
 
 ## When to Use
 
@@ -129,19 +129,16 @@ AD=54dia x 28.5H in
 
 ## Step 1: Accept Input
 
+Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Default to the nearest ancestor containing `PROJECT.md` and validate its `product-library.csv` with `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate product --project <project-root>` before conversion. This skill is read-only with respect to the CSV; its structured output remains SIF.
+
 **CSV file:**
 ```
-/csv-to-sif ./product-data-import.csv
-```
-
-**Google Sheet:**
-```
-/csv-to-sif 1FMScYW9guezOWc_m4ClTQxxFIpS6TNRr373R-MJGzgE
+/as:csv-to-sif ./product-data-import.csv
 ```
 
 **Pasted CSV:**
 ```
-/csv-to-sif
+/as:csv-to-sif
 Product,Brand,SKU,Qty,Price,Finish,Room
 Eames Lounge Chair,Herman Miller,670,3,5695,Walnut/Black Leather,Executive Lounge
 Saarinen Table 54,Knoll,164-500,1,4750,Arabescato/White,Dining
@@ -277,6 +274,6 @@ Write the `.sif` file with CRLF line endings:
 
 ## Pairs With
 
-- `/product-data-import` — generate a schedule first, then convert to SIF
-- `/sif-to-csv` — round-trip: CSV → SIF → send to dealer → receive updated SIF → back to CSV
-- `/product-data-cleanup` — clean up the CSV before converting
+- `/as:product-data-import` — generate a schedule first, then convert to SIF
+- `/as:sif-to-csv` — round-trip: CSV → SIF → send to dealer → receive updated SIF → back to CSV
+- `/as:product-data-cleanup` — clean up the CSV before converting

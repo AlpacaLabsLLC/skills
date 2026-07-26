@@ -1,6 +1,6 @@
 ---
 name: product-enrich
-description: Auto-tag FF&E products with categories, colors, materials, and style tags using AI. Use when the user asks to "enrich", "tag", or "categorize" products, or to fill in missing category, material, or style columns in the schedule.
+description: Enrich FF&E schedule rows with categories, colors, materials, and style tags. Use to tag, categorize, or fill those missing fields; not to research new products.
 allowed-tools:
   - Read
   - Write
@@ -9,14 +9,11 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-enrich — Product Enrichment
+# /as:product-enrich — Product Enrichment
 
-Takes a product list with basic info (name + brand) and fills in missing metadata — category, subcategory, primary color, material, and style tags — using AI. Works on CSV files, Google Sheets, or pasted data.
+Takes product rows from the nearest project's `product-library.csv` or pasted data and proposes missing category, color, material, and style metadata.
 
 ## When to Use
 
@@ -29,19 +26,14 @@ Takes a product list with basic info (name + brand) and fills in missing metadat
 
 Accept product data in any format:
 
-**Google Sheet ID:**
-```
-/product-enrich 1FMScYW9guezOWc_m4ClTQxxFIpS6TNRr373R-MJGzgE
-```
-
 **CSV file:**
 ```
-/product-enrich ./products.csv
+/as:product-enrich ./products.csv
 ```
 
 **Pasted data:**
 ```
-/product-enrich
+/as:product-enrich
 Eames Lounge Chair, Herman Miller
 Saarinen Tulip Table, Knoll
 PH 5 Pendant, Louis Poulsen
@@ -82,7 +74,7 @@ Primary materials, comma-separated:
 - Context: Residential, Contract, Hospitality, Healthcare, Education, Outdoor
 
 ### Image Analysis
-If the product data includes an image URL (column AC in the master schema), use Claude vision to verify and refine the enrichment. The image may reveal:
+If product data includes the named `Image URL` field, use image analysis to verify and refine the enrichment. The image may reveal:
 - Actual color (not just what the name suggests)
 - Material details not in the product name
 - Style characteristics
@@ -111,17 +103,10 @@ Flag any products where enrichment is uncertain:
 
 ## Step 4: Apply
 
-### To Google Sheet
-Write enriched fields to the master 33-column schema:
-- Column A (Category) — enriched category
-- Column R (Materials) — enriched materials
-- Column S (Colors/Finishes) — enriched color
-- Column AD (Tags) — enriched style tags, appended to existing tags
+### To the project library
+Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Map enrichment only to canonical named fields: `Category`, `Materials`, `Colors/Finishes`, and appended `Tags`; place noncanonical subcategory detail in `Notes`. Do not overwrite a populated field unless the preview explicitly calls that out.
 
-Do NOT overwrite existing values unless the field is empty or the user explicitly asks to overwrite.
-
-### To CSV
-Add new columns if they don't exist: Category, Subcategory, Primary Color, Material, Style Tags. Save as `{original-name}-enriched.csv`.
+For multiple enriched rows, materialize the complete proposed 33-column CSV as a temporary or user-visible review file. Validate it, preview every material change and the target `product-library.csv` once, then use the single confirmation gate. After approval, invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" import product --project <project-root> --source <review.csv>` exactly once for one atomic replacement; never loop `update`. A genuinely single-record enrichment may use the same plugin-root helper's `update` command once with a uniquely matching stable field.
 
 ### To conversation
 Output the enriched table in markdown.
@@ -139,7 +124,7 @@ Output the enriched table in markdown.
 
 ## Pairs With
 
-- `/product-spec-bulk-fetch` — fetch specs first, then enrich the results
-- `/product-data-cleanup` — cleanup normalizes formatting, enrich adds metadata
-- `/product-data-import` — enriched products make better formatted schedules
-- `/product-match` — enriched tags help find better matches
+- `/as:product-spec-bulk-fetch` — fetch specs first, then enrich the results
+- `/as:product-data-cleanup` — cleanup normalizes formatting, enrich adds metadata
+- `/as:product-data-import` — enriched products make better formatted schedules
+- `/as:product-match` — enriched tags help find better matches

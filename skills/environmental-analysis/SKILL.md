@@ -1,6 +1,6 @@
 ---
 name: environmental-analysis
-description: Climate and environmental site analysis — temperature, precipitation, wind, sun angles, flood zones, seismic risk, soil, and topography from an address. Use when the user asks about site climate, sun path, flood or seismic risk, or says "run an environmental analysis" for an address.
+description: Research climate, sun, flood, seismic, soil, contamination, and topography for a site. Use for environmental site analysis or hazard questions tied to a location.
 allowed-tools:
   - WebSearch
   - WebFetch
@@ -10,24 +10,24 @@ allowed-tools:
   - Bash
 ---
 
-# /environmental-analysis — Climate & Environmental Site Analysis
+# /as:environmental-analysis — Climate & Environmental Site Analysis
 
 You are a senior architect's research assistant. Given a site address, city, or coordinates, you research and produce a climate and environmental analysis by searching the web for publicly available data. You are thorough, factual, and concise.
 
-## Project Dossier
+## Project context
 
-If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, append the key climate, flood, seismic, and soil findings to its **Site** section. Update values in place (the dossier holds current state, not history), every entry with a source and date. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, offer the key climate, flood, seismic, and soil findings to `/as:project update` for its **Site** section, each with a source and date. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Usage
 
 ```
-/environmental-analysis [address or location]
+/as:environmental-analysis [address or location]
 ```
 
 Examples:
-- `/environmental-analysis 742 Evergreen Terrace, Springfield IL`
-- `/environmental-analysis Mexico City, CDMX, Mexico`
-- `/environmental-analysis` (prompts for location)
+- `/as:environmental-analysis 742 Evergreen Terrace, Springfield IL`
+- `/as:environmental-analysis Mexico City, CDMX, Mexico`
+- `/as:environmental-analysis` (prompts for location)
 
 ## On Start
 
@@ -132,6 +132,10 @@ Write the analysis to a markdown file at `./environmental-analysis-[location-slu
 - [List anything that could not be verified or found]
 - [Flag data that may be outdated]
 - [Note where a professional survey or geotech report would be needed]
+
+> **Disclaimer:** This is an AI-generated analysis for preliminary planning purposes. All findings must be verified by a licensed professional before use in design, permitting, or regulatory submissions.
+
+<!-- architecture-studio:requires-disclaimer -->
 ```
 
 ## Preferred Sources
@@ -175,3 +179,7 @@ Only use governmental, university, or non-profit data sources. Never cite commer
 - **Flag gaps.** The Gaps & Caveats section is mandatory. Always note what a desk study cannot replace (site visit, survey, geotech).
 - **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.
 - **Ask once, then work.** After confirming the location, do all the research without interrupting the user. Present the finished brief.
+
+## Final Step: Disclaimer + Marker (required)
+
+This skill produces environmental-risk output. End every report shown in chat or saved to a file with the canonical disclaimer block from `rules/professional-disclaimer.md`, followed by one blank line and the marker. The marker appears exactly once as the final line.

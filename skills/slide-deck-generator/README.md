@@ -5,7 +5,7 @@ A Claude Code skill that generates self-contained HTML slide decks with an edito
 ## Usage
 
 ```
-/slide-deck-generator
+/as:slide-deck-generator
 ```
 
 Provide a topic, outline, data, or document and the skill produces a single `.html` file you can open in any browser — no dependencies, no build step.

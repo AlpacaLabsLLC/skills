@@ -30,3 +30,11 @@ jobs:
         run: ./scripts/lint.sh
         env:
           CI: "true"
+
+      - name: Run contract tests
+        run: |
+          for test_file in tests/test-*.sh; do
+            echo "::group::$test_file"
+            "$test_file"
+            echo "::endgroup::"
+          done

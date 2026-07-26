@@ -1,10 +1,9 @@
 ---
 name: slide-deck-generator
-description: Generate a polished HTML slide deck from a topic, outline, or data — a self-contained .html file with keyboard/touch navigation, responsive typography, and the ALPA (Alpaca Labs) design system. Use when the user asks to "generate a slide deck", make a presentation, or turn an outline, report, or data into slides.
+description: Generate a self-contained HTML slide deck from a topic, outline, report, or data. Use for presentations and slide decks; not for editing PowerPoint files.
 allowed-tools:
   - Read
   - Write
-  - Edit
   - Bash
   - Glob
 ---
@@ -19,38 +18,11 @@ This skill keeps its bulk material in reference files in this directory. Load th
 
 - **[slide-types.md](slide-types.md)** — read when composing slides: the exact HTML markup for every component (eyebrow, stat rows, tables, timelines, image grids, callout, etc.). Copy these structures verbatim.
 - **[html-template.md](html-template.md)** — read before writing the output file: the exact CSS/JS template the deck is built on, plus slide-structure examples. Only the slide `<div>`s inside `<body>` change.
-- **[image-handling.md](image-handling.md)** — read when the user provides local images (or ran `/resize-images`): base64 embedding workflow, placeholder convention, file-size warnings.
+- **[image-handling.md](image-handling.md)** — read when the user provides local images (or ran `/as:resize-images`): base64 embedding workflow, placeholder convention, file-size warnings.
 
 ## On Start
 
-When invoked, list the available page types for the user before proceeding:
-
-| # | Type | Layout | Background |
-|---|------|--------|------------|
-| 1 | Title (Image + Title) | Full bleed image, text overlay bottom-left | Image |
-| 2 | Title (Text Only) | Left-aligned h1 + subtitle + credit | White |
-| 3 | Heading + Body | Eyebrow + h2 + paragraph | White |
-| 4 | Heading + List | Eyebrow + h2 + bullet list | White / Grey |
-| 5 | Heading + Stats | Eyebrow + h2 + vertical stat lines | White |
-| 6 | Stat Row | Large centered numbers in columns | White / Grey |
-| 7 | Stat Comparison | Before/after with arrows | White / Grey |
-| 8 | Heading + Stat Row | Eyebrow + h2 + stat columns (centered) | White / Grey |
-| 9 | Statement (white) | Bold centered text | White |
-| 10 | Statement (dark) | Bold centered text | Dark |
-| 11 | Data Table | Eyebrow + h2 + table | Grey |
-| 12 | Insight List | Eyebrow + h2 + numbered items | White |
-| 13 | Bar Chart | Eyebrow + h2 + horizontal bars | White |
-| 14 | Timeline | Eyebrow + h2 + phased dots (centered) | White |
-| 15 | Two Column | Eyebrow + h2 + side-by-side text | White / Grey |
-| 16 | Comparison | Eyebrow + h2 + before/after boxes (centered) | White |
-| 17 | Image — Full Bleed | Single image, edge to edge | Image |
-| 18 | Image — Full Bleed + Title | Full image with gradient + overlaid text | Image |
-| 19 | Image — Split 2 | Two images side by side | White border |
-| 20 | Image — Split 3 | Three images in a row | White border |
-| 21 | Image — Split 4 | 2×2 grid | White border |
-| 22 | Image — Split 6 | 3×2 grid | White border |
-
-Any slide can include a **Callout** (footnote annotation) appended below the main content.
+When invoked, read [slide-types.md](slide-types.md), then give the user its compact numbered list of page-type names. Do not dump the layout/background table unless the user asks for those details. Any slide can include a callout footnote.
 
 A sample deck demonstrating every type is at `sample.html` in this skill's directory.
 

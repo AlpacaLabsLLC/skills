@@ -1,6 +1,6 @@
 ---
 name: nyc-acris
-description: Look up ACRIS property transaction records for any NYC property — deeds, mortgages, satisfactions, liens, and ownership history. Use when the user asks who owns a building, when it last sold or for how much, or whether there are mortgages or liens against it. NYC only; for permits or violations use the DOB skills.
+description: Look up NYC ACRIS deeds, mortgages, liens, sales, and ownership history. Use for property transactions or recorded ownership; not permits or violations.
 allowed-tools:
   - WebFetch
   - Write
@@ -8,16 +8,16 @@ allowed-tools:
   - Bash
 ---
 
-# /nyc-acris — ACRIS Property Transaction Records
+# /as:nyc-acris — ACRIS Property Transaction Records
 
 Look up ACRIS (Automated City Register Information System) property records — deeds, mortgages, liens, and other recorded documents. Uses a 3-table join across Legals, Master, and Parties datasets. No API key required.
 
 ## Usage
 
 ```
-/nyc-acris 120 Broadway, Manhattan
-/nyc-acris 1000770001          (BBL)
-/nyc-acris 1001389             (BIN)
+/as:nyc-acris 120 Broadway, Manhattan
+/as:nyc-acris 1000770001          (BBL)
+/as:nyc-acris 1001389             (BIN)
 ```
 
 ## Steps 1–2: Parse Input & Resolve BBL

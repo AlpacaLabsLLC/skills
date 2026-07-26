@@ -1,4 +1,4 @@
-# /nyc-dob-permits
+# /as:nyc-dob-permits
 
 DOB permit and job filing history for any NYC building as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries both the Legacy BIS and DOB NOW systems — covering permits, job applications, and filing statuses across four datasets. No API key required.
 
@@ -9,19 +9,15 @@ DOB permit and job filing history for any NYC building as a [Claude Code](https:
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-dob-permits ~/.claude/skills/nyc-dob-permits
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-dob-permits 120 Broadway, Manhattan
-/nyc-dob-permits 1000770001          (BBL)
-/nyc-dob-permits 1001389             (BIN)
+/as:nyc-dob-permits 120 Broadway, Manhattan
+/as:nyc-dob-permits 1000770001          (BBL)
+/as:nyc-dob-permits 1001389             (BIN)
 ```
 
 The skill:

@@ -1,6 +1,6 @@
-# /product-spec-pdf-parser
+# /as:product-spec-pdf-parser
 
-PDF product spec parser for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it price books, fact sheets, or spec sheets — get structured FF&E data written to your master Google Sheet.
+PDF product spec parser for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it price books, fact sheets, or spec sheets and optionally save structured FF&E data to `product-library.csv`.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -14,19 +14,19 @@ PDF product spec parser for [Claude Code](https://docs.anthropic.com/en/docs/cla
 ## Usage
 
 ```
-/product-spec-pdf-parser
+/as:product-spec-pdf-parser
 ```
 
 Then provide PDF paths — point to individual files or a folder.
 
 ```
-/product-spec-pdf-parser ~/Documents/specs/alphabeta-floor-lamp.pdf
+/as:product-spec-pdf-parser ~/Documents/specs/alphabeta-floor-lamp.pdf
 ```
 
 Or a folder:
 
 ```
-/product-spec-pdf-parser ~/Documents/specs/
+/as:product-spec-pdf-parser ~/Documents/specs/
 ```
 
 ### Variant depth
@@ -36,7 +36,7 @@ Or a folder:
 
 ### Output
 
-Appends rows to the **master Google Sheet** using the 33-column schema. PDF-specific data (variant, price adder, country of origin, source filename) is stored in the Notes column. Can also output to local CSV or markdown.
+Shows a Markdown preview and, after approval, appends rows atomically to the 33-column project library. PDF-specific data is stored in `Notes`.
 
 ## How it fits
 
@@ -45,7 +45,7 @@ This is a **utility** — it can be called standalone or as part of a larger wor
 | Context | How it's used |
 |---------|--------------|
 | Standalone | Designer has spec sheets or catalogs to process |
-| `/product-research` | Designer drops a PDF from a rep into the conversation |
+| `/as:product-research` | Designer drops a PDF from a rep into the conversation |
 | Product & Materials Researcher agent | Agent delegates to this skill for PDF-based spec extraction |
 
 ## Output Schema
@@ -86,9 +86,9 @@ After every batch: `Parsed: X products from Y PDF(s)`
 
 | Skill | Relationship |
 |-------|-------------|
-| `/product-research` | Designer drops a PDF during research, this extracts the data |
-| `/product-data-cleanup` | Run after parsing to normalize the sheet |
-| `/product-image-processor` | Run after parsing to process product images |
+| `/as:product-research` | Designer drops a PDF during research, this extracts the data |
+| `/as:product-data-cleanup` | Run after parsing to normalize the library |
+| `/as:product-image-processor` | Run after parsing to process product images |
 
 ## License
 

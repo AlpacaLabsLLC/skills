@@ -1,6 +1,6 @@
 ---
 name: epd-to-spec
-description: Generate CSI-formatted specification sections requiring EPDs and setting maximum GWP thresholds — references ISO 14025, ISO 21930, EN 15804. Use when the user asks to write EPD requirements into a spec, set GWP limits, or "add embodied carbon requirements" to a specification.
+description: Write CSI specification language for EPD submittals and sourced GWP limits. Use to add embodied-carbon or EPD requirements to specs; not to parse, find, or compare EPDs.
 allowed-tools:
   - Read
   - Write
@@ -9,24 +9,24 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__list_sheets
 ---
 
-# /epd-to-spec — EPD Specification Writer
+# /as:epd-to-spec — EPD Specification Writer
 
-Takes EPD data, GWP limits, or a materials list and generates CSI-formatted specification sections that require Environmental Product Declarations and set maximum Global Warming Potential thresholds. Output follows the same three-part CSI SectionFormat used by `/spec-writer`.
+Takes EPD data, GWP limits, or a materials list and generates CSI-formatted specification sections that require Environmental Product Declarations and set maximum Global Warming Potential thresholds. Output follows the same three-part CSI SectionFormat used by `/as:spec-writer`.
 
-## Project Dossier
+EPD fields follow [`schema/epd-schema.md`](../../schema/epd-schema.md). Accept pasted structured values, direct handoffs from `/as:epd-parser` or `/as:epd-compare`, or a validated project-local `epd-library.csv`; do not require a library.
 
-If `PROJECT.md` exists in the working directory, read it before fetching — the **Decisions** index may already hold GWP threshold or material choices the spec must reflect. After completing, append chosen thresholds to its **Code** section. Update values in place (the dossier holds current state, not history), every entry with a source and date. A GWP threshold is a decision — if one was set here, propose recording it with `/decision`. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+## Project context
+
+If `PROJECT.md` exists in the working directory, read it before fetching, then scan `decisions/*.md` directly for GWP thresholds or material choices the spec must reflect. After completing, offer chosen thresholds to `/as:project update` for its **Code** section, each with a source and date. If a threshold was chosen here, propose `/as:project record-decision`. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Input
 
 The user provides one or more of:
 
 1. **Material list with GWP limits** — "concrete max 350 kg CO2e/m3, rebar max 1.0 kg CO2e/kg"
-2. **EPD data from the sheet** — "use the EPDs I saved to set thresholds"
+2. **EPD data** — pasted values, a direct handoff, or "use the EPDs in my project library to set thresholds"
 3. **Comparison report** — "use the lowest GWP from my last comparison as the max"
 4. **LEED target** — "we're pursuing LEED v4.1 MRc2 Option 2"
 5. **Verbal description** — "write EPD requirements for a ground-up office, concrete and steel structure, curtain wall"
@@ -34,7 +34,7 @@ The user provides one or more of:
 
 If the user invokes the skill without input, ask:
 
-1. **What materials need EPD requirements?** (paste a list, reference the sheet, or describe the project)
+1. **What materials need EPD requirements?** (paste a list, reference a direct EPD result or local EPD CSV, or describe the project)
 2. **Do you have specific GWP thresholds, or should I use published industry baselines (cited with named source and publication year)?**
 
 ## CSI Divisions Where EPDs Are Most Common
@@ -72,17 +72,17 @@ Read the user's input and build an inventory:
 
 - **Material/product** — as provided
 - **CSI division and section number** — mapped from the material type
-- **GWP threshold** — user-provided limit, EPD sheet value, or industry baseline
+- **GWP threshold** — user-provided limit, EPD value, or industry baseline
 - **Declared unit** — must match the unit used in the GWP threshold
 
-If the user provided EPD sheet data or a comparison report, extract the GWP values and declared units from there.
+If the user provided EPD data or a comparison report, extract the GWP values and declared units from there. Validate any `epd-library.csv` with `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate epd`; reject the FF&E schema. Validation is read-only; never invoke `init`, `import`, `append`, or `update`.
 
 If no GWP thresholds are specified, a published industry-average baseline may be used **only when you can cite its named source and publication year** (per the GWP Baseline Policy below) — always flag such thresholds `[VERIFY THRESHOLD]`. If no citable baseline is available, **do not use approximate from-memory numbers.** Instead, ask the user:
 
 **"I need GWP thresholds to write the spec. You can provide them by:**
 1. **Sharing an EPD** — I'll extract the GWP value and declared unit
-2. **Using `/epd-research`** — I'll find EPDs for your material categories
-3. **Using `/epd-compare`** — compare products and pick a threshold from the results
+2. **Using `/as:epd-research`** — I'll find EPDs for your material categories
+3. **Using `/as:epd-compare`** — compare products and pick a threshold from the results
 4. **Stating a number** — e.g., 'concrete max 350 kg CO2e/m3'
 
 **We're working on EC3 API integration that will automate baseline lookups — for now, provide an EPD or a specific threshold."**
@@ -216,7 +216,7 @@ Standard. No EPD-specific changes.
 
 #### Part 3 — Execution
 
-Standard execution language for the material. No EPD-specific additions. Follow the same pattern as `/spec-writer`:
+Standard execution language for the material. No EPD-specific additions. Follow the same pattern as `/as:spec-writer`:
 
 - 3.01 Examination
 - 3.02 Preparation
@@ -341,7 +341,7 @@ Sections flagged for review: [count]
 ## Edge Cases
 
 - **Single material**: Generate one section. Still include the full three-part structure.
-- **No GWP threshold provided**: Use a published baseline only if you can cite named source + publication year (flag `[VERIFY THRESHOLD]`); otherwise ask the user to provide an EPD, run `/epd-research`, or state a specific threshold. If the user asks to proceed without data, use `[THRESHOLD TBD]` placeholders and flag every one.
+- **No GWP threshold provided**: Use a published baseline only if you can cite named source + publication year (flag `[VERIFY THRESHOLD]`); otherwise ask the user to provide an EPD, run `/as:epd-research`, or state a specific threshold. If the user asks to proceed without data, use `[THRESHOLD TBD]` placeholders and flag every one.
 - **Materials outside common EPD divisions**: Some materials (Division 10 specialties, Division 12 furnishings) rarely have EPDs. Note: "EPDs are uncommon for this product category. Consider requiring manufacturer environmental data sheets as an alternative submittal."
 - **Mixed metric/imperial**: GWP declared units follow industry convention — concrete in kg CO2e/m3, steel in kg CO2e/kg. Don't convert these to imperial.
 - **Multiple concrete mixes**: Create separate GWP thresholds per strength class (3000, 4000, 5000 PSI) if the user specifies different mixes.
@@ -349,12 +349,12 @@ Sections flagged for review: [count]
 
 ## GWP Baseline Policy
 
-This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/epd-research` — never guess a baseline.
+This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/as:epd-research` — never guess a baseline.
 
 ## Notes
 
-- **This skill generates spec language, not data.** It reads from the EPD sheet or conversation context but writes `.md` specification files.
-- **Pair with `/spec-writer` for complete specs.** This skill adds EPD/sustainability requirements to specific sections. The general `/spec-writer` produces full outline specs without EPD language. For a complete specification package, use both.
+- **This skill generates spec language, not EPD records.** It reads from conversation context or a validated local EPD CSV but writes `.md` specification files.
+- **Pair with `/as:spec-writer` for complete specs.** This skill adds EPD/sustainability requirements to specific sections. The general `/as:spec-writer` produces full outline specs without EPD language. For a complete specification package, use both.
 - **Baselines follow the GWP Baseline Policy above.** Cited source + publication year required; uncited from-memory numbers banned. EC3 API integration is in progress and will automate baseline lookups.
 - **Buy America / regional sourcing**: Some projects (federal, state-funded) require domestic materials. The regional materials preference in Part 2 can be strengthened to a requirement if needed.
 

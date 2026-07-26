@@ -1,6 +1,6 @@
 # Rules
 
-Rules are cross-cutting conventions that shape every skill output across the whole architecture-studio plugin. Unlike skills (invoked with a slash command), rules are never invoked — and they are NOT auto-loaded: each skill, agent, or hook that needs a rule references its file explicitly (see [How Rules Work](#how-rules-work--honestly) below). This directory ships inside the plugin as its internal reference docs.
+Rules are cross-cutting conventions that shape every skill output across the whole Architecture Studio plugin (`as`). Unlike skills (invoked with a slash command), rules are never invoked — and they are NOT auto-loaded: each skill, agent, or hook that needs a rule references its file explicitly (see [How Rules Work](#how-rules-work--honestly) below). This directory ships inside the plugin as its internal reference docs.
 
 | Rule | What it governs |
 |------|-----------------|

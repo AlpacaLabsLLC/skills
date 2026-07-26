@@ -11,12 +11,9 @@ allowed-tools:
   - WebFetch
   - WebSearch
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-match — Product Match
+# /as:product-match — Product Match
 
 "Find me something like this." Takes a product — by name, image, or description — and searches the web for similar alternatives. Returns 5-10 matches with specs, pricing, and links.
 
@@ -33,27 +30,27 @@ The designer provides a product reference in any format:
 
 **By name:**
 ```
-/product-match Eames Lounge Chair
+/as:product-match Eames Lounge Chair
 ```
 
 **By name + constraints:**
 ```
-/product-match Eames Lounge Chair but under $3,000
+/as:product-match Eames Lounge Chair but under $3,000
 ```
 
 **By image:**
 ```
-/product-match ~/Downloads/chair-photo.jpg
+/as:product-match ~/Downloads/chair-photo.jpg
 ```
 
 **By description:**
 ```
-/product-match mid-century lounge chair, molded plywood shell, leather cushions, swivel base
+/as:product-match mid-century lounge chair, molded plywood shell, leather cushions, swivel base
 ```
 
 **By URL:**
 ```
-/product-match https://store.hermanmiller.com/living-room-furniture/eames-lounge-chair
+/as:product-match https://store.hermanmiller.com/living-room-furniture/eames-lounge-chair
 ```
 
 ## Step 2: Identify the Source Product
@@ -154,16 +151,16 @@ Available in COM.
 
 ## Step 6: Save
 
-If the designer picks matches ("save 1 and 3"), write to the master Google Sheet using the 33-column schema defined in `../../schema/product-schema.md` (read for column reference and formats). Use `../../schema/sheet-conventions.md` for CRUD patterns.
+If the designer picks matches, prepare complete rows for the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Preview all chosen matches and the target path, then use the single confirmation gate. After approval, serialize the complete batch as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once so validation and replacement are atomic; never loop per row.
 
-- Column AD (Tags): append `match:{source-product-name}` so matches are traceable
-- Column AE (Notes): "Matched from {source product}. {Why reasoning}"
-- Column AF (Status): "saved"
-- Column AG (Source): "product-match"
+- `Tags`: append `match:{source-product-name}` so matches are traceable
+- `Notes`: `Matched from {source product}. {Why reasoning}`
+- `Status`: `saved`
+- `Source`: `product-match`
 
 ## Pairs With
 
-- `/product-research` — research finds products from a brief, match finds alternatives to a specific product
-- `/product-enrich` — enrich the matched products with categories and tags
-- `/product-pair` — after matching, find complementary products
-- `/product-data-import` — import matched products into the master schedule
+- `/as:product-research` — research finds products from a brief, match finds alternatives to a specific product
+- `/as:product-enrich` — enrich the matched products with categories and tags
+- `/as:product-pair` — after matching, find complementary products
+- `/as:product-data-import` — import matched products into the master schedule

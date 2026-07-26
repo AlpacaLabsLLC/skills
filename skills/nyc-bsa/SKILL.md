@@ -1,6 +1,6 @@
 ---
 name: nyc-bsa
-description: Look up Board of Standards and Appeals (BSA) variances and special permits for any NYC property. Use when checking whether a lot carries zoning relief — variances, special permits, appeals — that modifies its as-of-right envelope. NYC only; for base zoning controls use /zoning-analysis-nyc.
+description: Look up NYC BSA variances, special permits, and appeals that modify as-of-right zoning. Use for zoning relief; use zoning-analysis-nyc for base controls.
 allowed-tools:
   - WebFetch
   - Write
@@ -8,16 +8,16 @@ allowed-tools:
   - Bash
 ---
 
-# /nyc-bsa — BSA Variances & Special Permits
+# /as:nyc-bsa — BSA Variances & Special Permits
 
 Look up Board of Standards and Appeals (BSA) applications, variances, and special permits for any NYC property. Records available from 1998 to present. No API key required.
 
 ## Usage
 
 ```
-/nyc-bsa 120 Broadway, Manhattan
-/nyc-bsa 1000770001          (BBL)
-/nyc-bsa 1001389             (BIN)
+/as:nyc-bsa 120 Broadway, Manhattan
+/as:nyc-bsa 1000770001          (BBL)
+/as:nyc-bsa 1001389             (BIN)
 ```
 
 ## Steps 1–2: Parse Input & Resolve BBL

@@ -27,8 +27,8 @@ The most common path — headcount and work style in, space program out.
    - Special requirements (labs, server rooms, large conference, all-hands, studio space)
    - Budget or lease constraints (target RSF, cost per SF cap)
    - Don't over-interview — if the user gives enough to start, start. Ask only what's missing and critical.
-2. **Occupancy compliance** — invoke `/occupancy-calculator` with the proposed areas and use types. Verify egress, plumbing fixture counts, and IBC occupant loads. This establishes the code floor before design begins.
-3. **Space programming** — invoke `/workplace-programmer` with the business requirements and occupancy results. Build the program:
+2. **Occupancy compliance** — invoke `/as:occupancy-calculator` with the proposed areas and use types. Verify egress, plumbing fixture counts, and IBC occupant loads. This establishes the code floor before design begins.
+3. **Space programming** — invoke `/as:workplace-programmer` with the business requirements and occupancy results. Build the program:
    - Zone allocation (Work, Meeting, Common, Circulation, BOH) with percentages and SF
    - Room schedule with quantities, unit SF, and total SF per type
    - Seat count and sharing ratio
@@ -46,8 +46,8 @@ The user has a current program and changing requirements.
 
 1. **Understand the delta** — what changed? More people? Fewer in-office days? New department? Acquired company?
 2. **Assess current state** — read the existing program (user provides a schedule, spreadsheet, or description).
-3. **Run occupancy check** — invoke `/occupancy-calculator` on the existing footprint with new headcount.
-4. **Reprogram** — invoke `/workplace-programmer` with the new requirements, constrained to the existing RSF.
+3. **Run occupancy check** — invoke `/as:occupancy-calculator` on the existing footprint with new headcount.
+4. **Reprogram** — invoke `/as:workplace-programmer` with the new requirements, constrained to the existing RSF.
 5. **Present** — show a before/after comparison. Which zones grow, which shrink, and why.
 
 ### Path C: Validate a Space Against a Program
@@ -55,8 +55,8 @@ The user has a current program and changing requirements.
 The user has a lease option or a floor plan and needs to know if it works.
 
 1. **Understand the target** — read the space details (RSF, floor plate, core factor).
-2. **Run occupancy check** — invoke `/occupancy-calculator` to verify the space can legally support the headcount.
-3. **Test fit** — invoke `/workplace-programmer` with the user's requirements, constrained to the specific RSF. Does it fit?
+2. **Run occupancy check** — invoke `/as:occupancy-calculator` to verify the space can legally support the headcount.
+3. **Test fit** — invoke `/as:workplace-programmer` with the user's requirements, constrained to the specific RSF. Does it fit?
 4. **Present** — clear verdict: fits / tight but workable / doesn't fit. If it doesn't fit, say what needs to give (fewer private offices, higher sharing ratio, cut common space) and by how much.
 
 ## Judgment Rules

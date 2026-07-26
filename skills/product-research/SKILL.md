@@ -1,6 +1,6 @@
 ---
 name: product-research
-description: FF&E product research — receives a brief from the designer, searches the web for matching products, and returns structured candidates to save to the master Google Sheet. Use when the user asks to "find products", "research options for...", or source FF&E candidates against a brief.
+description: Find and compare current FF&E candidates from a design brief, with sourced purchasing facts and optional CSV-library save. Use to research or source products; not to match from an image or pair coordinating items.
 allowed-tools:
   - Read
   - Write
@@ -11,14 +11,11 @@ allowed-tools:
   - WebFetch
   - WebSearch
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-research — Product Research
+# /as:product-research — Product Research
 
-Receives a brief from a designer, researches products across the web, and returns a curated shortlist of candidates. Selected products are saved to the master Google Sheet.
+Receives a brief from a designer, researches products across the web, and returns a curated shortlist. Selected products can be saved to the nearest project's `product-library.csv`.
 
 ## How It Works
 
@@ -31,7 +28,7 @@ Presents candidates with specs + reasoning
         ↓
 Designer picks winners
         ↓
-Saved to master Google Sheet
+Saved to project product library
 ```
 
 ## Step 1: Take the Brief
@@ -85,9 +82,11 @@ Run **3-5 searches** depending on brief complexity. Aim for breadth — differen
 ### For each candidate found
 
 Attempt to fetch the product page with WebFetch to extract full specs. If the page is JS-rendered and returns no data:
-- Use whatever info is available from the search result snippet
-- Fill in from general knowledge if the product is well-known
-- Note specs as "unverified" if sourced from search snippets rather than product pages
+- Use the search result only to identify the candidate and locate another current, authoritative source.
+- Never fill price, availability, lead time, dimensions, finishes, certifications, or other purchasing facts from model memory.
+- Label any volatile fact without a current manufacturer, authorized-dealer, or certification-registry source as `Not verified`; do not turn a search snippet into a confirmed fact.
+
+For every price, availability, lead-time, finish, dimension, and certification claim, retain the source URL and access date. Prefer the manufacturer's current product page or price list; use an authorized dealer only when the manufacturer does not publish the fact. A candidate may remain useful with `Not verified` fields, but the shortlist must make those gaps visible.
 
 **Target: 6-10 candidates** that genuinely match the brief. Don't pad the list with weak matches.
 
@@ -141,17 +140,13 @@ Which ones should I save to your product library?
 - **Don't oversell** — if a product is a weak match, say so or don't include it
 - **Group by angle** if useful — "Budget options", "Premium picks", "Fastest delivery"
 
-## Step 4: Save to Sheet
+## Step 4: Save to the project library
 
-When the designer picks candidates ("save 1, 3, and 5"), write them to the master Google Sheet.
-
-### Connecting to the sheet
-
-If not already connected, ask for the Google Sheet ID or URL. Same sheet used by other product skills.
+When the designer picks candidates ("save 1, 3, and 5"), prepare rows for the nearest project-root `product-library.csv`. A project root is the nearest ancestor containing `PROJECT.md`; do not create a library outside one.
 
 ### Row format
 
-Write rows to the master product sheet using the 33-column schema. Read `../../schema/product-schema.md` (relative to this SKILL.md) for the full column reference, field formats, and category vocabulary. Read `../../schema/sheet-conventions.md` for CRUD patterns with MCP tools.
+Read `../../schema/product-schema.md` for the exact 33-column row contract and `../../schema/csv-conventions.md` for local-file rules. Preview all selected products and the target path, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper validates the complete batch and library before one atomic replacement; never loop per row or hand-edit persistent CSV.
 
 Skill-specific column values:
 - **AG (Source):** `research`
@@ -179,7 +174,7 @@ The designer may want to refine:
 - **"Compare #1 and #3 side by side"** → Detailed comparison
 - **"Any of these have GREENGUARD?"** → Check certifications for the shortlist
 
-Each iteration can add more products to the sheet.
+Each iteration can add more products to the library.
 
 ## Conversation Style
 
@@ -191,4 +186,4 @@ Each iteration can add more products to the sheet.
 ## Notes
 
 - **JS-rendered product pages** are common (Hem, Muuto, Vitra, etc.). If WebFetch returns no data, use search result snippets + general knowledge. Note when specs are unverified.
-- **The sheet is shared.** Products from this skill live alongside bulk-fetch imports and PDF extractions. The `Source` column ("research") identifies where each row came from.
+- **The library is shared.** Products from this skill live alongside bulk-fetch imports and PDF extractions. The `Source` field (`research`) identifies where each row came from.

@@ -6,15 +6,17 @@ Hooks are event-driven automations that run automatically during Claude Code ses
 
 | Hook | Event | What it does |
 |------|-------|-------------|
+| [session-start-welcome](./session-start-welcome.sh) | First session after install | Displays a short `/as:studio` and `/as:learn` discovery notice, then records that it was emitted |
 | [post-write-disclaimer-check](./post-write-disclaimer-check.sh) | After Write or Edit | Flags a regulatory output (zoning, occupancy, code analysis) that is missing the professional disclaimer |
 | [pre-commit-spec-lint](./pre-commit-spec-lint.sh) | Before git commit | Scans staged markdown files for malformed CSI section numbers and blocks the commit until they're fixed |
+| [version-check](./version-check.sh) | Enabled session startup, at most daily | Checks for a newer release and notifies once per version |
 
 ## Installation
 
-None. The hooks ship with the **architecture-studio** plugin via [`hooks.json`](./hooks.json) and register automatically when the plugin is enabled:
+None. The hooks ship with the Architecture Studio plugin (`as`) via [`hooks.json`](./hooks.json) and register automatically when the plugin is enabled:
 
 ```bash
-claude plugin install architecture-studio@skills-for-architects
+claude plugin install as@skills-for-architects
 ```
 
 Run `/hooks` in Claude Code to confirm they're loaded. Disable them by disabling the plugin, or per-session via `/hooks`.
@@ -23,10 +25,14 @@ Run `/hooks` in Claude Code to confirm they're loaded. Disable them by disabling
 
 ## Behavior
 
-Both hooks surface their findings so Claude actually receives them (stderr with exit 0 is shown to no one in Claude Code):
+All four hooks surface their output so Claude actually receives it (stderr with exit 0 is shown to no one in Claude Code):
 
+- **session-start-welcome** (SessionStart) emits a concise visible system message once, after checking required plugin sentinels. It says the built-in tools are ready, points to `/as:tool-catalog`, optional `/as:studio` setup, and `/as:learn`, and does not rewrite the user’s first response. It records the one-time marker only after output succeeds.
 - **pre-commit-spec-lint** (PreToolUse) exits `2` on findings, which blocks the commit and feeds the stderr message back to Claude so it fixes the staged files before retrying.
 - **post-write-disclaimer-check** (PostToolUse) emits JSON `{"decision": "block", "reason": …}` on stdout on findings, which surfaces the reason to Claude so it restores the disclaimer block.
+- **version-check** (SessionStart) exits before any filesystem or network work unless the user explicitly enabled it through `/as:studio`. The first enabled session seeds a private local cache silently. Later sessions make at most one two-second request per 24 hours, fail silently, and notify once for each newer version. Disable it with `/as:studio updates disable`.
+
+The deterministic preference helper lives with the owning `/as:studio` skill; it is not a hook.
 
 To downgrade either hook to advisory-only, replace the `exit 2` / JSON emission with a plain `exit 0` at the finding point in the script (the finding then goes unseen).
 

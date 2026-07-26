@@ -1,4 +1,4 @@
-# /nyc-landmarks
+# /as:nyc-landmarks
 
 LPC landmark and historic district check for any NYC building as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Provide an address, BBL, or BIN and find out if the property is individually landmarked, in a historic district, or not designated — using the LPC Individual Landmark & Historic District Building Database. No API key required.
 
@@ -9,19 +9,15 @@ LPC landmark and historic district check for any NYC building as a [Claude Code]
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-landmarks ~/.claude/skills/nyc-landmarks
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-landmarks 120 Broadway, Manhattan
-/nyc-landmarks 1000770001          (BBL)
-/nyc-landmarks 1001389             (BIN)
+/as:nyc-landmarks 120 Broadway, Manhattan
+/as:nyc-landmarks 1000770001          (BBL)
+/as:nyc-landmarks 1001389             (BIN)
 ```
 
 The skill:

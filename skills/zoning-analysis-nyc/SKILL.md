@@ -1,6 +1,6 @@
 ---
 name: zoning-analysis-nyc
-description: Analyze zoning envelope rules for lots in New York City using PLUTO data and the NYC Zoning Resolution. Use when the user asks "what can I build" on a NYC lot, requests a zoning analysis, or asks about FAR or height limits for an address. For variances and special permits use /nyc-bsa; to visualize the result use /zoning-envelope.
+description: Analyze NYC lot zoning, FAR, height, setbacks, uses, and buildable envelope from PLUTO and the Zoning Resolution. Use for "what can I build"; use nyc-bsa for relief and zoning-envelope for 3D visualization.
 allowed-tools:
   - Read
   - Write
@@ -12,13 +12,13 @@ allowed-tools:
   - Grep
 ---
 
-# /zoning-analysis-nyc — Zoning Envelope Analysis (New York City)
+# /as:zoning-analysis-nyc — Zoning Envelope Analysis (New York City)
 
 Analyze building envelope rules for any lot in New York City using the PLUTO database (NYC Open Data) and the NYC Zoning Resolution.
 
-## Project Dossier
+## Project context
 
-If `PROJECT.md` exists in the working directory, read it before fetching — the BBL, district, and prior envelope results may already be on file. After completing, append the zoning district, FAR set, envelope results, overlays/special districts, and landmark status to its **Zoning** section. Update values in place (the dossier holds current state, not history), every entry with a source and date. If the analysis surfaces a choice between development paths (as-of-right vs. a City of Yes / UAP bonus scheme), propose recording it with `/decision`. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+If `PROJECT.md` exists in the working directory, read it before fetching — the BBL, district, and prior envelope results may already be on file. After completing, offer the zoning district, FAR set, envelope results, overlays/special districts, and landmark status to `/as:project update` for its **Zoning** section, each with a source and date. If the analysis surfaces a choice between development paths, propose `/as:project record-decision`. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Workflow
 
@@ -345,7 +345,7 @@ Adapt both diagrams to the specific lot. Use actual dimensions and controls from
 
 ## Envelope Data
 
-Machine-readable data for `/zoning-envelope`. Include the exact lot polygon from Step 2b (MapPLUTO ArcGIS) converted to local feet, plus all computed envelope parameters.
+Machine-readable data for `/as:zoning-envelope`. Include the exact lot polygon from Step 2b (MapPLUTO ArcGIS) converted to local feet, plus all computed envelope parameters.
 
 ```json
 {
@@ -367,7 +367,7 @@ Adapt the `volumes` array to the district type:
 - **Contextual:** Base/streetwall volume + tower volume with deeper inset
 - **With front yard:** Add front setback to `setbacks`
 
-To generate an interactive 3D viewer from this data, run: `/zoning-envelope path/to/this-report.md`
+To generate an interactive 3D viewer from this data, run: `/as:zoning-envelope path/to/this-report.md`
 
 ## Caveats
 - This analysis is based on publicly available zoning data (PLUTO) and general Zoning Resolution rules

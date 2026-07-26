@@ -1,6 +1,6 @@
 ---
 name: product-data-import
-description: Generate a formatted FF&E specification schedule from raw product data — notes, CSV, or pasted lists — compatible with the 33-column master schema. Use when the user pastes or uploads raw product data and asks to "import products", build a schedule, or get items into the master sheet.
+description: Generate a formatted FF&E specification schedule from notes, CSV, or pasted lists and optionally save it to the project's 33-column CSV library. Use when asked to import products or build a schedule.
 allowed-tools:
   - Read
   - Write
@@ -9,14 +9,11 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-data-import — Product Data Importer
+# /as:product-data-import — Product Data Importer
 
-Takes raw, unstructured product data and formats it into a proper FF&E specification schedule. Input can be notes, a CSV, a pasted spreadsheet, or a conversation. Output is a formatted schedule as markdown, CSV, or written to a Google Sheet — using the same 33-column schema as `/product-research`, `/product-spec-bulk-fetch`, and other product skills.
+Takes raw product data and formats it as a Markdown preview or as rows in the nearest project's `product-library.csv`, using the shared 33-column schema.
 
 ## When to Use
 
@@ -37,7 +34,7 @@ The designer provides product data in any format:
 Pendant light for above the table - something by Flos, budget $800-1200
 ```
 
-**Pasted spreadsheet or CSV:**
+**Pasted CSV:**
 ```
 Product, Brand, Qty, Price
 Eames Lounge Chair, Herman Miller, 3, $5695
@@ -46,7 +43,7 @@ Nelson Bench 48, Herman Miller, 2, $2195
 
 **A file path:**
 ```
-/product-data-import ./product-list.csv
+/as:product-data-import ./product-list.csv
 ```
 
 **Conversational:**
@@ -104,29 +101,13 @@ Show the formatted schedule as a markdown table:
 - **Don't fabricate prices** — if you're unsure, note "price TBD" or "estimated" and use the designer's stated budget
 - **Currency** — default USD unless the designer specifies otherwise
 
-## Step 4: Ask for Output Format
+## Step 4: Choose persistence
 
-Ask the designer how they want the schedule:
-
-1. **Markdown** — stay in conversation (already shown)
-2. **CSV file** — save as `.csv` to the current directory or a specified path
-3. **Google Sheet** — write to the master product library using the 33-column schema
-
-If the designer doesn't specify, default to saving a CSV file.
+The Markdown schedule is always available without a write. Persist structured product data only to the nearest project-root `product-library.csv`. If no ancestor contains `PROJECT.md`, stop and direct the user to `/as:project`.
 
 ## Step 5: Save
 
-### CSV output
-
-Save as `product-data-import-[date].csv` with these columns:
-
-```
-Item #, Product Name, Brand, Category, Qty, W, D, H, Unit, Materials, Finish, Unit Price, Extended Price, Lead Time, Notes
-```
-
-### Google Sheet output
-
-If the designer provides a Sheet ID or says "save to my sheet", write to the 33-column master schema. Read `../../schema/product-schema.md` (relative to this SKILL.md) for the full column reference, field formats, and category vocabulary. Read `../../schema/sheet-conventions.md` for CRUD patterns with MCP tools.
+Read `../../schema/product-schema.md` for the exact header, category vocabulary, and values. Read `../../schema/csv-conventions.md` for parsing and mutation rules. Preview the complete batch, row count, totals, target path, and material field changes, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper owns batch validation and one atomic replacement; never loop per row or rewrite the persistent CSV directly.
 
 Skill-specific column values:
 - **AG (Source):** `product-data-import`
@@ -136,14 +117,14 @@ Skill-specific column values:
 
 ### Quantity handling
 
-The master sheet is one row per product, not per unit. Put the quantity in the Notes column (e.g., "Qty: 3") since the 33-column schema doesn't have a dedicated quantity column. Also include the extended price in Notes: "Qty: 3 · Ext: $17,085".
+The product library is one row per product, not per unit. Put quantity and extended price in `Notes`, for example `Qty: 3 · Ext: $17,085`.
 
 ## Step 6: Summary
 
 After saving:
 
 ```
-✓ FF&E Schedule saved to [path or sheet]
+✓ FF&E Schedule saved to [product-library.csv path]
   [n] line items · [total qty] units · $[total] estimated
   [n] items fully specified, [n] items need specification (TBD)
 ```
@@ -151,14 +132,14 @@ After saving:
 If there are TBD items, offer to research them:
 
 ```
-Want me to research the TBD items? I can use /product-research to find specific products for:
+Want me to research the TBD items? I can use /as:product-research to find specific products for:
 - L-01: Flos pendant, $800-$1,200 budget
 ```
 
 ## Pairs With
 
-- `/product-research` — research specific products to fill TBD slots
-- `/product-spec-bulk-fetch` — pull full specs from product URLs
-- `/product-data-cleanup` — normalize the schedule after assembly
-- `/product-enrich` — auto-tag categories, colors, and materials
-- `/csv-to-sif` — convert the schedule to SIF for dealer procurement
+- `/as:product-research` — research specific products to fill TBD slots
+- `/as:product-spec-bulk-fetch` — pull full specs from product URLs
+- `/as:product-data-cleanup` — normalize the schedule after assembly
+- `/as:product-enrich` — auto-tag categories, colors, and materials
+- `/as:csv-to-sif` — convert the schedule to SIF for dealer procurement

@@ -31,9 +31,18 @@ Include the disclaimer on:
 - Structural or MEP assumptions
 - Environmental risk assessments (flood, seismic, soil)
 - Any output the user might submit to a client or authority
+- Site visit reports that are client-facing, authority-facing, issued externally,
+  or contain regulated analysis or professional conclusions
 
 Omit the disclaimer on:
 - Product research and FF&E schedules (informational, not regulatory)
 - Presentation decks (aesthetic output)
 - Color palettes
 - Data formatting and conversion tasks (CSV, SIF)
+- Purely internal administrative site-visit drafts that contain only observations,
+  logistics, photo/file references, limitations, and follow-up coordination, with
+  no regulated conclusion
+
+Omission never permits a site report to claim concealed-condition certainty,
+compliance, completeness, or professional verification. If intended use is
+uncertain, include the disclaimer.

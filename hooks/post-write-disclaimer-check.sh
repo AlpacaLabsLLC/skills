@@ -18,10 +18,30 @@
 #   - See rules/professional-disclaimer.md for the canonical block.
 
 INPUT=$(cat)
-FILE_PATH=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
+if command -v jq >/dev/null 2>&1; then
+  if ! FILE_PATH=$(printf '%s' "$INPUT" | jq -er '.tool_input.file_path | strings' 2>/dev/null); then
+    printf '{"decision":"block","reason":"Architecture Studio could not decode the Write/Edit hook payload, so disclaimer enforcement stopped safely. Retry the file operation or verify the Claude Code hook configuration."}\n'
+    exit 0
+  fi
+elif command -v python3 >/dev/null 2>&1; then
+  if ! FILE_PATH=$(printf '%s' "$INPUT" | python3 -c 'import json,sys
+try:
+    value = json.load(sys.stdin)["tool_input"]["file_path"]
+    if not isinstance(value, str) or not value:
+        raise ValueError("file_path is not a non-empty string")
+    sys.stdout.write(value)
+except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+    print(f"invalid hook payload: {exc}", file=sys.stderr)
+    raise SystemExit(2)' 2>/dev/null); then
+    printf '{"decision":"block","reason":"Architecture Studio could not decode the Write/Edit hook payload, so disclaimer enforcement stopped safely. Retry the file operation or verify the Claude Code hook configuration."}\n'
+    exit 0
+  fi
+else
+  printf '{"decision":"block","reason":"Architecture Studio needs jq or Python 3 to decode the Write/Edit hook payload. Disclaimer enforcement stopped safely; install one decoder and retry."}\n'
+  exit 0
+fi
 
-# Only check writes/edits with a known markdown path.
-[ -z "$FILE_PATH" ] && exit 0
+# Only check writes/edits to markdown files.
 [[ "$FILE_PATH" != *.md ]] && exit 0
 [ -f "$FILE_PATH" ] || exit 0
 [ -s "$FILE_PATH" ] || exit 0
@@ -38,7 +58,7 @@ PROBLEMS=""
 
 # Marker present → canonical disclaimer text must also be present.
 if ! grep -qF "$DISCLAIMER_PHRASE" "$FILE_PATH"; then
-  PROBLEMS="$FILE_PATH carries the architecture-studio:requires-disclaimer marker but is missing the canonical disclaimer block. Restore the block from rules/professional-disclaimer.md."
+  PROBLEMS="$FILE_PATH carries the architecture-studio:requires-disclaimer marker but is missing the canonical disclaimer block. Restore the block from ${CLAUDE_PLUGIN_ROOT:-<plugin-root>}/rules/professional-disclaimer.md."
 fi
 
 # Marker should be a single end-of-file sentinel; flag duplicates.
@@ -50,7 +70,13 @@ if [ "$MARKER_COUNT" -gt 1 ]; then
 fi
 
 if [ -n "$PROBLEMS" ]; then
-  jq -n --arg reason "$PROBLEMS" '{decision: "block", reason: $reason}'
+  if command -v jq >/dev/null 2>&1; then
+    jq -n --arg reason "$PROBLEMS" '{decision: "block", reason: $reason}'
+  elif command -v python3 >/dev/null 2>&1; then
+    PROBLEMS="$PROBLEMS" python3 -c 'import json,os; print(json.dumps({"decision":"block","reason":os.environ["PROBLEMS"]}))'
+  else
+    printf '{"decision":"block","reason":"Architecture Studio disclaimer check failed; restore the canonical block from %s/rules/professional-disclaimer.md."}\n' "${CLAUDE_PLUGIN_ROOT:-<plugin-root>}"
+  fi
 fi
 
 exit 0

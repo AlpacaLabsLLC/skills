@@ -1,6 +1,8 @@
-# /product-enrich
+# /as:product-enrich
 
 Auto-tag FF&E products with categories, colors, materials, and style tags using AI. for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+
+Enrichment is previewed before approved named-field updates are applied atomically to the nearest project's `product-library.csv`.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,17 +11,13 @@ Auto-tag FF&E products with categories, colors, materials, and style tags using 
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/product-enrich ~/.claude/skills/product-enrich
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/product-enrich
+/as:product-enrich
 ```
 
 ## What's Included

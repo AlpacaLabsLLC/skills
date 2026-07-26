@@ -1,4 +1,4 @@
-# /spec-writer
+# /as:spec-writer
 
 CSI outline specification writer for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it a materials list, product schedule, or project description — get structured outline specs organized by MasterFormat 2020 divisions.
 
@@ -9,23 +9,19 @@ CSI outline specification writer for [Claude Code](https://docs.anthropic.com/en
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/spec-writer ~/.claude/skills/spec-writer
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/spec-writer
+/as:spec-writer
 ```
 
 Then provide your materials — paste a list, point to a file, or describe the project.
 
 ```
-/spec-writer
+/as:spec-writer
 
 Porcelain floor tile, ACT ceiling, painted gypsum board, aluminum curtain wall,
 resilient base, ceramic wall tile, hollow metal doors and frames, joint sealants
@@ -34,13 +30,13 @@ resilient base, ceramic wall tile, hollow metal doors and frames, joint sealants
 From a file:
 
 ```
-/spec-writer ~/Documents/finish-schedule.csv
+/as:spec-writer ~/Documents/finish-schedule.csv
 ```
 
 By description:
 
 ```
-/spec-writer
+/as:spec-writer
 
 Ground-up 5-story commercial office. Curtain wall exterior, concrete structure,
 TPO roof, porcelain tile in lobbies, carpet tile in offices, ACT ceilings throughout.
