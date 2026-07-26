@@ -398,11 +398,18 @@ tok_re = re.compile(r'`([^`\s]+)`')
 root = pathlib.Path('.')
 errors = 0
 checked = 0
+runtime_outputs = {
+    'docs/plans/',
+}
 for f in files:
     skill_dir = pathlib.Path(f).parent
     text = pathlib.Path(f).read_text()
     for m in tok_re.finditer(text):
         t = m.group(1)
+        if t in runtime_outputs:
+            # Workplan creates this project-local destination at runtime. It is
+            # deliberately not bundled in the flat plugin package.
+            continue
         if t.startswith('${CLAUDE_PLUGIN_ROOT}/'):
             rel = t[len('${CLAUDE_PLUGIN_ROOT}/'):]
             checked += 1
