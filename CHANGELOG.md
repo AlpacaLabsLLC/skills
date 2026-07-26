@@ -52,7 +52,7 @@ Existing local welcome and update-check preferences remain in place because thei
 - **Typed project-record workflow** — `/as:meeting-minutes` preserves discussion and promotion candidates, `/as:site-visit-report` separates observation from reported information and interpretation, `/as:tasklist` owns permanent action IDs and lifecycle history, and `/as:timetracker` reconstructs dated activity while requiring user-confirmed durations.
 - **Linked record graph** — project facts, decisions, minutes, site reports, tasks, plans, and time entries remain independently owned, project-relative artifacts with explicit source links and non-destructive histories.
 
-- **`/as:workplan` project context** — reads and cites relevant dossier facts, decision records, meetings, site reports, and tasks; decided records constrain plans, proposed decisions remain unresolved, and superseded decisions remain historical context.
+- **`/as:workplan` project context** — reads and cites relevant `PROJECT.md` facts, decision records, meetings, site reports, and tasks; decided records constrain plans, proposed decisions remain unresolved, and superseded decisions remain historical context.
 - **`/as:studio` routing and `/as:tool-catalog` discoverability** — typed-record deliverables route to their owning skills, while an explicitly requested plan or coordination strategy retains `/as:workplan` precedence.
 - **Project Dossier documentation renamed Project Records** to describe the connected workflow without implying one central record or database.
 
