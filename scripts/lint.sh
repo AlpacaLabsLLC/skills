@@ -275,6 +275,34 @@ PYEOF
 RC=$?
 [ "$RC" -ne 0 ] && FAIL=1
 
+# 6a. Balanced fenced code blocks. An unmatched fence can collapse diagrams
+#     into prose and render the rest of a README as one large code block.
+echo "→ markdown code fences"
+python3 - <<'PYEOF'
+import pathlib, subprocess, sys
+
+md_files = subprocess.check_output([
+    'git', 'ls-files', '--cached', '--others', '--exclude-standard', '--', '*.md'
+]).decode().splitlines()
+errors = 0
+for filename in md_files:
+    path = pathlib.Path(filename)
+    if not path.is_file():
+        continue
+    fences = sum(
+        line.startswith('```')
+        for line in path.read_text(errors='replace').splitlines()
+    )
+    if fences % 2:
+        print(f"  ✗ {filename}: unmatched triple-backtick code fence")
+        errors += 1
+if errors:
+    sys.exit(1)
+print(f"  ✓ {len(md_files)} markdown files have balanced fences")
+PYEOF
+RC=$?
+[ "$RC" -ne 0 ] && FAIL=1
+
 # 7. No ~/ data paths in SKILL.md bodies (regression guard, ALPA-365 #1:
 #    skills once hardcoded ~/Documents and ~/.claude paths that broke on
 #    other machines). skills/learn is exempt — it TEACHES where personal

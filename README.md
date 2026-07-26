@@ -41,6 +41,7 @@ Full history is in the [CHANGELOG](./CHANGELOG.md).
 
 ## Architecture
 
+```text
 ARCHITECTURE STUDIO PLUGIN                    USER-OWNED STUDIO
 ─────────────────────────                    ─────────────────
 
