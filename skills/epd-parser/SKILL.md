@@ -1,6 +1,6 @@
 ---
 name: epd-parser
-description: Parse EPD (Environmental Product Declaration) PDF documents into structured environmental impact data — GWP, life cycle stages, certifications, and compliance metrics. Use when the user shares an EPD document or asks to "parse this EPD", extract GWP, or pull impact data from a declaration.
+description: Extract GWP, life-cycle stages, certifications, and impact metrics from an EPD PDF. Use when given a declaration to parse; not to find or compare EPDs.
 allowed-tools:
   - Read
   - Write
@@ -9,12 +9,9 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /epd-parser — EPD PDF Parser
+# /as:epd-parser — EPD PDF Parser
 
 Extract structured environmental impact data from EPD (Environmental Product Declaration) PDF files. Uses PyMuPDF for text extraction and Claude's reasoning to parse varying EPD formats into a standardized 42-column schema.
 
@@ -28,85 +25,9 @@ The user provides EPD PDFs in one of these ways:
 2. **Folder path** — a directory containing PDFs (will process all `.pdf` files)
 3. **Just invoked** — ask the user for file paths or a folder
 
-Also ask (or use defaults):
-
-- **Output destination** — Google Sheet, local CSV, or markdown (default: ask)
-
 ## Output Schema
 
-EPD data uses a **42-column schema** — separate from the 33-column FF&E product schema. When writing to CSV, use the same column order.
-
-### Product Identity (columns A-H)
-
-| Col | Field | Description | Format |
-|-----|-------|-------------|--------|
-| A | EPD Link | URL to original EPD document | `=HYPERLINK(url, "EPD")` or blank for local PDFs |
-| B | Manufacturer | Company that makes the product | Title Case |
-| C | Product Name | Declared product or product group | Title Case |
-| D | Description | Brief product description | Sentence case |
-| E | Declared Unit | Functional/declared unit (e.g., "1 m2", "1 kg", "1 m3") | As stated in EPD |
-| F | Functional Unit | Functional unit with RSL if different from declared | As stated, blank if same |
-| G | CSI Division | MasterFormat division number | `03`, `05`, `07`, `08`, `09`, etc. |
-| H | Material Category | Normalized material type | See vocabulary below |
-
-### EPD Metadata (columns I-P)
-
-| Col | Field | Description | Format |
-|-----|-------|-------------|--------|
-| I | EPD Registration No. | Unique EPD identifier | As published |
-| J | Program Operator | Certifying body | `UL`, `NSF`, `SCS`, `IBU`, `Environdec`, etc. |
-| K | PCR Reference | Product Category Rule reference | Full citation |
-| L | PCR Expiry | PCR expiration date | YYYY-MM-DD |
-| M | Standard | Governing standard | `ISO 14025`, `ISO 21930`, `EN 15804+A2`, etc. |
-| N | System Boundary | Scope of LCA | `Cradle-to-gate`, `Cradle-to-grave`, `Cradle-to-gate with options` |
-| O | Valid From | EPD publication date | YYYY-MM-DD |
-| P | Valid To | EPD expiration date | YYYY-MM-DD |
-
-### Impact Indicators — Product Stage A1-A3 (columns Q-V)
-
-| Col | Field | Description | Unit |
-|-----|-------|-------------|------|
-| Q | GWP-total (A1-A3) | Global Warming Potential, total | kg CO2e |
-| R | GWP-fossil (A1-A3) | GWP from fossil sources | kg CO2e |
-| S | GWP-biogenic (A1-A3) | GWP from biogenic sources | kg CO2e |
-| T | ODP (A1-A3) | Ozone Depletion Potential | kg CFC-11e |
-| U | AP (A1-A3) | Acidification Potential | kg SO2e |
-| V | EP (A1-A3) | Eutrophication Potential | kg PO4e |
-
-### Impact Indicators — Other Stages (columns W-AB)
-
-| Col | Field | Description | Unit |
-|-----|-------|-------------|------|
-| W | GWP (A4-A5) | Construction stage GWP | kg CO2e |
-| X | GWP (B1-B7) | Use stage GWP | kg CO2e |
-| Y | GWP (C1-C4) | End-of-life GWP | kg CO2e |
-| Z | GWP (D) | Beyond system boundary GWP | kg CO2e |
-| AA | GWP-total (all stages) | Sum of all declared stages | kg CO2e |
-| AB | POCP (A1-A3) | Photochemical Ozone Creation Potential | kg C2H4e |
-
-### Resource Use (columns AC-AH)
-
-| Col | Field | Description | Unit |
-|-----|-------|-------------|------|
-| AC | PERE (A1-A3) | Primary Energy, Renewable, energy use | MJ |
-| AD | PENRE (A1-A3) | Primary Energy, Non-Renewable, energy use | MJ |
-| AE | Total Energy (A1-A3) | PERE + PENRE | MJ |
-| AF | FW (A1-A3) | Fresh Water Use | m3 |
-| AG | Recycled Content | Percentage of recycled content | % |
-| AH | Waste (A1-A3) | Total waste generated | kg |
-
-### Tracking (columns AI-AP)
-
-| Col | Field | Description | Format |
-|-----|-------|-------------|--------|
-| AI | LEED Eligible | MRc2 compliance flag | `Yes`, `No`, `Partial` |
-| AJ | EC3 ID | Building Transparency EC3 identifier | As listed, blank if unknown |
-| AK | Plant/Facility | Manufacturing plant or facility name | As stated |
-| AL | Country | Manufacturing country | ISO 3166-1 alpha-2 |
-| AM | Parsed At | Timestamp of parsing | ISO 8601 |
-| AN | Tags | User-assigned tags | Comma-separated |
-| AO | Notes | Additional context | Free text — see below |
-| AP | Source | Which skill created this row | `epd-parser` |
+Use the canonical 42-column contract in [`schema/epd-schema.md`](../../schema/epd-schema.md). It is separate from the 33-column FF&E product schema. Never substitute or persist an FF&E-shaped record as EPD data. Leave unavailable values empty and use a plain URL for `EPD Link`.
 
 ### Material Category Vocabulary
 
@@ -161,7 +82,7 @@ doc.close()
 print(json.dumps({"filename": pdf_path.split("/")[-1], "total_pages": len(pages), "pages": pages}))
 ```
 
-For each PDF, extract all pages and save the JSON output.
+For each PDF, extract all pages and keep the JSON output transiently for parsing; do not create a persistent JSON artifact.
 
 ### Step 3: Parse EPD data
 
@@ -231,24 +152,19 @@ Show a summary table for each parsed EPD:
 Products extracted: 3 (3000 PSI, 4000 PSI, 5000 PSI)
 ```
 
-Ask: **"Does this look correct? Should I adjust anything before saving?"**
+The preview is the default result. It can pass directly to `/as:epd-compare` or `/as:epd-to-spec` without creating a file.
 
-### Step 5: Write output
+### Step 5: Optional persistence
 
-Ask the user (if not already specified): **"Where should I save this?"**
+Do not create a file by default. Only when the user explicitly asks to save reusable records:
 
-Options:
-- **EPD Google Sheet** — append rows to a dedicated EPD spreadsheet (separate from the FF&E product library). Ask for spreadsheet ID if not already known.
-- **Local CSV** — save to a specified path (default: `./epd-data-YYYY-MM-DD.csv`)
-- **Just the table** — leave as markdown in the conversation
+1. Resolve the nearest ancestor containing `PROJECT.md`; the target is `<project-root>/epd-library.csv`.
+2. Build complete records using [`schema/epd-schema.md`](../../schema/epd-schema.md), with `Parsed At` as an ISO 8601 timestamp and `Source` as `epd-parser`.
+3. Preview the records, target path, and whether this initializes or appends.
+4. Use one confirmation gate; do not ask the same confirmation first in prose.
+5. Serialize all approved records as one JSON array, preserving canonical field names. After approval, use `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" init epd` if needed, then invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append epd --row-json <batch.json>` exactly once. Never append in a per-record loop. The helper validates the entire file, rejects FF&E or malformed headers, and writes the whole batch atomically.
 
-## CSV Format
-
-When saving to CSV, use the 42-column header:
-
-```csv
-EPD Link,Manufacturer,Product Name,Description,Declared Unit,Functional Unit,CSI Division,Material Category,EPD Registration No.,Program Operator,PCR Reference,PCR Expiry,Standard,System Boundary,Valid From,Valid To,GWP-total (A1-A3),GWP-fossil (A1-A3),GWP-biogenic (A1-A3),ODP (A1-A3),AP (A1-A3),EP (A1-A3),GWP (A4-A5),GWP (B1-B7),GWP (C1-C4),GWP (D),GWP-total (all stages),POCP (A1-A3),PERE (A1-A3),PENRE (A1-A3),Total Energy (A1-A3),FW (A1-A3),Recycled Content,Waste (A1-A3),LEED Eligible,EC3 ID,Plant/Facility,Country,Parsed At,Tags,Notes,Source
-```
+If no project root exists, keep the result in conversation and offer `/as:project init`; do not invent another CSV destination.
 
 ## Edge Cases
 
@@ -263,7 +179,7 @@ EPD Link,Manufacturer,Product Name,Description,Declared Unit,Functional Unit,CSI
 
 ## GWP Baseline Policy
 
-This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/epd-research` — never guess a baseline.
+This policy is shared by all four EPD skills (`epd-parser`, `epd-research`, `epd-compare`, `epd-to-spec`) and must read identically in each. Industry-average GWP baselines are allowed only when cited with a named source and publication year (e.g., "NRMCA Industry-Wide Member EPD v3.2, 2022" or "AISC Fabricated Hot-Rolled Structural Sections EPD, 2021"). Uncited baseline numbers recalled from memory or training data are banned. If no source-and-year citation is available, ask the user to provide a baseline EPD or find one with `/as:epd-research` — never guess a baseline.
 
 For this skill: report only values extracted from the parsed EPD itself. When contextualizing a parsed GWP against an industry average (e.g., in the parse-results summary), the baseline must carry a source-and-year citation or be omitted.
 

@@ -1,6 +1,6 @@
-# /mobility-analysis
+# /as:mobility-analysis
 
-Transit and mobility site analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get subway/bus/rail stations, walk/transit/bike scores, road access, airport distances, and pedestrian/cycling infrastructure — sourced from transit authorities and government data.
+Transit and mobility site analysis for Claude Code. Provide an address and get subway/bus/rail stations, walk/transit/bike scores, road access, airport distances, and pedestrian/cycling infrastructure — sourced from transit authorities and government data.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,23 +9,19 @@ Transit and mobility site analysis for [Claude Code](https://docs.anthropic.com/
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/mobility-analysis ~/.claude/skills/mobility-analysis
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/mobility-analysis 742 Evergreen Terrace, Springfield IL
+/as:mobility-analysis 742 Evergreen Terrace, Springfield IL
 ```
 
 Or start with no context:
 
 ```
-/mobility-analysis
+/as:mobility-analysis
 ```
 
 The skill researches:

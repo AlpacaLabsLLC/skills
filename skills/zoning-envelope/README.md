@@ -1,6 +1,6 @@
-# /zoning-envelope
+# /as:zoning-envelope
 
-Interactive 3D zoning envelope viewer as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Generates a single HTML file (Three.js loaded from a CDN) that renders the buildable envelope for any lot — exact lot polygon from GIS data, setback zones, extruded volumes, height caps, and interactive orbit controls.
+Interactive 3D zoning envelope viewer as a Claude Code skill. Generates a single HTML file (Three.js loaded from a CDN) that renders the buildable envelope for any lot — exact lot polygon from GIS data, setback zones, extruded volumes, height caps, and interactive orbit controls.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,11 +9,7 @@ Interactive 3D zoning envelope viewer as a [Claude Code](https://docs.anthropic.
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/zoning-envelope ~/.claude/skills/zoning-envelope
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
@@ -21,25 +17,25 @@ ln -s $(pwd)/skills-for-architects/skills/zoning-envelope ~/.claude/skills/zonin
 First, run a zoning analysis to generate a report:
 
 ```
-/zoning-analysis-nyc 250 Hudson St, New York NY
+/as:zoning-analysis-nyc 250 Hudson St, New York NY
 ```
 
 Then generate the 3D viewer:
 
 ```
-/zoning-envelope path/to/zoning-analysis-250-hudson-st.md
+/as:zoning-envelope path/to/zoning-analysis-250-hudson-st.md
 ```
 
 Or search by keyword:
 
 ```
-/zoning-envelope 250 hudson
+/as:zoning-envelope 250 hudson
 ```
 
 Or auto-detect the most recent report:
 
 ```
-/zoning-envelope
+/as:zoning-envelope
 ```
 
 ## What it renders
@@ -89,7 +85,7 @@ The skill then:
 
 ## Dependency
 
-This skill requires a zoning analysis report as input. It does not perform zoning calculations — run `/zoning-analysis-nyc` first.
+This skill requires a zoning analysis report as input. It does not perform zoning calculations — run `/as:zoning-analysis-nyc` first.
 
 ## Demo
 

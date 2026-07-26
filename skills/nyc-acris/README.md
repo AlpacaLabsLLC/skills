@@ -1,6 +1,6 @@
-# /nyc-acris
+# /as:nyc-acris
 
-ACRIS property transaction record lookup for any NYC property as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries deeds, mortgages, liens, and other recorded documents using a 3-table join across the ACRIS Legals, Master, and Parties datasets. No API key required.
+ACRIS property transaction record lookup for any NYC property as a Claude Code skill. Queries deeds, mortgages, liens, and other recorded documents using a 3-table join across the ACRIS Legals, Master, and Parties datasets. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,19 +9,15 @@ ACRIS property transaction record lookup for any NYC property as a [Claude Code]
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-acris ~/.claude/skills/nyc-acris
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-acris 120 Broadway, Manhattan
-/nyc-acris 1000770001          (BBL)
-/nyc-acris 1001389             (BIN)
+/as:nyc-acris 120 Broadway, Manhattan
+/as:nyc-acris 1000770001          (BBL)
+/as:nyc-acris 1001389             (BIN)
 ```
 
 The skill:

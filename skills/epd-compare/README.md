@@ -1,6 +1,6 @@
-# /epd-compare
+# /as:epd-compare
 
-Compare 2+ products side-by-side on environmental impact metrics for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Validates comparability, normalizes declared units, generates percentage deltas, and checks LEED v4.1 MRc2 eligibility.
+Compare 2+ products side-by-side on environmental impact metrics for Claude Code. Validates comparability, normalizes declared units, generates percentage deltas, and checks LEED v4.1 MRc2 eligibility.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,11 +9,7 @@ Compare 2+ products side-by-side on environmental impact metrics for [Claude Cod
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/epd-compare ~/.claude/skills/epd-compare
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
@@ -21,13 +17,13 @@ ln -s $(pwd)/skills-for-architects/skills/epd-compare ~/.claude/skills/epd-compa
 After parsing or researching EPDs:
 
 ```
-/epd-compare compare the CLT EPDs I just found
+/as:epd-compare compare the CLT EPDs I just found
 ```
 
 Or with inline data:
 
 ```
-/epd-compare concrete A: 320 kg CO2e/m3, concrete B: 280 kg CO2e/m3, concrete C: 410 kg CO2e/m3
+/as:epd-compare concrete A: 320 kg CO2e/m3, concrete B: 280 kg CO2e/m3, concrete C: 410 kg CO2e/m3
 ```
 
 ## What it checks
@@ -40,6 +36,8 @@ Or with inline data:
 - **EPD type** — distinguishes product-specific from industry-average
 
 Output includes side-by-side impact tables, percentage deltas relative to lowest-impact option, industry average baselines, and LEED v4.1 MRc2 assessment.
+
+Inputs may be pasted values, structured results handed directly from `/as:epd-parser` or `/as:epd-research`, or a validated project-local `epd-library.csv` following [`schema/epd-schema.md`](../../schema/epd-schema.md).
 
 ## What's Included
 

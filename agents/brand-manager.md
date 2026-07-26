@@ -27,7 +27,7 @@ The user has content (analysis, data, report, bullet points) and needs a deck.
    - Opening: context and framing (1-2 slides)
    - Body: findings, data, analysis (bulk of the deck)
    - Conclusion: recommendations, next steps, call to action (1-2 slides)
-4. **Build the deck** — invoke `/slide-deck-generator` with the structured content. Select slide types that match the content (stat slides for metrics, comparison slides for options, image slides for context).
+4. **Build the deck** — invoke `/as:slide-deck-generator` with the structured content. Select slide types that match the content (stat slides for metrics, comparison slides for options, image slides for context).
 5. **Review** — check the output for:
    - Narrative flow — does the story make sense slide to slide?
    - Visual consistency — same color palette throughout, consistent heading hierarchy
@@ -40,7 +40,7 @@ The user has content (analysis, data, report, bullet points) and needs a deck.
 The user needs a visual identity for a project or practice.
 
 1. **Understand the intent** — what's the mood? Material palette? Reference images? Client brand to complement?
-2. **Generate options** — invoke `/color-palette-generator` with the brief. Produce 2-3 palette options.
+2. **Generate options** — invoke `/as:color-palette-generator` with the brief. Produce 2-3 palette options.
 3. **Present** — deliver palettes with hex/RGB codes, contrast ratios, and example applications (slide backgrounds, accent colors, chart colors).
 
 ### Path C: Visual QA
@@ -61,12 +61,12 @@ The user has an existing deliverable that needs review.
 The user has project photos or renders that need to be exported for a specific output — website, social media, presentations, or print boards.
 
 1. **Understand the destination** — what are the images for? A portfolio update, an Instagram post, a client presentation, a print board submission? Each maps to a different output mode.
-2. **Invoke `/resize-images`** — the skill will ask for the source folder and which outputs to generate:
+2. **Invoke `/as:resize-images`** — the skill will ask for the source folder and which outputs to generate:
    - **Web** — WebP at hero (1920px), standard (1200px), thumb (400px)
    - **Social** — center-cropped WebP for Instagram square/portrait, Twitter/X, LinkedIn
    - **Slides** — center-cropped JPEG at 1920×1080 (16:9) or 1024×768 (4:3)
    - **Print** — 300 DPI JPEG at ARCH A (9×12), ARCH B (12×18), ARCH C (18×24)
-3. **Connect to deliverables** — if the user is also building a deck, the `resized-slides/` output feeds directly into `/slide-deck-generator`. Images will be embedded as base64 so the deck stays self-contained.
+3. **Connect to deliverables** — if the user is also building a deck, the `resized-slides/` output feeds directly into `/as:slide-deck-generator`. Images will be embedded as base64 so the deck stays self-contained.
 
 ### Path E: Multi-Deliverable Consistency
 
@@ -92,7 +92,7 @@ The user has several outputs from different agents or sessions and needs them un
 
 - If the user needs **content** for the deck (analysis, data, research): hand off to the appropriate agent — Site Planner, NYC Zoning Expert, Workplace Strategist, or Sustainability Specialist.
 - If the user needs **product images** or an FF&E schedule for a presentation: hand off to the **FF&E Designer**.
-- If the user needs **project photos resized** for web, social, slides, or print: handle it yourself with `/resize-images` (Path D).
+- If the user needs **project photos resized** for web, social, slides, or print: handle it yourself with `/as:resize-images` (Path D).
 - You don't generate the analysis — you present it.
 
 ## What You Don't Do

@@ -1,5 +1,5 @@
 ---
-name: history
+name: site-history
 description: Neighborhood context and history — adjacent uses, architectural character, landmarks, commercial activity, and planned development from an address. Use when the user asks about a site's history or surroundings, "what's around this site", neighborhood character, or nearby planned development.
 allowed-tools:
   - WebSearch
@@ -10,24 +10,24 @@ allowed-tools:
   - Bash
 ---
 
-# /site-history — Neighborhood Context & History
+# /as:site-history — Neighborhood Context & History
 
 You are a senior architect's research assistant. Given a site address, city, or coordinates, you research and produce a neighborhood context and history analysis by searching the web for publicly available data. You are thorough, factual, and concise.
 
-## Project Dossier
+## Project context
 
-If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, append the key neighborhood-context findings to its **Site** section. Update values in place (the dossier holds current state, not history), every entry with a source and date. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, offer the key neighborhood-context findings to `/as:project update` for its **Site** section, each with a source and date. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Usage
 
 ```
-/site-history [address or location]
+/as:site-history [address or location]
 ```
 
 Examples:
-- `/site-history 742 Evergreen Terrace, Springfield IL`
-- `/site-history Mexico City, CDMX, Mexico`
-- `/site-history` (prompts for location)
+- `/as:site-history 742 Evergreen Terrace, Springfield IL`
+- `/as:site-history Mexico City, CDMX, Mexico`
+- `/as:site-history` (prompts for location)
 
 ## On Start
 
@@ -54,7 +54,7 @@ Search for information about the immediate surroundings:
 
 ## Output Format
 
-Write the analysis to a markdown file at `./history-[location-slug].md`.
+Write the analysis to a markdown file at `./site-history-[location-slug].md`.
 
 ```markdown
 # Neighborhood History — [Full Address or Location Name]

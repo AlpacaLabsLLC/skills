@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest an Architecture Studio improvement
+title: "[feature] "
+labels: [enhancement]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Architecture Studio version
+    validations:
+      required: true
+  - type: input
+    id: skill
+    attributes:
+      label: Related skill or command
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Do not include confidential client or project information.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior

@@ -1,6 +1,6 @@
-# /epd-to-spec
+# /as:epd-to-spec
 
-Generate CSI-formatted specification sections requiring EPDs and setting maximum GWP thresholds for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). References ISO 14025, ISO 21930, and EN 15804.
+Generate CSI-formatted specification sections requiring EPDs and setting maximum GWP thresholds for Claude Code. References ISO 14025, ISO 21930, and EN 15804.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,11 +9,7 @@ Generate CSI-formatted specification sections requiring EPDs and setting maximum
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/epd-to-spec ~/.claude/skills/epd-to-spec
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
@@ -21,13 +17,13 @@ ln -s $(pwd)/skills-for-architects/skills/epd-to-spec ~/.claude/skills/epd-to-sp
 With explicit thresholds:
 
 ```
-/epd-to-spec concrete max 350 kg CO2e/m3, rebar max 1.0 kg CO2e/kg, CLT max 125 kg CO2e/m3
+/as:epd-to-spec concrete max 350 kg CO2e/m3, rebar max 1.0 kg CO2e/kg, CLT max 125 kg CO2e/m3
 ```
 
 From a project description:
 
 ```
-/epd-to-spec write EPD requirements for a mass timber office — CLT floors and walls, steel connections, mineral wool insulation
+/as:epd-to-spec write EPD requirements for a mass timber office — CLT floors and walls, steel connections, mineral wool insulation
 ```
 
 ## What it generates
@@ -39,6 +35,8 @@ For each material, a three-part CSI section:
 - **Part 3** — Standard execution
 
 Plus optional LEED v4.1 MRc2 language (Option 1 disclosure + Option 2 optimization).
+
+Inputs can come directly from `/as:epd-parser` or `/as:epd-compare`, from pasted structured data, or from a validated project-local `epd-library.csv` using [`schema/epd-schema.md`](../../schema/epd-schema.md).
 
 Covers divisions 03 (Concrete), 05 (Metals), 06 (Wood/CLT/Glulam), 07 (Insulation, Roofing), 08 (Curtain Wall), 09 (Gypsum, Tile, Flooring), and 32 (Paving).
 

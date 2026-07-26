@@ -1,6 +1,6 @@
 ---
 name: nyc-dob-permits
-description: Look up DOB permit and job filing history for any NYC building — new-building, alteration, and demolition filings with status and dates. Use when the user asks what work was filed or permitted at an address, or to gauge renovation history during due diligence. NYC only; for open violations use /nyc-dob-violations.
+description: Look up NYC DOB permits and new-building, alteration, or demolition job filings. Use for filed or permitted work and renovation history; use nyc-dob-violations for violations.
 allowed-tools:
   - WebFetch
   - Write
@@ -8,16 +8,16 @@ allowed-tools:
   - Bash
 ---
 
-# /nyc-dob-permits — DOB Permit & Filing History
+# /as:nyc-dob-permits — DOB Permit & Filing History
 
 Look up all DOB permits and job filings for any NYC building across both Legacy BIS and DOB NOW systems. No API key required.
 
 ## Usage
 
 ```
-/nyc-dob-permits 120 Broadway, Manhattan
-/nyc-dob-permits 1000770001          (BBL)
-/nyc-dob-permits 1001389             (BIN)
+/as:nyc-dob-permits 120 Broadway, Manhattan
+/as:nyc-dob-permits 1000770001          (BBL)
+/as:nyc-dob-permits 1001389             (BIN)
 ```
 
 ## Steps 1–2: Parse Input & Resolve BBL/BIN

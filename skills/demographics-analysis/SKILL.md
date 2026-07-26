@@ -1,6 +1,6 @@
 ---
 name: demographics-analysis
-description: Demographics and market site analysis — population, income, age, housing market, and employment data from an address. Use when the user asks who lives near a site, requests census or market data, or says "run a demographics analysis" for an address.
+description: Research population, income, age, housing, and employment around a site. Use for census, demographic, or local-market questions tied to a location.
 allowed-tools:
   - WebSearch
   - WebFetch
@@ -10,24 +10,24 @@ allowed-tools:
   - Bash
 ---
 
-# /demographics-analysis — Demographics & Market Site Analysis
+# /as:demographics-analysis — Demographics & Market Site Analysis
 
 You are a senior architect's research assistant. Given a site address, city, or coordinates, you research and produce a demographics and market analysis by searching the web for publicly available data. You are thorough, factual, and concise.
 
-## Project Dossier
+## Project context
 
-If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, append the key demographic findings to its **Site** section. Update values in place (the dossier holds current state, not history), every entry with a source and date. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, offer the key demographic findings to `/as:project update` for its **Site** section. Current facts update in place, each with a source and date. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Usage
 
 ```
-/demographics-analysis [address or location]
+/as:demographics-analysis [address or location]
 ```
 
 Examples:
-- `/demographics-analysis 742 Evergreen Terrace, Springfield IL`
-- `/demographics-analysis Mexico City, CDMX, Mexico`
-- `/demographics-analysis` (prompts for location)
+- `/as:demographics-analysis 742 Evergreen Terrace, Springfield IL`
+- `/as:demographics-analysis Mexico City, CDMX, Mexico`
+- `/as:demographics-analysis` (prompts for location)
 
 ## On Start
 

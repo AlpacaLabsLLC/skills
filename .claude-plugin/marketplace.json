@@ -5,14 +5,14 @@
     "email": "hello@alpa.llc"
   },
   "metadata": {
-    "description": "Architecture Studio — one plugin of skills, agents, and hooks for architects, designers, and AEC professionals: site research, zoning, programming, specifications, sustainability, materials research, and presentations.",
-    "version": "1.3.0"
+    "description": "Architecture Studio — one plugin of skills, agents, and hooks for architects, designers, and AEC professionals: site research, zoning, programming, specifications, sustainability, materials research, presentations, and linked project records.",
+    "version": "1.4.0"
   },
   "plugins": [
     {
-      "name": "architecture-studio",
+      "name": "as",
       "source": "./",
-      "description": "Claude Code studio for architects, designers, and AEC professionals — 41 skills and 7 agents covering NYC due diligence, site planning, zoning analysis, programming, CSI specifications, sustainability (EPDs), FF&E and materials research, presentations, project dossiers, and a guided learning course."
+      "description": "Architecture Studio — Claude Code studio for architects, designers, and AEC professionals: initialize a portable studio workspace, create registered projects, maintain linked project records, and route architecture work."
     }
   ]
 }

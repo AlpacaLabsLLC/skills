@@ -1,6 +1,6 @@
-# /environmental-analysis
+# /as:environmental-analysis
 
-Climate and environmental site analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get temperature, precipitation, wind, sun angles, flood zones, seismic risk, soil conditions, and topography — sourced exclusively from governmental and scientific databases.
+Climate and environmental site analysis for Claude Code. Provide an address and get temperature, precipitation, wind, sun angles, flood zones, seismic risk, soil conditions, and topography — sourced exclusively from governmental and scientific databases.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,23 +9,19 @@ Climate and environmental site analysis for [Claude Code](https://docs.anthropic
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/environmental-analysis ~/.claude/skills/environmental-analysis
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/environmental-analysis 742 Evergreen Terrace, Springfield IL
+/as:environmental-analysis 742 Evergreen Terrace, Springfield IL
 ```
 
 Or start with no context:
 
 ```
-/environmental-analysis
+/as:environmental-analysis
 ```
 
 The skill researches two sections:

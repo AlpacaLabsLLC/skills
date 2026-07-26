@@ -1,6 +1,6 @@
-# /site-history
+# /as:site-history
 
-Neighborhood context and history analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get development history, architectural character, historic district status, landmarks, commercial activity, and planned development — sourced from landmarks commissions, planning departments, and archives.
+Neighborhood context and history analysis for Claude Code. Provide an address and get development history, architectural character, historic district status, landmarks, commercial activity, and planned development — sourced from landmarks commissions, planning departments, and archives.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,23 +9,19 @@ Neighborhood context and history analysis for [Claude Code](https://docs.anthrop
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/site-history ~/.claude/skills/site-history
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/site-history 742 Evergreen Terrace, Springfield IL
+/as:site-history 742 Evergreen Terrace, Springfield IL
 ```
 
 Or start with no context:
 
 ```
-/site-history
+/as:site-history
 ```
 
 The skill researches:
@@ -38,7 +34,7 @@ The skill researches:
 - **Commercial activity** — retail corridors, restaurants, market character
 - **Planned development** — major projects approved or under construction
 
-Output is saved to `./history-[location-slug].md` in the current working directory.
+Output is saved to `./site-history-[location-slug].md` in the current working directory.
 
 ## Data Sources
 

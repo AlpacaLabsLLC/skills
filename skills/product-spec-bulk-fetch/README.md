@@ -1,19 +1,19 @@
-# /product-spec-bulk-fetch
+# /as:product-spec-bulk-fetch
 
-Bulk FF&E product spec extractor for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it a list of product page URLs — get a standardized schedule written to your master Google Sheet.
+Bulk FF&E product spec extractor for Claude Code. Feed it product-page URLs and optionally save standardized rows to `product-library.csv`.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
 ## Usage
 
 ```
-/product-spec-bulk-fetch
+/as:product-spec-bulk-fetch
 ```
 
-Then provide URLs — paste inline, point to a file, or give a Google Sheet column of product links.
+Then provide URLs inline, point to a text/CSV/Markdown file, or use links already stored in the project library.
 
 ```
-/product-spec-bulk-fetch
+/as:product-spec-bulk-fetch
 
 https://www.hermanmiller.com/products/seating/lounge-seating/eames-lounge-chair-and-ottoman/
 https://www.steelcase.com/products/collaborative-chairs/gesture/
@@ -24,11 +24,11 @@ https://www.ikea.pr/puertorico/es/pd/vardagen-vaso-art-70313106
 
 - **Inline URLs** — one per line or comma-separated
 - **File path** — a `.txt`, `.csv`, or `.md` file with URLs (one per line)
-- **Google Sheet** — spreadsheet ID + column containing product URLs
+- **Project library** — values from the named `Link` field
 
 ### Output
 
-Appends rows to the **master Google Sheet** using the 33-column schema. Can also output to local CSV or markdown.
+Shows a Markdown preview and, after approval, appends rows atomically to the 33-column project library.
 
 ## How it fits
 
@@ -37,7 +37,7 @@ This is a **utility** — it can be called standalone or as part of a larger wor
 | Context | How it's used |
 |---------|--------------|
 | Standalone | Designer has a list of URLs to batch-process |
-| `/product-research` | Claude found candidates → bulk-fetch pulls full specs from their URLs |
+| `/as:product-research` | Claude found candidates → bulk-fetch pulls full specs from their URLs |
 | Product & Materials Researcher agent | Agent delegates to this skill for URL-based spec extraction |
 
 ## Output Schema
@@ -71,9 +71,9 @@ After every batch: `Fetched: X/Y successful, Z partial, W failed`
 
 | Skill | Relationship |
 |-------|-------------|
-| `/product-research` | Research finds candidates, this pulls full specs |
-| `/product-data-cleanup` | Run after fetching to normalize the sheet |
-| `/product-image-processor` | Run after fetching to process product images |
+| `/as:product-research` | Research finds candidates, this pulls full specs |
+| `/as:product-data-cleanup` | Run after fetching to normalize the library |
+| `/as:product-image-processor` | Run after fetching to process product images |
 
 ## License
 

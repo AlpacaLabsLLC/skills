@@ -1,42 +1,53 @@
 #!/usr/bin/env bash
-# First-session welcome: confirm the install and offer /learn.
-# Fires on SessionStart (matcher: startup); a marker file limits it to the
-# first session after install. Exit 0 always — a broken welcome must never
-# block a session.
+# One-time first-session notice. Full branded onboarding belongs to the studio skill;
+# this hook only makes that entry point discoverable before the first prompt.
+# Exit 0 always: onboarding must never block a Claude Code session.
 
 set -u
 
-DATA_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.claude}"
+DATA_DIR="${ARCHITECTURE_STUDIO_STATE_DIR:-$HOME/.claude}"
 MARKER="$DATA_DIR/.architecture-studio-welcomed"
 
 [ -f "$MARKER" ] && exit 0
 mkdir -p "$DATA_DIR" 2>/dev/null || exit 0
-touch "$MARKER" 2>/dev/null || exit 0
 
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-}"
-SKILL_COUNT=0
-if [ -n "$PLUGIN_ROOT" ] && [ -d "$PLUGIN_ROOT/skills" ]; then
-  SKILL_COUNT=$(find "$PLUGIN_ROOT/skills" -mindepth 2 -maxdepth 2 -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
+MISSING=""
+
+check_sentinel() {
+  [ -e "$PLUGIN_ROOT/$1" ] || MISSING="${MISSING}${MISSING:+, }$1"
+}
+
+if [ -n "$PLUGIN_ROOT" ] && [ -d "$PLUGIN_ROOT" ]; then
+  check_sentinel ".claude-plugin/plugin.json"
+  check_sentinel "skills/studio/SKILL.md"
+  check_sentinel "skills/project/SKILL.md"
+  check_sentinel "skills/learn/SKILL.md"
+  check_sentinel "hooks/hooks.json"
+else
+  MISSING="plugin root"
 fi
 
-if [ "$SKILL_COUNT" -ge 41 ]; then
-  STATUS="Architecture Studio installed successfully: $SKILL_COUNT skills, 7 agents, and its hooks are loaded."
-elif [ "$SKILL_COUNT" -gt 0 ]; then
-  STATUS="Architecture Studio loaded partially: only $SKILL_COUNT of 41 skills were found. Suggest the user run: claude plugin marketplace update skills-for-architects, then reinstall architecture-studio."
+if [ -z "$MISSING" ]; then
+  STATUS="Architecture Studio is installed and its required setup, project, learning, and hook surfaces are available."
 else
-  STATUS="Architecture Studio's hooks are running but its skills directory was not found. Suggest the user reinstall: claude plugin install architecture-studio@skills-for-architects."
+  STATUS="Architecture Studio appears incomplete; missing: $MISSING. Suggest updating the skills-for-architects marketplace and reinstalling as@skills-for-architects."
 fi
 
-CONTEXT="[architecture-studio first run] $STATUS
-This is the user's first session since installing Architecture Studio. At the start of your reply — before addressing anything else, unless the user's message is already /learn or /studio — do two things in a short paragraph, then continue normally:
-1. Report the install status above in one plain sentence.
-2. Offer the guided course: type /learn for a ~15-minute jump start. Mention what it covers in one sentence: how this works locally (your files stay in your folders on your machine — no ALPA servers, no accounts; only what you ask about goes to Claude, like any conversation), what Architecture Studio is (a pre-configured, open-source harness on Claude Code so a firm doesn't start from zero — fork it and make it your own), and how memory works here (plain markdown files you can open and read — everything the tools know is on your disk, in the open).
-Do not repeat this welcome in later sessions."
+SYSTEM_MESSAGE="$STATUS The built-in tools are ready: use /as:tool-catalog to browse or call a skill directly. Run /as:studio for optional local workspace setup, or /as:learn for the course."
+CONTEXT="[architecture-studio first run] Architecture Studio is available. Do not interrupt or rewrite the user's first request with onboarding. If setup is relevant, mention /as:studio briefly. Full branding and setup are owned by the /as:studio skill."
 
-if command -v jq >/dev/null 2>&1; then
-  jq -n --arg ctx "$CONTEXT" '{hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:$ctx}}'
-else
-  ESCAPED=$(printf '%s' "$CONTEXT" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' | awk '{printf "%s\\n", $0}' | sed -e 's/\\n$//')
-  printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$ESCAPED"
+emit_context() {
+  if command -v jq >/dev/null 2>&1; then
+    jq -n --arg message "$SYSTEM_MESSAGE" --arg ctx "$CONTEXT" '{systemMessage:$message,hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:$ctx}}'
+  else
+    ESCAPED=$(printf '%s' "$CONTEXT" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' | awk '{printf "%s\\n", $0}' | sed -e 's/\\n$//')
+    MESSAGE_ESCAPED=$(printf '%s' "$SYSTEM_MESSAGE" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g')
+    printf '{"systemMessage":"%s","hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$MESSAGE_ESCAPED" "$ESCAPED"
+  fi
+}
+
+if emit_context; then
+  touch "$MARKER" 2>/dev/null || true
 fi
 exit 0

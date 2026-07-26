@@ -1,6 +1,6 @@
 ---
 name: nyc-hpd
-description: Look up HPD violations, complaints, and building registration for NYC residential buildings. Use when the user asks about housing-code violations, tenant complaints, or HPD registration at an address. NYC only; for DOB and ECB violations use /nyc-dob-violations.
+description: Look up HPD violations, complaints, and building registration for NYC residential buildings. Use when the user asks about housing-code violations, tenant complaints, or HPD registration at an address. NYC only; for DOB and ECB violations use /as:nyc-dob-violations.
 allowed-tools:
   - WebFetch
   - Write
@@ -8,16 +8,16 @@ allowed-tools:
   - Bash
 ---
 
-# /nyc-hpd — HPD Violations, Complaints & Registration
+# /as:nyc-hpd — HPD Violations, Complaints & Registration
 
 Look up HPD (Housing Preservation & Development) violations, complaints, and building registration for NYC residential buildings. Only applies to residential building classes. No API key required.
 
 ## Usage
 
 ```
-/nyc-hpd 1055 Bergen Street, Brooklyn
-/nyc-hpd 3012120065          (BBL)
-/nyc-hpd 3030348             (BIN)
+/as:nyc-hpd 1055 Bergen Street, Brooklyn
+/as:nyc-hpd 3012120065          (BBL)
+/as:nyc-hpd 3030348             (BIN)
 ```
 
 ## Steps 1–2: Parse Input & Resolve BBL

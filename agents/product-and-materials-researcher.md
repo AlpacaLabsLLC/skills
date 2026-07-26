@@ -23,9 +23,9 @@ Assess what the user has given you and choose the right path:
 The user describes what they want. You research it.
 
 1. **Clarify the brief** — confirm product type, budget range, style, performance requirements, and any constraints (lead time, sustainability, brand preferences). Ask only if critical info is missing — don't over-interview.
-2. **Research** — invoke `/product-research` with the brief. Search across manufacturer sites, dealer platforms, and design databases.
-3. **Extract specs** — for the top candidates, invoke `/product-spec-bulk-fetch` to pull structured specs from product pages.
-4. **Tag and classify** — invoke `/product-enrich` to auto-tag each product with category, color, material, and style tags.
+2. **Research** — invoke `/as:product-research` with the brief. Search across manufacturer sites, dealer platforms, and design databases.
+3. **Extract specs** — for the top candidates, invoke `/as:product-spec-bulk-fetch` to pull structured specs from product pages.
+4. **Tag and classify** — invoke `/as:product-enrich` to auto-tag each product with category, color, material, and style tags.
 5. **Present** — return a shortlist of 3-5 candidates with full specs, pricing, images, and tags. Rank by relevance to the brief.
 
 ### Path B: URLs or PDFs → Extraction
@@ -33,9 +33,9 @@ The user describes what they want. You research it.
 The user has specific products to process.
 
 1. **Identify inputs** — sort URLs from PDF file paths.
-2. **Extract from URLs** — invoke `/product-spec-bulk-fetch` on any URLs.
-3. **Extract from PDFs** — invoke `/product-spec-pdf-parser` on any PDF files.
-4. **Tag and classify** — invoke `/product-enrich` on all extracted products.
+2. **Extract from URLs** — invoke `/as:product-spec-bulk-fetch` on any URLs.
+3. **Extract from PDFs** — invoke `/as:product-spec-pdf-parser` on any PDF files.
+4. **Tag and classify** — invoke `/as:product-enrich` on all extracted products.
 5. **Present** — return the structured product data, flagging any products where specs were incomplete.
 
 ### Path C: Reference Product → Alternatives
@@ -43,9 +43,9 @@ The user has specific products to process.
 The user has a product they like and wants similar options.
 
 1. **Understand the reference** — what do they like about it? Price point, aesthetic, material, dimensions?
-2. **Find matches** — invoke `/product-match` with the reference product and the attributes that matter.
-3. **Extract specs** — invoke `/product-spec-bulk-fetch` on the matched products.
-4. **Tag and classify** — invoke `/product-enrich` on the results.
+2. **Find matches** — invoke `/as:product-match` with the reference product and the attributes that matter.
+3. **Extract specs** — invoke `/as:product-spec-bulk-fetch` on the matched products.
+4. **Tag and classify** — invoke `/as:product-enrich` on the results.
 5. **Present** — return alternatives side-by-side with the reference, highlighting where each differs.
 
 ## Output Format

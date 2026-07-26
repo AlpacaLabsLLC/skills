@@ -1,23 +1,23 @@
 # Product Research
 
-FF&E product research for Claude Code. Give it a brief, it searches the web, and comes back with a curated shortlist. Save the winners to your master Google Sheet.
+FF&E product research for Claude Code. Give it a brief, get a curated shortlist, and optionally save winners to the project-local `product-library.csv`.
 
 ## How it works
 
 ```
-Brief → Search → Candidates → Pick → Sheet
+Brief → Search → Candidates → Pick → Product library
 ```
 
 1. **Brief** — Tell Claude what you're looking for ("round walnut dining table under $3k")
 2. **Research** — Claude searches across brands, trade platforms, and design publications
 3. **Candidates** — Get 6-10 options with specs, pricing, and reasoning
 4. **Pick** — Choose which products to save
-5. **Sheet** — Saved to the master Google Sheet
+5. **Library** — Saved to `product-library.csv` after preview and approval
 
 ## Usage
 
 ```
-/product-research
+/as:product-research
 ```
 
 Then describe what you need — loose or specific:
@@ -39,10 +39,10 @@ Category, use context, style, materials, dimensions, budget, sustainability cert
 
 | Tool | How |
 |------|-----|
-| `/product-data-cleanup` | Normalize the sheet after adding products |
-| `/product-spec-bulk-fetch` | Batch-add from URLs |
-| `/product-spec-pdf-parser` | Extract from PDF catalogs |
-| `/product-image-processor` | Process images from the sheet |
+| `/as:product-data-cleanup` | Normalize the library after adding products |
+| `/as:product-spec-bulk-fetch` | Batch-add from URLs |
+| `/as:product-spec-pdf-parser` | Extract from PDF catalogs |
+| `/as:product-image-processor` | Process images named in the library |
 
 ## License
 

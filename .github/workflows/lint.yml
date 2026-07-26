@@ -23,10 +23,18 @@ jobs:
       - name: Install lint dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y shellcheck jq
+          sudo apt-get install -y shellcheck jq ripgrep
           pip install pyyaml
 
       - name: Run lint
         run: ./scripts/lint.sh
         env:
           CI: "true"
+
+      - name: Run contract tests
+        run: |
+          for test_file in tests/test-*.sh; do
+            echo "::group::$test_file"
+            "$test_file"
+            echo "::endgroup::"
+          done

@@ -1,32 +1,32 @@
-# /product-data-cleanup
+# /as:product-data-cleanup
 
-FF&E schedule normalizer for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Takes a messy furniture schedule — mixed casing, combined dimensions, Spanish material names, inconsistent categories — and cleans it into consistent, procurement-ready data.
+FF&E schedule normalizer for Claude Code. Takes a messy furniture schedule — mixed casing, combined dimensions, Spanish material names, inconsistent categories — and cleans it into consistent, procurement-ready data.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
 ## Usage
 
 ```
-/product-data-cleanup 1FMScYW9guezOWc_m4ClTQxxFIpS6TNRr373R-MJGzgE
+/as:product-data-cleanup
 ```
 
 Or point to a file:
 
 ```
-/product-data-cleanup ~/Documents/product-data-import.csv
+/as:product-data-cleanup ~/Documents/as:product-data-import.csv
 ```
 
 Or paste a markdown table directly in the conversation.
 
 ### Input formats
 
-- **Master Google Sheet** — the shared product library
-- **File path** — `.csv`, `.tsv`, or `.md`
+- **Project library** — the nearest `product-library.csv`
+- **File path** — `.csv` or `.md`
 - **Pasted table** — markdown or tab-separated data
 
 ### Output
 
-Cleans the data in place (Google Sheet) or saves as a new file with `-clean` suffix.
+Previews proposed fixes, then applies approved changes atomically to the project library.
 
 ## How it fits
 
@@ -35,10 +35,10 @@ This is a **utility** that normalizes data regardless of source:
 | Context | How it's used |
 |---------|--------------|
 | Standalone | Clean up any FF&E schedule |
-| After `/product-spec-bulk-fetch` | Normalize fetched data |
-| After `/product-spec-pdf-parser` | Normalize parsed PDF data |
-| After `/product-research` | Normalize research results |
-| On the master sheet | Clean up the entire library — data from all sources |
+| After `/as:product-spec-bulk-fetch` | Normalize fetched data |
+| After `/as:product-spec-pdf-parser` | Normalize parsed PDF data |
+| After `/as:product-research` | Normalize research results |
+| On the project library | Clean up the entire library — data from all sources |
 
 ## What It Cleans
 
@@ -103,10 +103,10 @@ Flags identical Product Name + Brand or identical URL — presents for review, n
 
 | Skill | Relationship |
 |-------|-------------|
-| `/product-research` | Normalizes research results after saving |
-| `/product-spec-bulk-fetch` | Normalizes fetched data |
-| `/product-spec-pdf-parser` | Normalizes parsed PDF data |
-| `/product-image-processor` | Run after cleanup for processed images |
+| `/as:product-research` | Normalizes research results after saving |
+| `/as:product-spec-bulk-fetch` | Normalizes fetched data |
+| `/as:product-spec-pdf-parser` | Normalizes parsed PDF data |
+| `/as:product-image-processor` | Run after cleanup for processed images |
 
 ## License
 

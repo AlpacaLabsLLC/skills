@@ -1,6 +1,6 @@
-# /epd-parser
+# /as:epd-parser
 
-Extract structured environmental impact data from EPD PDFs for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Parses Environmental Product Declaration PDFs — extracting GWP, life cycle stages, program operator metadata, and LEED eligibility into a standardized 42-column schema.
+Extract structured environmental impact data from EPD PDFs for Claude Code. Parses Environmental Product Declaration PDFs — extracting GWP, life cycle stages, program operator metadata, and LEED eligibility into a standardized 42-column schema.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,23 +9,19 @@ Extract structured environmental impact data from EPD PDFs for [Claude Code](htt
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/epd-parser ~/.claude/skills/epd-parser
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/epd-parser ~/Downloads/EPD11075.pdf
+/as:epd-parser ~/Downloads/EPD11075.pdf
 ```
 
 A folder of EPDs:
 
 ```
-/epd-parser ~/Documents/project-epds/
+/as:epd-parser ~/Documents/as:project-epds/
 ```
 
 ## What it extracts
@@ -39,7 +35,7 @@ A folder of EPDs:
 
 Handles EN 15804+A1 and +A2 formats, multi-product EPDs, non-English documents, and varying table layouts across program operators (UL, NSF, Environdec, IBU, ASTM).
 
-Output saves to CSV (42-column EPD schema) or Google Sheets.
+Parsing is file-free by default: results can pass directly to `/as:epd-compare` or `/as:epd-to-spec`. On explicit request, records can be saved to the nearest project's `epd-library.csv` using the canonical schema in [`schema/epd-schema.md`](../../schema/epd-schema.md).
 
 ## What's Included
 

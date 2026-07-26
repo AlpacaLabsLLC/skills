@@ -1,6 +1,6 @@
 ---
 name: sif-to-csv
-description: Convert a SIF (Standard Interchange Format) file to a clean, readable CSV or Google Sheet. Use when the user shares a .sif file or asks to "convert SIF to CSV", open a dealer file, or make a SIF readable. For the reverse direction use /csv-to-sif.
+description: Parse a SIF (Standard Interchange Format) input into a readable preview and optionally append canonical product rows to the project's CSV library. Use when asked to convert or inspect SIF dealer data. For the reverse direction use /as:csv-to-sif.
 allowed-tools:
   - Read
   - Write
@@ -9,21 +9,18 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /sif-to-csv — SIF to CSV Converter
+# /as:sif-to-csv — SIF to CSV Converter
 
-Converts a SIF (Standard Interchange Format) file from a dealer or procurement system into a clean, human-readable CSV or Google Sheet. Translates field codes to column headers, expands options and attributes, calculates pricing, and computes totals.
+Converts a SIF input from a dealer or procurement system into a human-readable preview and canonical product rows. Translates field codes, expands options and attributes, calculates pricing, and computes totals.
 
 ## When to Use
 
-- Received a SIF file from a dealer and need to review it as a spreadsheet
+- Received a SIF file from a dealer and need to review it as CSV data
 - Importing dealer pricing back into your FF&E schedule
 - Comparing a dealer quote (SIF) against your original specification
-- Loading dealer data into the master Google Sheet
+- Loading dealer data into the project's `product-library.csv`
 
 ## SIF Format Reference
 
@@ -86,12 +83,12 @@ SIF is a text-based key-value format. Each line is `CODE=VALUE`, terminated by C
 
 **SIF file:**
 ```
-/sif-to-csv ./dealer-quote.sif
+/as:sif-to-csv ./dealer-quote.sif
 ```
 
 **Pasted SIF content:**
 ```
-/sif-to-csv
+/as:sif-to-csv
 SF=Project Alpha
 ST=Dealer Quote - March 2026
 PN=670
@@ -161,37 +158,15 @@ For unknown codes, keep as-is and flag.
 
 ## Step 4: Output
 
-Ask the user for output format:
+Show the parsed table in Markdown. For persistence, write only to the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md`, `../../schema/csv-conventions.md`, and `../../schema/sif-crosswalk.md`. Map by these named fields:
 
-### CSV file
-Save as `{input-name}-parsed.csv`:
+- `Link` ← ProductURL; `Product Name` ← PD; `SKU` ← PN; `Brand` ← expanded MC
+- `Category` ← GC or PRC; dimensions ← AD where AN=DIM; `Weight` ← WT
+- `List Price` ← PL/P1/I1; `Sale Price` ← calculated sell price; `Selected Color/Finish` ← OD
+- `Image URL` ← ImageURL; `Tags` ← TG; `Status` ← `quoted`; `Source` ← `sif-to-csv`
+- `Notes` ← `From SIF: {ST}. Discount: {S-}%. Qty: {QT} · Ext: ${ext_sell}`
 
-```
-Item #, SKU, Product, Brand, Qty, List Price, Discount %, Sell Price, Ext List, Ext Sell, Category, Weight, Options, Attributes, Tag, Product URL, Image URL, MC Code
-```
-
-### Google Sheet (master schema)
-Write to the 33-column schema (defined in `../../schema/product-schema.md`, CRUD patterns in `../../schema/sheet-conventions.md`):
-See `../../schema/sif-crosswalk.md` for the full column-to-SIF mapping. Key fields:
-
-- Column J (Link) ← ProductURL
-- Column E (Product Name) ← PD
-- Column I (SKU) ← PN
-- Column B (Brand) ← MC expanded
-- Column A (Category) ← GC or PRC
-- Column L-P (Dims) ← parsed from AD where AN=DIM
-- Column Q (Weight) ← WT
-- Column U (List Price) ← PL/P1/I1
-- Column V (Sale Price) ← calculated sell price
-- Column T (Selected Finish) ← OD
-- Column AC (Image URL) ← ImageURL
-- Column AD (Tags) ← TG
-- Column AE (Notes) ← "From SIF: {ST}. Discount: {S-}%. Qty: {QT} · Ext: ${ext_sell}"
-- Column AF (Status) ← "quoted"
-- Column AG (Source) ← "sif-to-csv"
-
-### Markdown
-Output the table in conversation.
+Preview the complete batch's row mappings, totals, warnings, and target path, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper validates the complete batch and library before one atomic replacement; never loop per row.
 
 ## Step 5: Summary
 
@@ -201,12 +176,12 @@ Output the table in conversation.
   3 records · 12 units
   Total list: $22,147 · Total sell: $18,086 (18.3% avg discount)
   Manufacturers: HMI (1), KNL (1), STC (1)
-  Saved to: ./dealer-quote-parsed.csv
+  Saved to: ./product-library.csv
 ```
 
 ## Pairs With
 
-- `/csv-to-sif` — round-trip: create SIF, send to dealer, parse their quote back
-- `/product-data-cleanup` — normalize the parsed data
-- `/product-data-import` — reformulate dealer data into a formatted schedule
-- `/product-enrich` — add categories and tags to imported products
+- `/as:csv-to-sif` — round-trip: create SIF, send to dealer, parse their quote back
+- `/as:product-data-cleanup` — normalize the parsed data
+- `/as:product-data-import` — reformulate dealer data into a formatted schedule
+- `/as:product-enrich` — add categories and tags to imported products

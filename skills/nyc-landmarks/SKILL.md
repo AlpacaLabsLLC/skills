@@ -8,16 +8,16 @@ allowed-tools:
   - Bash
 ---
 
-# /nyc-landmarks — LPC Landmark & Historic District Check
+# /as:nyc-landmarks — LPC Landmark & Historic District Check
 
 Check if a NYC building is individually landmarked or within a historic district using the LPC Individual Landmark & Historic District Building Database. No API key required.
 
 ## Usage
 
 ```
-/nyc-landmarks 120 Broadway, Manhattan
-/nyc-landmarks 1000770001          (BBL)
-/nyc-landmarks 1001389             (BIN)
+/as:nyc-landmarks 120 Broadway, Manhattan
+/as:nyc-landmarks 1000770001          (BBL)
+/as:nyc-landmarks 1001389             (BIN)
 ```
 
 ## Steps 1–2: Parse Input & Resolve BBL

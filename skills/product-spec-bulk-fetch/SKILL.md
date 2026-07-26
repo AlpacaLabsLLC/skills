@@ -1,6 +1,6 @@
 ---
 name: product-spec-bulk-fetch
-description: Fetch structured FF&E product specs from a list of URLs — extracts name, brand, dimensions, materials, price, and images into a standardized schedule. Use when the user provides product URLs and asks to "pull specs", scrape product pages, or bulk-import items by link.
+description: Extract structured FF&E specs from a list of product URLs into a schedule. Use to pull or bulk-import product-page data; not for PDF catalogs.
 allowed-tools:
   - Read
   - Write
@@ -10,12 +10,9 @@ allowed-tools:
   - Grep
   - WebFetch
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-spec-bulk-fetch — Bulk Product Spec Fetcher
+# /as:product-spec-bulk-fetch — Bulk Product Spec Fetcher
 
 Extract structured FF&E data from a list of product page URLs. Outputs a standardized schedule ready for design specs, procurement, or import into [Norma](https://norma.llc).
 
@@ -25,15 +22,13 @@ The user provides product URLs in one of these ways:
 
 1. **Inline list** — URLs pasted directly in the message (one per line, or comma-separated)
 2. **File path** — A `.txt`, `.csv`, or `.md` file containing URLs (one per line)
-3. **Google Sheet column** — A spreadsheet ID + column containing URLs to re-fetch
+3. **Project library** — URLs from the named `Link` field in `product-library.csv`
 
 If the input format is unclear, ask.
 
 ## Output Schema
 
-Products are written to the **master Google Sheet** — the same 33-column schema used by all product skills. When writing to CSV, use the same column order.
-
-Read `../../schema/product-schema.md` (relative to this SKILL.md) for the full column reference, field formats, and category vocabulary. Read `../../schema/sheet-conventions.md` for CRUD patterns with MCP tools.
+Persistent results use the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` for the exact 33-column contract and `../../schema/csv-conventions.md` for safe local-file behavior.
 
 Skill-specific column values:
 - **AF (Status):** `saved`
@@ -110,19 +105,13 @@ Show a summary table in markdown with all successful + partial results. Flag any
 - "Dimensions not found" if missing
 - "Failed to fetch" for errors
 
-### Step 5: Ask about output format
-Ask the user: **"Where should I save this?"**
-Options:
-- **Master Google Sheet** — append rows to the shared product library. Ask for spreadsheet ID if not already known.
-- **Local CSV** — save to a specified path (default: `./ffe-fetch-YYYY-MM-DD.csv`)
-- **Just the table** — leave as markdown in the conversation
+### Step 5: Preview persistence
+The results table is the Markdown output. If the user asks to save, preview the selected row count, incomplete fields, and target `product-library.csv`, then use the single confirmation gate.
 
 ### Step 6: Save
-Write the output in the chosen format using the 33-column master schema. For Google Sheets, use `mcp__google-sheets__update_cells` to append rows. Set `Clipped At` to current timestamp and `Source` to `bulk-fetch`.
+After approval, serialize all complete canonical rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. Set `Clipped At` to the current timestamp and `Source` to `bulk-fetch`. The helper validates the complete batch and library before one atomic replacement; never loop per row.
 
-## CSV Format
-
-When saving to CSV, use the CSV header from `../../schema/product-schema.md`.
+Do not write a secondary structured export. A Markdown report may be retained separately.
 
 ## Edge Cases
 

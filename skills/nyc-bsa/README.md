@@ -1,6 +1,6 @@
-# /nyc-bsa
+# /as:nyc-bsa
 
-BSA variance and special permit lookup for any NYC property as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries the Board of Standards and Appeals application database for variances, special permits, and appeals — records available from 1998 to present. No API key required.
+BSA variance and special permit lookup for any NYC property as a Claude Code skill. Queries the Board of Standards and Appeals application database for variances, special permits, and appeals — records available from 1998 to present. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,19 +9,15 @@ BSA variance and special permit lookup for any NYC property as a [Claude Code](h
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-bsa ~/.claude/skills/nyc-bsa
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-bsa 120 Broadway, Manhattan
-/nyc-bsa 1000770001          (BBL)
-/nyc-bsa 1001389             (BIN)
+/as:nyc-bsa 120 Broadway, Manhattan
+/as:nyc-bsa 1000770001          (BBL)
+/as:nyc-bsa 1001389             (BIN)
 ```
 
 The skill:

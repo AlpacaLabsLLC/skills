@@ -1,6 +1,6 @@
-# /resize-images
+# /as:resize-images
 
-Batch-resizes project photos and renders for web, social, slides, and print — for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Asks for a source folder, outputs resized copies into clearly named subfolders. Originals are never modified.
+Batch-resizes project photos and renders for web, social, slides, and print — for Claude Code. Asks for a source folder, outputs resized copies into clearly named subfolders. Originals are never modified.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,11 +9,7 @@ Batch-resizes project photos and renders for web, social, slides, and print — 
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/resize-images ~/.claude/skills/resize-images
+claude plugin install as@skills-for-architects
 ```
 
 Requires [Pillow](https://pillow.readthedocs.io): `pip install Pillow`
@@ -21,7 +17,7 @@ Requires [Pillow](https://pillow.readthedocs.io): `pip install Pillow`
 ## Usage
 
 ```
-/resize-images
+/as:resize-images
 ```
 
 The skill asks which folder to use, then which outputs you need:

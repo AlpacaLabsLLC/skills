@@ -1,6 +1,6 @@
-# /csv-to-sif
+# /as:csv-to-sif
 
-Convert CSV or Excel FF&E product lists to SIF (Standard Interchange Format) for dealer and procurement systems, for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Convert the local CSV FF&E product library to SIF (Standard Interchange Format) for dealer and procurement systems, for Claude Code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,17 +9,13 @@ Convert CSV or Excel FF&E product lists to SIF (Standard Interchange Format) for
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/csv-to-sif ~/.claude/skills/csv-to-sif
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/csv-to-sif ~/Documents/project/product-schedule.csv
+/as:csv-to-sif ~/Documents/as:project/product-schedule.csv
 ```
 
 Supports Standard (Hedberg, CAP, ProjectMatrix), CET/Configura, Cyncly Worksheet, and Design Manager target systems.

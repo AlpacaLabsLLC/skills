@@ -1,6 +1,6 @@
 # SIF ↔ Product Schema Crosswalk
 
-Maps between the 33-column product schema and SIF (Standard Interchange Format) field codes. Used by `/csv-to-sif` and `/sif-to-csv`.
+Maps between the 33-column product schema and SIF (Standard Interchange Format) field codes. Used by `/as:csv-to-sif` and `/as:sif-to-csv`.
 
 ## Column-to-SIF Mapping
 

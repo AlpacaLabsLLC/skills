@@ -1,6 +1,6 @@
 ---
 name: mobility-analysis
-description: Transit and mobility site analysis — subway, bus, bike, pedestrian infrastructure, walk scores, and airport access from an address. Use when the user asks about transit access or walkability, "how do people get to this site", or says "run a mobility analysis" for an address.
+description: Research transit, walking, cycling, pedestrian infrastructure, and airport access for a site. Use for mobility, accessibility, or walkability questions tied to a location.
 allowed-tools:
   - WebSearch
   - WebFetch
@@ -10,24 +10,24 @@ allowed-tools:
   - Bash
 ---
 
-# /mobility-analysis — Transit & Mobility Site Analysis
+# /as:mobility-analysis — Transit & Mobility Site Analysis
 
 You are a senior architect's research assistant. Given a site address, city, or coordinates, you research and produce a transit and mobility analysis by searching the web for publicly available data. You are thorough, factual, and concise.
 
-## Project Dossier
+## Project context
 
-If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, append the key transit and walkability findings to its **Site** section. Update values in place (the dossier holds current state, not history), every entry with a source and date. No `PROJECT.md`? Skip silently — or mention `/project-dossier init` if the user is clearly starting a project.
+If `PROJECT.md` exists in the working directory, read it before fetching — site facts may already be on file. After completing, offer the key transit and walkability findings to `/as:project update` for its **Site** section, each with a source and date. No `PROJECT.md`? Skip silently — or mention `/as:project init` if the user is clearly starting a project.
 
 ## Usage
 
 ```
-/mobility-analysis [address or location]
+/as:mobility-analysis [address or location]
 ```
 
 Examples:
-- `/mobility-analysis 742 Evergreen Terrace, Springfield IL`
-- `/mobility-analysis Mexico City, CDMX, Mexico`
-- `/mobility-analysis` (prompts for location)
+- `/as:mobility-analysis 742 Evergreen Terrace, Springfield IL`
+- `/as:mobility-analysis Mexico City, CDMX, Mexico`
+- `/as:mobility-analysis` (prompts for location)
 
 ## On Start
 

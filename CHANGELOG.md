@@ -2,24 +2,77 @@
 
 All notable changes to **Architecture Studio** (`AlpacaLabsLLC/skills-for-architects`) are documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Architecture Studio uses a sequential `major.minor.patch` release scheme, marks breaking migrations explicitly, and reserves patch releases for compatible corrections.
 
 ## [Unreleased]
 
-### Added
+## [1.4.0] - 2026-07-26
 
-- **`/skill-maker`** — scaffold a new skill in three steps, no interview: copy the canonical bundled template, apply the PATTERNS.md checklist (read at runtime, single source), verify with `scripts/lint.sh` inside the catalog or a portable checklist outside it. The catalog is 41 skills; the Dispatcher group is 3.
-- **Post-install welcome** — a `SessionStart` hook (`session-start-welcome`) fires once on the first session after install: confirms the plugin loaded (with a partial-install warning if skills are missing) and offers `/learn`. Hook count is now 3.
-- **`/learn` teaches three framing concepts** threaded through the course: work stays local (files never leave the machine except what's asked about), Architecture Studio is an open-source harness on Claude Code, and memory is plain markdown files — with an explicit markdown explainer at the first file creation.
-- **Terminal preflight** in the README — a hand-to-a-colleague page covering install → login → `/learn` for people who have never opened a terminal.
+Architecture Studio v1.4.0 is a breaking migration release. It preserves the public `1.x` release sequence while replacing the installed plugin identity and introducing the studio/project workspace architecture.
 
-### Changed
+### Breaking
 
-- **`/learn` restructured to six modules named for their lessons** (How we interact with each other · Nothing without your "yes" · Let's set some guidelines first · Plan first, build second · Creating your own skills · Get started) for an honest ~75-minute core plus a 30–60 min capstone. Plan mode, subagents, and the precedent study moved to a planned advanced track. Data privacy is taught in Module 2 alongside consent; Module 6 opens with a source-check and absence drill on a faithful summary (no planted errors), then a professional checklist offered but never imposed (firm data-governance policy, low-stakes project, work on a copy) and one real task; quitting /learn is honored immediately at any point. The deliverable thread is a site-visit report and a learner-built `/site-report` skill. The five sandbox project types were replaced by a single project — a fictional Brooklyn art museum expansion — one example path, same engineered flaws. Permission-prompt narration covers the "stop asking" option; the tutor spec itself was cut roughly in half. Old 0-indexed PROGRESS.md files migrate by content.
+- **Shorter technical namespace.** Architecture Studio now installs as `as@skills-for-architects`, and public commands use `/as:<skill>`. Existing users must remove the retired v1 install or installs, update the marketplace, install `as@skills-for-architects`, and reload plugins or restart Claude Code. User-owned project and workspace files are untouched. Manually maintained Claude settings must replace only the old plugin identifier with the new one.
+- **One project-memory interface.** `/as:project` replaces `/as:project-dossier` and `/decision`; no compatibility aliases remain. Use `/as:project init`, `/as:project update` or `/as:project remember`, `/as:project decisions`, `/as:project record-decision`, and `/as:project supersede`.
+- **Decision files are canonical.** `PROJECT.md` no longer maintains a Decisions table. Run `/as:project migrate` in an existing 1.x project; migration removes the table only after every row matches a decision file.
+
+### Migration
+
+Existing v1.3 users must update the `skills-for-architects` marketplace, uninstall `architecture-studio@skills-for-architects`, install `as@skills-for-architects`, and reload plugins or restart Claude Code. The reinstall changes plugin code only; it does not delete or rewrite user-owned project or workspace files.
+
+Users moving directly from v1.2 or earlier should uninstall any installed numbered plugins (`00-due-diligence` through `09-project-dossier`), update the marketplace, and install `as@skills-for-architects`. They do not need to install v1.3 first.
+
+After reinstalling, run `/as:studio`. If an existing project uses the v1.x `PROJECT.md` Decisions table, open that project and run `/as:project migrate`; review the proposed migration before approving it. Plugin reinstall does not migrate project records automatically.
+
+Existing local welcome and update-check preferences remain in place because their stable `.architecture-studio-*` filenames and state location do not change with the plugin identifier.
+
+### Architecture and extensibility
+
+- **User-reviewed feedback** — `/as:studio-feedback` prepares minimal bug or feature fields, flags sensitive project information, explains that opening GitHub transmits the displayed URL parameters, and never submits an issue automatically.
+- **GitHub issue forms** — bug and feature templates share exact field identifiers with `/as:studio-feedback` so users arrive at an editable, prefilled report.
+- **Opt-in update notice** — update checking remains disabled until enabled through `/as:studio`; when enabled it is throttled to one bare request per day, fails silently, and notifies once per newer version.
+- **Studio workspace setup** — `/as:studio init`, `/as:studio status`, `/as:studio projects`, `/as:studio create-project`, `/as:studio register-project`, and `/as:studio archive-project` manage a portable `STUDIO.md` registry and descendant project folders. Setup records working units, default country/state-or-region/city, and a plain-language data-governance boundary.
+- **Firm-owned skills** — initialized studios include `.claude/skills/`, and `/as:skill-maker` defaults private firm procedures there from descendant projects.
+- **Deterministic setup helpers and fixtures** — studio/project scaffolding, collision refusal, registration, archive, and lossless project migration have executable shell coverage.
+- **Agent documentation moved outside `agents/`** so Claude registers exactly the seven intended native subagents rather than treating the former index README as an eighth agent.
+
+### Data boundaries and onboarding
+
+- **Lightweight onboarding** — running `/as:studio` displays the Architecture Studio mark, creator, ALPA ownership/contact, license, and repository provenance before moving into setup. Setup uses one structured interaction gate per question or confirmation instead of asking once in prose and again in the UI. The first-session hook is now a concise visible discovery notice rather than an instruction that rewrites the user’s first response.
+- **Project-record integrations** — meeting minutes, site reports, analysis skills, work plans, tasks, and time tracking hand facts and decisions to `/as:project` and discover decision files directly.
+- **Installation remains non-mutating** — installing the plugin creates no user workspace, account, cloud store, git repository, or project files.
+- **Local CSV product data** — `product-library.csv` is the sole persistent FF&E library; EPD parsing remains PDF-first, with `epd-library.csv` created only when the user explicitly saves reusable records. SIF conversion remains available as bounded interchange, not as the persistent schedule source.
+- **Honest legacy migration** — existing `master-schedule.json` and `canoa.json` files are preserved as cloud-configuration evidence. Users export their former cloud rows to CSV before import; Architecture Studio does not claim to migrate disconnected data.
+- **Reserved connector boundary** — `/as:studio init` creates a root `.mcp.json` containing only an empty `mcpServers` object. It configures no provider, endpoint, credential, or OAuth flow, and projects do not receive MCP manifests.
+- **Deferred formats and integrations** — XLS/XLSX product support and configured studio connectors remain outside v1.4.
+- **Privacy disclosure** — documents the feedback transmission boundary and ordinary Cloudflare request metadata without treating endpoint traffic as anonymous users or daily active users.
+
+### Project workflow and memory
+
+- **Typed project-record workflow** — `/as:meeting-minutes` preserves discussion and promotion candidates, `/as:site-visit-report` separates observation from reported information and interpretation, `/as:tasklist` owns permanent action IDs and lifecycle history, and `/as:timetracker` reconstructs dated activity while requiring user-confirmed durations.
+- **Linked record graph** — project facts, decisions, minutes, site reports, tasks, plans, and time entries remain independently owned, project-relative artifacts with explicit source links and non-destructive histories.
+
+- **`/as:workplan` project context** — reads and cites relevant dossier facts, decision records, meetings, site reports, and tasks; decided records constrain plans, proposed decisions remain unresolved, and superseded decisions remain historical context.
+- **`/as:studio` routing and `/as:tool-catalog` discoverability** — typed-record deliverables route to their owning skills, while an explicitly requested plan or coordination strategy retains `/as:workplan` precedence.
+- **Project Dossier documentation renamed Project Records** to describe the connected workflow without implying one central record or database.
+
+- **`/as:workplan`** — a self-contained, Markdown-only planning workflow for repository, operational, and AEC project-delivery work. It distinguishes work planning from floor plans and regulated analysis, separates facts from assumptions, traces requirements and decisions into verifiable work units, uses optional harness capabilities only when available, and stops at an explicit execution handoff.
+
+### Learning and extension tooling
+
+- **`/as:skill-maker`** — scaffold a new skill in three steps, no interview: copy the canonical bundled template, apply the PATTERNS.md checklist (read at runtime, single source), verify with `scripts/lint.sh` inside the catalog or a portable checklist outside it.
+- **Post-install discovery** — a `SessionStart` hook (`session-start-welcome`) emits one concise notice that `/as:studio` and `/as:learn` are available, without changing the user’s first response. Together with the opt-in version notice, Architecture Studio now has four hook handlers across three events.
+- **`/as:learn` teaches three framing concepts** threaded through the course: this version stores project files locally while sending prompts and needed file contents to the configured Claude service, Architecture Studio is an open-source harness on Claude Code, and course/project memory is plain markdown files — with an explicit markdown explainer at the first file creation. Future cloud-based versions may require accounts and use a different data model.
+- **Terminal preflight** in the README — a hand-to-a-colleague page covering install → login → `/as:learn` for people who have never opened a terminal.
+
+- **`/as:learn` restructured to six modules named for their lessons** (How we interact with each other · Nothing without your "yes" · Let's set some guidelines first · Plan first, build second · Creating your own skills · Get started) for an honest ~75-minute core plus a 30–60 min capstone. Plan mode, subagents, and the precedent study moved to a planned advanced track. Data privacy is taught in Module 2 alongside consent; Module 6 opens with a source-check and absence drill on a faithful summary (no planted errors), then a professional checklist offered but never imposed (firm data-governance policy, low-stakes project, work on a copy) and one real task; quitting /learn is honored immediately at any point. The deliverable thread is a site-visit report and a learner-built `/site-report` skill. The five sandbox project types were replaced by a single project — a fictional Brooklyn art museum expansion — one example path, same engineered flaws. Permission-prompt narration covers the "stop asking" option; the tutor spec itself was cut roughly in half. Old 0-indexed PROGRESS.md files migrate by content.
 - Starter binder template: "Sign documents off as" → "Document attribution block" (AI documents are never signed or sealed), plus phase names and date-format lines.
 
-### Fixed
+### Fixes and optimization
 
+- Clarified `/as:learn` and the welcome hook's data model: this version stores project files locally but sends prompts and needed contents to the configured Claude service; future cloud-based versions may require accounts and use a different model.
+- Hardened `/as:skill-maker` target resolution, existing-skill collision handling, bundled-resource paths, and lint coverage for newly generated untracked files.
+- Made the first-session welcome verify each bundled surface it reports and persist its one-time marker only after valid context is emitted.
 - Removed the Shift+Tab plan-mode instruction (Shift+Tab cycles permission modes and can land in auto-accept — the opposite of the course's safety promise); plan-first is taught as a prompt phrase.
 - Removed six stale duplicate sandbox files at the `sandbox/` root left over from the pre-selection layout.
 
@@ -157,7 +210,8 @@ First public release.
 - **3 hooks** — post-write disclaimer check, post-output metadata, pre-commit spec lint.
 - Marketplace install: `claude plugin marketplace add AlpacaLabsLLC/skills-for-architects`.
 
-[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.0
 [1.3.0]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.3.0
 [1.2.1]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.2.1
 [1.2.0]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.2.0

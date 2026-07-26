@@ -1,6 +1,6 @@
-# /workplace-programmer
+# /as:workplace-programmer
 
-AI workplace strategy consultant for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Builds office space programs through conversation — area splits, room schedules, seat counts, and exportable reports — backed by industry research from JLL, CBRE, Gensler, VergeSense, and others.
+AI workplace strategy consultant for Claude Code. Builds office space programs through conversation — area splits, room schedules, seat counts, and exportable reports — backed by industry research from JLL, CBRE, Gensler, VergeSense, and others.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,23 +9,19 @@ AI workplace strategy consultant for [Claude Code](https://docs.anthropic.com/en
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/workplace-programmer ~/.claude/skills/workplace-programmer
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/workplace-programmer 30,000 RSF tech company, 200 people, 3 days hybrid
+/as:workplace-programmer 30,000 RSF tech company, 200 people, 3 days hybrid
 ```
 
 Or start with no context and let the skill ask discovery questions:
 
 ```
-/workplace-programmer
+/as:workplace-programmer
 ```
 
 ### Conversation Flow

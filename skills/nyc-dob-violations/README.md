@@ -1,6 +1,6 @@
-# /nyc-dob-violations
+# /as:nyc-dob-violations
 
-DOB and ECB violation lookup for any NYC building as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries DOB violations, ECB (Environmental Control Board) violations, and active/open violations — flagging open items prominently. No API key required.
+DOB and ECB violation lookup for any NYC building as a Claude Code skill. Queries DOB violations, ECB (Environmental Control Board) violations, and active/open violations — flagging open items prominently. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,19 +9,15 @@ DOB and ECB violation lookup for any NYC building as a [Claude Code](https://doc
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-dob-violations ~/.claude/skills/nyc-dob-violations
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-dob-violations 120 Broadway, Manhattan
-/nyc-dob-violations 1000770001          (BBL)
-/nyc-dob-violations 1001389             (BIN)
+/as:nyc-dob-violations 120 Broadway, Manhattan
+/as:nyc-dob-violations 1000770001          (BBL)
+/as:nyc-dob-violations 1001389             (BIN)
 ```
 
 The skill:

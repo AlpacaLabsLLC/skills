@@ -16,23 +16,39 @@
 # (e.g. echo "git commit") — harmless, the lint just runs and passes.
 
 INPUT=$(cat)
-COMMAND=$(printf '%s' "$INPUT" | jq -r '.tool_input.command // empty')
+if command -v jq >/dev/null 2>&1; then
+  if ! COMMAND=$(printf '%s' "$INPUT" | jq -er '.tool_input.command | strings' 2>/dev/null); then
+    printf 'Architecture Studio could not decode the Bash hook payload, so the pre-commit specification check stopped safely. Retry the command or verify the Claude Code hook configuration.\n' >&2
+    exit 2
+  fi
+elif command -v python3 >/dev/null 2>&1; then
+  if ! COMMAND=$(printf '%s' "$INPUT" | python3 -c 'import json,sys
+try:
+    value = json.load(sys.stdin)["tool_input"]["command"]
+    if not isinstance(value, str):
+        raise ValueError("command is not a string")
+    sys.stdout.write(value)
+except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+    print(f"invalid hook payload: {exc}", file=sys.stderr)
+    raise SystemExit(2)' 2>/dev/null); then
+    printf 'Architecture Studio could not decode the Bash hook payload, so the pre-commit specification check stopped safely. Retry the command or verify the Claude Code hook configuration.\n' >&2
+    exit 2
+  fi
+else
+  printf 'Architecture Studio needs jq or Python 3 to decode Bash hook payloads. The pre-commit specification check stopped safely; install one decoder and retry.\n' >&2
+  exit 2
+fi
 
 GIT_COMMIT_RE='(^|[;&|[:space:]])git[[:space:]]+([^;&|]*[[:space:]])?commit([[:space:]]|$)'
 if ! [[ "$COMMAND" =~ $GIT_COMMIT_RE ]]; then
   exit 0
 fi
 
-# Get list of staged markdown files
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null | grep '\.md$')
-
-if [ -z "$STAGED_FILES" ]; then
-  exit 0
-fi
-
 ERRORS=""
 
-while IFS= read -r FILE; do
+# NUL-delimited paths preserve spaces, quotes, backslashes, and newlines.
+while IFS= read -r -d '' FILE; do
+  [[ "$FILE" == *.md ]] || continue
   [ -f "$FILE" ] || continue
 
   # Check for CSI section references that look malformed
@@ -78,12 +94,12 @@ $BAD_NOTITLE
 "
   fi
 
-done <<< "$STAGED_FILES"
+done < <(git diff --cached --name-only --diff-filter=ACM -z 2>/dev/null)
 
 if [ -n "$ERRORS" ]; then
   {
     printf 'CSI formatting issues found in staged files:\n%s\n' "$ERRORS"
-    printf 'Fix these before committing — see rules/csi-formatting.md for conventions.\n'
+    printf 'Fix these before committing — see %s/rules/csi-formatting.md for conventions.\n' "${CLAUDE_PLUGIN_ROOT:-<plugin-root>}"
   } >&2
   # Exit 2 blocks the tool call; Claude Code feeds the stderr above back to
   # Claude so it can fix the staged files and retry the commit.

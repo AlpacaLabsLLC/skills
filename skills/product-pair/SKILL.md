@@ -11,12 +11,9 @@ allowed-tools:
   - WebFetch
   - WebSearch
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-pair — Product Pairing
+# /as:product-pair — Product Pairing
 
 "What goes with this?" Takes a product and suggests complementary items across different categories — a side table for a sofa, a floor lamp for a reading chair, a rug for a dining table. Returns 5-8 pairings with reasoning rooted in design principles.
 
@@ -31,17 +28,17 @@ allowed-tools:
 
 **By name:**
 ```
-/product-pair Blu Dot Diplomat Sofa
+/as:product-pair Blu Dot Diplomat Sofa
 ```
 
 **By name + context:**
 ```
-/product-pair Blu Dot Diplomat Sofa for a tech office lounge
+/as:product-pair Blu Dot Diplomat Sofa for a tech office lounge
 ```
 
 **By product details:**
 ```
-/product-pair
+/as:product-pair
 Name: Diplomat Sofa
 Brand: Blu Dot
 Materials: Steel frame, fabric upholstery
@@ -145,16 +142,16 @@ Neutral base grounds the navy. Contract-grade durability.
 
 ## Step 6: Save
 
-If the designer picks pairings, write to the master Google Sheet using the 33-column schema defined in `../../schema/product-schema.md` (read for column reference and formats). Use `../../schema/sheet-conventions.md` for CRUD patterns.
+If the designer picks pairings, prepare complete rows for the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Preview all chosen pairings and the target path, then use the single confirmation gate. After approval, serialize the complete batch as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once so validation and replacement are atomic; never loop per row.
 
-- Column AD (Tags): append `pair:{source-product-name}` for traceability
-- Column AE (Notes): "Paired with {source product}. {Design reasoning}"
-- Column AF (Status): "saved"
-- Column AG (Source): "product-pair"
+- `Tags`: append `pair:{source-product-name}` for traceability
+- `Notes`: `Paired with {source product}. {Design reasoning}`
+- `Status`: `saved`
+- `Source`: `product-pair`
 
 ## Pairs With
 
-- `/product-match` — match finds alternatives to the source, pair finds complements
-- `/product-research` — research finds products from a brief, pair builds around an anchor piece
-- `/product-enrich` — enrich paired products with full metadata
-- `/product-data-import` — import the source + pairings into the master schedule
+- `/as:product-match` — match finds alternatives to the source, pair finds complements
+- `/as:product-research` — research finds products from a brief, pair builds around an anchor piece
+- `/as:product-enrich` — enrich paired products with full metadata
+- `/as:product-data-import` — import the source + pairings into the master schedule

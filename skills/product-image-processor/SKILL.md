@@ -9,27 +9,21 @@ allowed-tools:
   - Grep
   - WebFetch
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-image-processor — Product Image Processor
+# /as:product-image-processor — Product Image Processor
 
-Download product images from a Google Sheet, normalize sizing, and remove backgrounds. Saves output at each processing stage.
+Read product image records from the nearest project's `product-library.csv`, download them, normalize sizing, and remove backgrounds. Saves output at each processing stage without mutating the library.
 
-Works with the **master Google Sheet** — the 33-column schema defined in `../../schema/product-schema.md`. Image URLs are in column AC, product names in column E. Read `../../schema/sheet-conventions.md` for CRUD patterns with MCP tools.
+Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Resolve the nearest ancestor containing `PROJECT.md`, strictly validate its `product-library.csv`, and address fields by the exact names `Image URL` and `Product Name`, never by position or letters.
 
 ## Step 1: Get Input
 
-If no arguments provided, ask the user:
-1. **Spreadsheet ID** — the Google Sheets ID (from the URL: `docs.google.com/spreadsheets/d/{ID}/...`). 2. **Image URL column** — which column contains image URLs (default: `AC` in the master schema, or the user can specify)
-3. **Name column** (optional) — which column has product names for file naming (default: `E` in the master schema). If not provided, derive names from the image URL/filename.
-4. **Output location** — where to save the images. Suggest `./product-images-YYYY-MM-DD/` as default but let the user pick any path.
-5. **Header row** — whether row 1 is a header (default: yes, row 2 in master schema)
+If no arguments are provided, use the nearest project's `product-library.csv` and ask only for the output location when it cannot be inferred. Suggest `./product-images-YYYY-MM-DD/`.
 
-## Step 2: Read URLs from Google Sheet
+## Step 2: Read URLs from CSV
 
-Use `mcp__google-sheets__list_sheets` to inspect the sheet, then `mcp__google-sheets__get_sheet_data` to read the image URL column and optional name column.
+Run `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate product --project <project-root>` before reading. Parse the entire UTF-8 CSV strictly and select the named `Image URL` and `Product Name` fields.
 
 Build a list of `{ index, url, name }` entries. Skip empty rows.
 
@@ -161,7 +155,7 @@ Include the full path to the output folder so the user can open it.
 - **Download failures:** Log and continue. Don't block the pipeline for one bad URL.
 - **Resize failures:** Log and continue. Skip that image in the bg-removal step.
 - **rembg failures:** Log and continue. Some images (vectors, icons) may not process well.
-- **Sheet read errors:** Stop and report. Ask the user to verify the spreadsheet ID and column.
+- **CSV validation errors:** Stop and report. Leave the source byte-for-byte unchanged.
 
 ## Notes
 

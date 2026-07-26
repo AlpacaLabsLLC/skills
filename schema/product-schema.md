@@ -1,8 +1,8 @@
 # FF&E Product Schema
 
-Version 1.1 · 33 columns (A–AG)
+Version 2.0 · 33 columns (A–AG)
 
-One row per product. All FF&E skills in this plugin read and write to this schema — whether the target is a Google Sheet, CSV file, or markdown table.
+One row per product. Persistent FF&E data uses the project-local `product-library.csv` and the rules in [csv-conventions.md](csv-conventions.md).
 
 ## Column Reference
 
@@ -13,13 +13,13 @@ One row per product. All FF&E skills in this plugin read and write to this schem
 | A | Category | Text | Title Case | One of 22 canonical terms. See **Category Vocabulary** below. |
 | B | Brand | Text | Title Case | Manufacturer name. Preserve known abbreviations (HAY, USM, HBF, OFS, DWR, CB2). |
 | C | Vendor | Text | Title Case | Retailer or website selling the product. May differ from Brand. |
-| D | Thumbnail | Formula | `=IMAGE(AC{row})` | Product hero image. Blank if no image available. |
+| D | Thumbnail | URL | Plain URL | Optional thumbnail URL. Blank if no image is available. |
 | E | Product Name | Text | Title Case | Full product name as listed by manufacturer. |
 | F | Designer | Text | Title Case | Designer or design studio if attributed. Blank if N/A. |
 | G | Indoor/Outdoor | Text | `Indoor`, `Outdoor`, or `Indoor/Outdoor` | Use context. Blank if unspecified. |
 | H | Description | Text | Sentence case | 1–2 sentence description or tagline. |
 | I | SKU | Text | As listed | Model number, part number, or catalog number. |
-| J | Link | Formula | `=HYPERLINK(url, "Link")` | Source page URL. Blank for PDFs or manually entered products. |
+| J | Link | URL | Plain URL | Source page URL. Blank for PDFs or manually entered products. |
 | K | Collection | Text | Title Case | Product line or collection name. Blank if N/A. |
 
 ### Dimensions (L–Q)
@@ -113,7 +113,7 @@ If a category is ambiguous, use the closest match and add `[?]` for the user to 
 
 ## Item Number Prefixes
 
-Used by `/product-data-import` to number items within a schedule. Each category maps to a prefix:
+Used by `/as:product-data-import` to number items within a schedule. Each category maps to a prefix:
 
 | Category | Prefix |
 |----------|--------|
@@ -155,14 +155,14 @@ Numbered sequentially within each prefix: S-01, S-02, T-01, L-01, etc.
 
 | Value | Written by |
 |-------|-----------|
-| `research` | `/product-research` |
-| `bulk-fetch` | `/product-spec-bulk-fetch` |
-| `pdf-parser` | `/product-spec-pdf-parser` |
-| `product-data-import` | `/product-data-import` |
-| `product-match` | `/product-match` |
-| `product-pair` | `/product-pair` |
-| `product-enrich` | `/product-enrich` |
-| `sif-to-csv` | `/sif-to-csv` |
+| `research` | `/as:product-research` |
+| `bulk-fetch` | `/as:product-spec-bulk-fetch` |
+| `pdf-parser` | `/as:product-spec-pdf-parser` |
+| `product-data-import` | `/as:product-data-import` |
+| `product-match` | `/as:product-match` |
+| `product-pair` | `/as:product-pair` |
+| `product-enrich` | `/as:product-enrich` |
+| `sif-to-csv` | `/as:sif-to-csv` |
 
 ## Notes Conventions
 
@@ -170,12 +170,12 @@ Column AE (Notes) holds skill-specific metadata. Each skill appends structured d
 
 | Skill | Notes format |
 |-------|-------------|
-| `/product-research` | The "Why" reasoning for each candidate |
-| `/product-data-import` | `Qty: 3 · Ext: $17,085` (quantity and extended price) |
-| `/product-spec-pdf-parser` | `Variant: Diamond, Black \| Origin: Sweden \| Source: filename.pdf` |
-| `/product-match` | Similarity reasoning |
-| `/product-pair` | Design pairing reasoning |
-| `/sif-to-csv` | `Sell: $1,200 · Ext List: $4,180 · Ext Sell: $3,600` (dealer pricing) |
+| `/as:product-research` | The "Why" reasoning for each candidate |
+| `/as:product-data-import` | `Qty: 3 · Ext: $17,085` (quantity and extended price) |
+| `/as:product-spec-pdf-parser` | `Variant: Diamond, Black \| Origin: Sweden \| Source: filename.pdf` |
+| `/as:product-match` | Similarity reasoning |
+| `/as:product-pair` | Design pairing reasoning |
+| `/as:sif-to-csv` | `Sell: $1,200 · Ext List: $4,180 · Ext Sell: $3,600` (dealer pricing) |
 
 ## Tags Conventions
 
@@ -183,15 +183,15 @@ Column AD (Tags) holds comma-separated identifiers. Skills append to existing ta
 
 | Skill | Tags format |
 |-------|------------|
-| `/product-data-import` | Item number: `S-01` |
-| `/product-match` | `match:{source-product-name}` |
-| `/product-pair` | `pair:{source-product-name}` |
-| `/product-enrich` | Style tags: `Mid-Century Modern, Iconic` |
+| `/as:product-data-import` | Item number: `S-01` |
+| `/as:product-match` | `match:{source-product-name}` |
+| `/as:product-pair` | `pair:{source-product-name}` |
+| `/as:product-enrich` | Style tags: `Mid-Century Modern, Iconic` |
 | Any skill | Project tags from designer: `lobby-reno, walnut` |
 
 ## CSV Header
 
-When writing to CSV, use this exact header row:
+Use this exact header row for `product-library.csv`:
 
 ```csv
 Category,Brand,Vendor,Thumbnail,Product Name,Designer,Indoor/Outdoor,Description,SKU,Link,Collection,W,D,H,Seat H,Unit,Weight,Materials,Colors/Finishes,Selected Color/Finish,List Price,Sale Price,Currency,Lead Time,Warranty,Certifications,COM/COL,Clipped At,Image URL,Tags,Notes,Status,Source

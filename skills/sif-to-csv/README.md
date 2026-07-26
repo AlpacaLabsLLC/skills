@@ -1,6 +1,6 @@
-# /sif-to-csv
+# /as:sif-to-csv
 
-Convert SIF (Standard Interchange Format) files from dealers into readable CSV spreadsheets, for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Convert SIF (Standard Interchange Format) files from dealers into readable CSV data, for Claude Code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,20 +9,16 @@ Convert SIF (Standard Interchange Format) files from dealers into readable CSV s
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/sif-to-csv ~/.claude/skills/sif-to-csv
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/sif-to-csv ~/Documents/project/dealer-quote.sif
+/as:sif-to-csv ~/Documents/as:project/dealer-quote.sif
 ```
 
-Parses SIF field codes, expands manufacturer codes, calculates sell prices from discounts, and outputs a clean spreadsheet. Handles Standard, CET, and Cyncly Worksheet SIF dialects.
+Parses SIF field codes, expands manufacturer codes, calculates sell prices from discounts, and outputs clean CSV rows. Handles Standard, CET, and Cyncly Worksheet SIF dialects.
 
 ## SIF Field Reference
 

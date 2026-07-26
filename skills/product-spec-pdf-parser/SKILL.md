@@ -1,6 +1,6 @@
 ---
 name: product-spec-pdf-parser
-description: Extract structured FF&E product specs from PDF files — price books, fact sheets, and spec sheets — into a standardized schedule. Use when the user shares a product PDF and asks to "parse this price book", extract specs, or import items from a spec sheet.
+description: Extract structured FF&E specs from PDF price books, fact sheets, or spec sheets into a schedule. Use for product PDFs; not web URLs or EPDs.
 allowed-tools:
   - Read
   - Write
@@ -9,12 +9,9 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__update_cells
-  - mcp__google-sheets__list_sheets
 ---
 
-# /product-spec-pdf-parser — PDF Product Spec Parser
+# /as:product-spec-pdf-parser — PDF Product Spec Parser
 
 Extract structured FF&E data from product PDF files — price books, fact sheets, configurator sheets, and spec sheets. Uses PyMuPDF for text extraction and Claude's reasoning to parse wildly varying PDF layouts into a standardized schedule.
 
@@ -28,25 +25,16 @@ The user provides PDFs in one of these ways:
 
 Also ask (or use defaults):
 
-- **Output destination** — Google Sheet, local CSV, or markdown (default: ask)
+- **Persistence** — Markdown preview by default; optionally save to the project library
 - **Variant depth** — `expand` (one row per variant/SKU, default) or `summarize` (comma-separated variants in one row)
 
 ## Output Schema
 
-Products are written to the **master Google Sheet** — the same 33-column schema used by all product skills, plus PDF-specific extra columns. When writing to CSV, use the same column order.
+Persistent products use the nearest project-root `product-library.csv` with no extra columns. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`.
 
-Read `../../schema/product-schema.md` (relative to this SKILL.md) for the full column reference, field formats, and category vocabulary. Read `../../schema/sheet-conventions.md` for CRUD patterns with MCP tools.
+Skill-specific named values: `Source` is `pdf-parser`; `Status` is `saved`; `Link`, `Thumbnail`, `Vendor`, `Sale Price`, and `Image URL` are blank unless directly supported by the PDF.
 
-Skill-specific column values:
-- **AG (Source):** `pdf-parser`
-- **AF (Status):** `saved`
-- **J (Link):** Blank (no URL for PDFs)
-- **D (Thumbnail):** Blank (no image URL typically)
-- **C (Vendor):** Blank (source is PDF, not a retailer)
-- **V (Sale Price):** Blank (PDFs don't have sale prices)
-- **AC (Image URL):** Blank (no image from PDF)
-
-### PDF-specific data in Notes (col AE)
+### PDF-specific data in `Notes`
 
 PDFs contain fields that don't have dedicated master columns. Append these to Notes using `|` as delimiter:
 
@@ -142,24 +130,11 @@ Show a summary markdown table with the parsed products. Include:
 - Any issues or assumptions made
 - Sample of the first 10 rows if large
 
-Ask: **"Does this look correct? Should I adjust anything before saving?"**
+If persistence was requested, use this results table as the change preview and present the single confirmation gate. Do not ask the same confirmation first in prose.
 
 ### Step 5: Write output
 
-Ask the user (if not already specified): **"Where should I save this?"**
-
-Options:
-- **Master Google Sheet** — append rows to the shared product library. Ask for spreadsheet ID if not already known.
-- **Local CSV** — save to a specified path (default: `./ffe-pdf-parse-YYYY-MM-DD.csv`)
-- **Just the table** — leave as markdown in the conversation
-
-## CSV Format
-
-When saving to CSV, use the CSV header from `../../schema/product-schema.md`.
-
-## Google Sheets Format
-
-Append rows to the master Google Sheet using the same 33-column schema. Set `Clipped At` to current timestamp and `Source` to `pdf-parser`. PDF-specific data (variant, price adder, country of origin, source filename) goes in the Notes column.
+Without persistence, leave the result as Markdown. After approval to persist, serialize all complete canonical rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The shared helper validates the complete batch and CSV before one atomic replacement; never loop per row. PDF-specific data stays in `Notes`; do not create extra columns or secondary structured exports.
 
 ## Edge Cases
 

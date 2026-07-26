@@ -1,6 +1,8 @@
-# /product-match
+# /as:product-match
 
-Find visually or functionally similar products from an image, name, or description. for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Find visually or functionally similar products from an image, name, or description. for Claude Code.
+
+Results are shown in Markdown; selected matches can be appended to the nearest project's `product-library.csv` after approval.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,17 +11,13 @@ Find visually or functionally similar products from an image, name, or descripti
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/product-match ~/.claude/skills/product-match
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/product-match
+/as:product-match
 ```
 
 ## What's Included

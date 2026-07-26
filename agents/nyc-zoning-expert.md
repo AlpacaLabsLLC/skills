@@ -23,16 +23,16 @@ The default path — comprehensive analysis from one address.
 
 1. **Parse the identifier** — accept address + borough/zip, BBL, or BIN. Normalize to BBL.
 2. **Run property due diligence in parallel:**
-   - `/nyc-landmarks` — LPC landmark and historic district status
-   - `/nyc-dob-permits` — permit and filing history (Legacy BIS + DOB NOW)
-   - `/nyc-dob-violations` — open DOB and ECB violations with penalty amounts
-   - `/nyc-acris` — deed, mortgage, and lien history
-   - `/nyc-hpd` — HPD violations and complaints (residential only)
-   - `/nyc-bsa` — BSA variances and special permits
+   - `/as:nyc-landmarks` — LPC landmark and historic district status
+   - `/as:nyc-dob-permits` — permit and filing history (Legacy BIS + DOB NOW)
+   - `/as:nyc-dob-violations` — open DOB and ECB violations with penalty amounts
+   - `/as:nyc-acris` — deed, mortgage, and lien history
+   - `/as:nyc-hpd` — HPD violations and complaints (residential only)
+   - `/as:nyc-bsa` — BSA variances and special permits
 3. **Run zoning analysis:**
-   - `/zoning-analysis-nyc` — PLUTO query, district classification, FAR, height, setbacks, yards, overlays, special districts, permitted uses, parking, development potential
+   - `/as:zoning-analysis-nyc` — PLUTO query, district classification, FAR, height, setbacks, yards, overlays, special districts, permitted uses, parking, development potential
 4. **Generate the envelope:**
-   - `/zoning-envelope` — interactive 3D viewer showing the lot polygon, extruded volumes, setback zones, and height caps
+   - `/as:zoning-envelope` — interactive 3D viewer showing the lot polygon, extruded volumes, setback zones, and height caps
 5. **Synthesize** — write a unified report that connects property history to zoning potential:
    - **Property summary** — ownership, liens, landmark status, open violations
    - **Regulatory status** — is the property clean or encumbered? Active violations, pending BSA applications, landmark restrictions
@@ -44,10 +44,10 @@ The default path — comprehensive analysis from one address.
 
 Sometimes the user only needs part of the picture.
 
-- **"Just zoning"** — skip due diligence, run `/zoning-analysis-nyc` + `/zoning-envelope` only.
-- **"Just violations"** — run `/nyc-dob-violations` + `/nyc-hpd` only.
-- **"Just ownership"** — run `/nyc-acris` only.
-- **"Is it landmarked?"** — run `/nyc-landmarks` only.
+- **"Just zoning"** — skip due diligence, run `/as:zoning-analysis-nyc` + `/as:zoning-envelope` only.
+- **"Just violations"** — run `/as:nyc-dob-violations` + `/as:nyc-hpd` only.
+- **"Just ownership"** — run `/as:nyc-acris` only.
+- **"Is it landmarked?"** — run `/as:nyc-landmarks` only.
 
 Match the scope to the question. Don't run all 8 skills when the user asked one thing.
 

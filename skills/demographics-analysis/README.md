@@ -1,6 +1,6 @@
-# /demographics-analysis
+# /as:demographics-analysis
 
-Demographics and market site analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get population, income, age distribution, housing market data, and employment statistics — sourced exclusively from Census Bureau, BLS, HUD, and other governmental databases.
+Demographics and market site analysis for Claude Code. Provide an address and get population, income, age distribution, housing market data, and employment statistics — sourced exclusively from Census Bureau, BLS, HUD, and other governmental databases.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,23 +9,19 @@ Demographics and market site analysis for [Claude Code](https://docs.anthropic.c
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/demographics-analysis ~/.claude/skills/demographics-analysis
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/demographics-analysis 742 Evergreen Terrace, Springfield IL
+/as:demographics-analysis 742 Evergreen Terrace, Springfield IL
 ```
 
 Or start with no context:
 
 ```
-/demographics-analysis
+/as:demographics-analysis
 ```
 
 The skill researches:

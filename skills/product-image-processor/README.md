@@ -1,6 +1,6 @@
-# /product-image-processor
+# /as:product-image-processor
 
-Batch product image processor for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Read image URLs from a Google Sheet, download at full resolution, normalize sizing, and remove backgrounds — saving output at each stage.
+Batch product image processor for Claude Code. Read the named `Image URL` and `Product Name` fields from `product-library.csv`, download at full resolution, normalize sizing, and remove backgrounds.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -16,16 +16,10 @@ The skill auto-installs missing packages on first run. The u2net model (~170MB) 
 ## Usage
 
 ```
-/product-image-processor
+/as:product-image-processor
 ```
 
-Then provide a Google Sheet ID. In the master schema, Image URLs are in column AC and Product Names in column C.
-
-```
-/product-image-processor
-
-Sheet: 1FMScYW9guezOWc_m4ClTQxxFIpS6TNRr373R-MJGzgE
-```
+Run it inside a project containing `PROJECT.md` and `product-library.csv`.
 
 ### Output
 
@@ -44,10 +38,10 @@ This is a **utility** that processes images from any source:
 
 | Context | How it's used |
 |---------|--------------|
-| Standalone | Process images from any Google Sheet with image URLs |
-| After `/product-spec-bulk-fetch` | Process images from fetched products |
-| After `/product-research` | Process images from research results |
-| On the master sheet | Process all product images in the library |
+| Standalone | Process named image URLs from the project product library |
+| After `/as:product-spec-bulk-fetch` | Process images from fetched products |
+| After `/as:product-research` | Process images from research results |
+| On the project library | Process all product images in the library |
 
 ## Processing Pipeline
 
@@ -71,9 +65,9 @@ After every batch: success/failure counts per stage.
 
 | Skill | Relationship |
 |-------|-------------|
-| `/product-research` | Processes images from research results |
-| `/product-spec-bulk-fetch` | Processes images from fetched products |
-| `/product-data-cleanup` | Run cleanup first, then process images |
+| `/as:product-research` | Processes images from research results |
+| `/as:product-spec-bulk-fetch` | Processes images from fetched products |
+| `/as:product-data-cleanup` | Run cleanup first, then process images |
 
 ## License
 

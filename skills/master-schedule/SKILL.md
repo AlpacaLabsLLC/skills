@@ -1,157 +1,84 @@
 ---
 name: master-schedule
-description: Silent setup check. Verifies master-schedule.json exists and the sheet is accessible. If not, copies the template sheet to the user's account and writes master-schedule.json. Called automatically by other skills before reading or writing product data.
+description: Initialize, validate, inspect, or import the current project's local FF&E product library. Use when a product workflow needs product-library.csv, when the user invokes /as:master-schedule, or when legacy master-schedule.json or canoa.json configuration is present.
 allowed-tools:
   - Read
   - Write
   - Bash
-  - mcp__google-sheets__list_sheets
-  - mcp__google-sheets__get_sheet_data
-  - mcp__google-sheets__create_spreadsheet
-  - mcp__google-sheets__update_cells
+  - AskUserQuestion
 ---
 
-# /master-schedule — Sheet Setup Check
+# /as:master-schedule — Local product library
 
-**Called automatically by all product skills before reading or writing.** Can also be run manually to reconnect or reset.
+Manage the current project's `product-library.csv`. This workflow is local-only: do not use a network service, connector, account, spreadsheet identifier, or MCP tool.
 
-Template sheet ID: `1mWnExnSWTKJv0vbu1mDnrQFmv_Iz_fNklIeuBYfMB5k`
-
----
-
-## Step 1: Check for master-schedule.json
+Use the deterministic helper instead of constructing or changing CSV with ad hoc shell or prompt logic:
 
 ```bash
-cat ./master-schedule.json 2>/dev/null
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" status product
 ```
 
-**Legacy config:** if `master-schedule.json` is missing but `./canoa.json` exists (written by plugin versions ≤ 1.0.0), migrate it — `mv ./canoa.json ./master-schedule.json` — and continue as found.
+The helper resolves the nearest project root by walking upward to `PROJECT.md`. The canonical schema is `${CLAUDE_PLUGIN_ROOT}/schema/product-schema.md`; storage rules are in `${CLAUDE_PLUGIN_ROOT}/schema/csv-conventions.md`.
 
-### Found and valid → Step 2 (verify access)
-### Not found → Step 3 (auto-setup)
+## Automatic use by product skills
 
----
+1. Run `status product` from the user's current working directory.
+2. If the valid library exists, continue silently.
+3. If it is missing and no legacy configuration exists, preview creation at the resolved project root. Use the single interaction gate once, then run `init product` after confirmation.
+4. If the library is invalid, stop. Explain the header or row error and leave the file unchanged.
+5. Never initialize outside a directory governed by `PROJECT.md`.
 
-## Step 2: Verify Sheet Access
+## Manual use
 
-Call `mcp__google-sheets__list_sheets` with the `master_sheet_id` from `master-schedule.json`.
+When the user invokes `/as:master-schedule` directly:
 
-- **Success** → sheet is accessible. Return silently — the calling skill continues.
-- **404 / error** → sheet was deleted or moved. Proceed to Step 3 to set up a new one.
+- Existing valid library: report its path and data-row count from `status product`.
+- Missing library: preview the exact path, explain that initialization creates only the 33-column header, use one confirmation gate, then run `init product`.
+- Invalid library: report the validation failure without writing.
+- Empty existing file: it may be initialized after the same preview and confirmation.
 
----
+Do not ask in prose whether to proceed immediately before presenting an approval gate. The gate itself is the question.
 
-## Step 3: Auto-Setup
+## User-exported CSV import
 
-No config found or sheet inaccessible. Set up automatically without asking the user.
+Import is explicit and never automatic:
 
-### 3a: Copy the template
-
-Attempt to copy the template sheet using the Google Drive API (`files.copy`). If a Drive MCP tool is available, use it:
-
-```
-drive.files.copy
-  fileId: "1mWnExnSWTKJv0vbu1mDnrQFmv_Iz_fNklIeuBYfMB5k"
-  title: "Product Library — {today's date}"
-```
-
-**If no Drive copy tool is available**, fall back to creating a new spreadsheet and writing the header row:
-
-1. Call `mcp__google-sheets__create_spreadsheet` with title `"Product Library — {today's date}"`
-2. Write the 33-column header row to `Sheet1!A1:AG1` using the CSV header from `../../schema/product-schema.md`
-
-Note in `master-schedule.json` whether this was a template copy or a fresh sheet (`"setup": "copy"` or `"setup": "fresh"`).
-
-### 3b: Identify the Products tab
-
-Look for a tab named `Products`. If not found (e.g. fresh sheet named `Sheet1`), use whatever tab exists and record its name in `master-schedule.json`.
-
-### 3c: Write master-schedule.json
-
-```json
-{
-  "master_sheet_id": "{new sheet ID}",
-  "sheet_title": "Product Library — {date}",
-  "sheet_url": "https://docs.google.com/spreadsheets/d/{id}",
-  "products_tab": "Products",
-  "project_name": "",
-  "setup": "copy",
-  "created_at": "{ISO timestamp}"
-}
+```bash
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" import product --source "/absolute/path/to/user-exported.csv"
 ```
 
-### 3d: Notify the user
+Before import, state the source and target paths and that the complete source will be validated against the exact 33-column schema. Use one confirmation gate. The helper refuses a malformed source and refuses to overwrite a populated target.
 
-```
-✓ Product library created and connected.
-  docs.google.com/spreadsheets/d/{id}
+For a reviewed operation that intentionally replaces the complete populated library, use the explicit replacement flag after preview and confirmation:
 
-  You may want to rename this sheet and set a project name.
-  Run /master-schedule to update.
+```bash
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" import product --source "/absolute/path/to/reviewed-library.csv" --replace-existing
 ```
 
-Then return — the calling skill continues.
+This validates the complete candidate and current library before one guarded atomic replacement. It fails closed if either file is malformed or if the target changes after validation. Never add this flag to ordinary setup or import.
 
----
+## Legacy evidence
 
-## Manual Run
+`master-schedule.json` and `canoa.json` may point to a library used by an earlier release. They contain configuration, not recoverable rows.
 
-When invoked directly (`/master-schedule`), run the same flow but also:
+- Preserve both files byte-for-byte.
+- Do not rename, delete, rewrite, or contact anything named inside them.
+- Explain that connectivity was removed in Architecture Studio 1.4.
+- Ask the user to export the former library as CSV, then use the explicit user-exported CSV import flow.
 
-- If `master-schedule.json` exists and the sheet is accessible, show current status:
+## Mutation boundary for other skills
 
-```
-Product library connected.
+Use the same helper for safe operations:
 
-  Project:  {project_name or "(unnamed)"}
-  Sheet:    {sheet_title}
-  URL:      docs.google.com/spreadsheets/d/{id}
-  Tab:      {products_tab}
+```bash
+# Validate the complete file
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate product
 
-Options:
-  1. Update project name
-  2. Connect a different sheet (paste URL)
-  3. Reset (create a new copy of the template)
-```
+# Append values supplied as a JSON object keyed by schema column
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --row-json "/path/to/row.json"
 
-- If user chooses (2), ask for URL, validate, update `master-schedule.json`.
-- If user chooses (3), run Step 3 again.
-
----
-
-## MCP Connection Errors
-
-If any MCP call fails with "tool not found" or auth error, stop and report:
-
-```
-Google Sheets MCP is not connected or not authenticated.
-
-To connect it, add to your user-level MCP settings (mcp_settings.json in your Claude config directory):
-
-{
-  "mcpServers": {
-    "google-sheets": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-google-sheets"],
-      "env": {
-        "GOOGLE_SERVICE_ACCOUNT_KEY": "<path-to-service-account-json>"
-      }
-    }
-  }
-}
-
-Then restart Claude Code and try again.
-Need help creating a service account? Ask for instructions.
+# Update exactly one matched row with a partial JSON object
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" update product --match-column "SKU" --match-value "ABC-123" --row-json "/path/to/changes.json"
 ```
 
----
-
-## Edge Cases
-
-| Situation | Handling |
-|-----------|----------|
-| `master-schedule.json` exists, sheet accessible | Return silently |
-| `master-schedule.json` exists, sheet deleted | Auto-create new copy, update `master-schedule.json` |
-| `master-schedule.json` missing | Auto-create new copy, write `master-schedule.json` |
-| Drive copy tool not available | Fall back to fresh sheet + header row |
-| MCP not connected | Stop, show setup instructions |
+All mutations validate the complete existing file before writing and atomically replace it from a temporary file in the same directory. A failed validation or mutation must leave the source unchanged.

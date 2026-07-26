@@ -1,6 +1,6 @@
-# /nyc-property-report
+# /as:nyc-property-report
 
-Combined NYC property report as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Runs all 6 NYC property data lookups in sequence and writes a comprehensive markdown report covering landmarks, DOB permits, violations, ACRIS records, HPD data, and BSA variances. No API key required.
+Combined NYC property report as a Claude Code skill. Runs all 6 NYC property data lookups in sequence and writes a comprehensive markdown report covering landmarks, DOB permits, violations, ACRIS records, HPD data, and BSA variances. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
@@ -9,19 +9,15 @@ Combined NYC property report as a [Claude Code](https://docs.anthropic.com/en/do
 ```bash
 # Via plugin system
 claude plugin marketplace add AlpacaLabsLLC/skills-for-architects
-claude plugin install architecture-studio@skills-for-architects
-
-# Or symlink just this skill
-git clone https://github.com/AlpacaLabsLLC/skills-for-architects.git
-ln -s $(pwd)/skills-for-architects/skills/nyc-property-report ~/.claude/skills/nyc-property-report
+claude plugin install as@skills-for-architects
 ```
 
 ## Usage
 
 ```
-/nyc-property-report 120 Broadway, Manhattan
-/nyc-property-report 1000770001          (BBL)
-/nyc-property-report 1001389             (BIN)
+/as:nyc-property-report 120 Broadway, Manhattan
+/as:nyc-property-report 1000770001          (BBL)
+/as:nyc-property-report 1001389             (BIN)
 ```
 
 ## What it covers
@@ -30,12 +26,12 @@ This skill orchestrates all 6 standalone NYC property skills into a single repor
 
 | Skill | What it covers |
 |-------|---------------|
-| [`/nyc-landmarks`](../nyc-landmarks) | LPC landmark & historic district check |
-| [`/nyc-dob-permits`](../nyc-dob-permits) | DOB permit & filing history (Legacy BIS + DOB NOW) |
-| [`/nyc-dob-violations`](../nyc-dob-violations) | DOB & ECB violations with open violation flags |
-| [`/nyc-acris`](../nyc-acris) | ACRIS property transaction records (deeds, mortgages, liens) |
-| [`/nyc-hpd`](../nyc-hpd) | HPD violations, complaints & registration (residential only) |
-| [`/nyc-bsa`](../nyc-bsa) | BSA variances & special permits |
+| [`/as:nyc-landmarks`](../nyc-landmarks) | LPC landmark & historic district check |
+| [`/as:nyc-dob-permits`](../nyc-dob-permits) | DOB permit & filing history (Legacy BIS + DOB NOW) |
+| [`/as:nyc-dob-violations`](../nyc-dob-violations) | DOB & ECB violations with open violation flags |
+| [`/as:nyc-acris`](../nyc-acris) | ACRIS property transaction records (deeds, mortgages, liens) |
+| [`/as:nyc-hpd`](../nyc-hpd) | HPD violations, complaints & registration (residential only) |
+| [`/as:nyc-bsa`](../nyc-bsa) | BSA variances & special permits |
 
 ## Data Sources
 
@@ -66,7 +62,7 @@ This skill orchestrates all 6 standalone NYC property skills into a single repor
 
 A markdown file (`property-{address-slug}.md`) with 7 sections: property identification, landmark status, DOB permits, DOB violations, ACRIS records, HPD data, and BSA variances. After writing the file, prints a brief inline summary with key findings.
 
-Pair with `/zoning-analysis-nyc` for a complete property and zoning picture.
+Pair with `/as:zoning-analysis-nyc` for a complete property and zoning picture.
 
 ## License
 

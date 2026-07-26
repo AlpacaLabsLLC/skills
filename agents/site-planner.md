@@ -22,10 +22,10 @@ The most common case — one address, full analysis.
 
 1. **Confirm the location** — parse the address, city, or coordinates. If ambiguous, ask once.
 2. **Run all four analyses in parallel:**
-   - `/environmental-analysis` — climate, precipitation, wind, sun angles, flood zones, seismic risk, soil, topography
-   - `/mobility-analysis` — transit, walk/bike/transit scores, road access, pedestrian infrastructure
-   - `/demographics-analysis` — population, income, age, housing market, employment
-   - `/site-history` — adjacent uses, architectural character, landmarks, commercial activity, planned development
+   - `/as:environmental-analysis` — climate, precipitation, wind, sun angles, flood zones, seismic risk, soil, topography
+   - `/as:mobility-analysis` — transit, walk/bike/transit scores, road access, pedestrian infrastructure
+   - `/as:demographics-analysis` — population, income, age, housing market, employment
+   - `/as:site-history` — adjacent uses, architectural character, landmarks, commercial activity, planned development
 3. **Synthesize** — don't just concatenate the four reports. Write a site brief that integrates findings:
    - **Site identity** — one paragraph capturing what makes this location distinct
    - **Opportunities** — what the site data suggests the project should leverage (transit adjacency, growing demographics, landmark character)
