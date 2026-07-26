@@ -42,7 +42,7 @@ PREF="$TEST_ROOT/preference"
 [ "$(CLAUDE_PLUGIN_DATA="$TEST_ROOT/plugin-data-old" ARCHITECTURE_STUDIO_STATE_DIR="$PREF" ./skills/studio/scripts/update-preference.sh enable)" = enabled ]
 [ -f "$PREF/.architecture-studio-update-check-enabled" ]
 [ ! -e "$TEST_ROOT/plugin-data-old/.architecture-studio-update-check-enabled" ]
-mode=$(stat -f '%Lp' "$PREF/.architecture-studio-update-check-enabled" 2>/dev/null || stat -c '%a' "$PREF/.architecture-studio-update-check-enabled")
+mode=$(python3 -c 'import os,sys; print(oct(os.stat(sys.argv[1]).st_mode & 0o777)[2:])' "$PREF/.architecture-studio-update-check-enabled")
 [ "$mode" = 600 ]
 printf 'checked_at=0\nremote=9.9.9\nnudged_for=\n' > "$PREF/.architecture-studio-version-check"
 [ "$(CLAUDE_PLUGIN_DATA="$TEST_ROOT/plugin-data-new" ARCHITECTURE_STUDIO_STATE_DIR="$PREF" ./skills/studio/scripts/update-preference.sh enable)" = enabled ]
