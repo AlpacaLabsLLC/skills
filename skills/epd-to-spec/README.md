@@ -1,6 +1,6 @@
 # /as:epd-to-spec
 
-Generate CSI-formatted specification sections requiring EPDs and setting maximum GWP thresholds for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). References ISO 14025, ISO 21930, and EN 15804.
+Generate CSI-formatted specification sections requiring EPDs and setting maximum GWP thresholds for Claude Code. References ISO 14025, ISO 21930, and EN 15804.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

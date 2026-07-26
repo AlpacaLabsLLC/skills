@@ -1,6 +1,6 @@
 # /as:product-data-import
 
-Turn raw product lists into formatted FF&E specification schedules for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Turn raw product lists into formatted FF&E specification schedules for Claude Code.
 
 Markdown previews remain in conversation; approved persistent rows are appended to the nearest project's `product-library.csv` using the shared 33-column schema.
 

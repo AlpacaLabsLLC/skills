@@ -1,6 +1,6 @@
 # /as:product-match
 
-Find visually or functionally similar products from an image, name, or description. for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Find visually or functionally similar products from an image, name, or description. for Claude Code.
 
 Results are shown in Markdown; selected matches can be appended to the nearest project's `product-library.csv` after approval.
 

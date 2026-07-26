@@ -1,6 +1,6 @@
 # /as:nyc-hpd
 
-HPD violations, complaints, and building registration lookup for NYC residential buildings as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries Housing Preservation & Development data — only applies to residential building classes (A, B, C, D, R, S). No API key required.
+HPD violations, complaints, and building registration lookup for NYC residential buildings as a Claude Code skill. Queries Housing Preservation & Development data — only applies to residential building classes (A, B, C, D, R, S). No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

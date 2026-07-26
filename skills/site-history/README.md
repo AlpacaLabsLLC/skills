@@ -1,6 +1,6 @@
 # /as:site-history
 
-Neighborhood context and history analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get development history, architectural character, historic district status, landmarks, commercial activity, and planned development — sourced from landmarks commissions, planning departments, and archives.
+Neighborhood context and history analysis for Claude Code. Provide an address and get development history, architectural character, historic district status, landmarks, commercial activity, and planned development — sourced from landmarks commissions, planning departments, and archives.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

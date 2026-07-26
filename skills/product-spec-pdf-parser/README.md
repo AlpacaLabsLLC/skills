@@ -1,6 +1,6 @@
 # /as:product-spec-pdf-parser
 
-PDF product spec parser for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it price books, fact sheets, or spec sheets and optionally save structured FF&E data to `product-library.csv`.
+PDF product spec parser for Claude Code. Feed it price books, fact sheets, or spec sheets and optionally save structured FF&E data to `product-library.csv`.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

@@ -1,6 +1,6 @@
 # /as:nyc-acris
 
-ACRIS property transaction record lookup for any NYC property as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries deeds, mortgages, liens, and other recorded documents using a 3-table join across the ACRIS Legals, Master, and Parties datasets. No API key required.
+ACRIS property transaction record lookup for any NYC property as a Claude Code skill. Queries deeds, mortgages, liens, and other recorded documents using a 3-table join across the ACRIS Legals, Master, and Parties datasets. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

@@ -1,6 +1,6 @@
 # /as:color-palette-generator
 
-Generates harmonious color palettes from descriptions, moods, images, or reference brands for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Outputs a self-contained HTML file with visual swatches, color codes, contrast ratios, and example pairings.
+Generates harmonious color palettes from descriptions, moods, images, or reference brands for Claude Code. Outputs a self-contained HTML file with visual swatches, color codes, contrast ratios, and example pairings.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

@@ -1,6 +1,6 @@
 # /as:sif-to-csv
 
-Convert SIF (Standard Interchange Format) files from dealers into readable CSV data, for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Convert SIF (Standard Interchange Format) files from dealers into readable CSV data, for Claude Code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

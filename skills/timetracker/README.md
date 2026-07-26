@@ -9,7 +9,7 @@ Reconstructs daily or weekly work descriptions from dated project artifacts and 
 /as:timetracker correct E0012
 ```
 
-The skill searches plans, decisions, meeting minutes, site reports, tasks, the project dossier, and other dated artifacts. Explicit dates inside artifacts take precedence; git history is secondary evidence; filesystem modification time is a visibly low-confidence fallback.
+The skill searches plans, decisions, meeting minutes, site reports, tasks, `PROJECT.md`, and other dated artifacts. Explicit dates inside artifacts take precedence; git history is secondary evidence; filesystem modification time is a visibly low-confidence fallback.
 
 Candidates always have a blank duration. File activity, commit counts, timestamp spans, task status, and meeting duration can never determine hours. The user selects entries, supplies a decimal duration for each, reviews the exact rows, and confirms before anything is appended.
 

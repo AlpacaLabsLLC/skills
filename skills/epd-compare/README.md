@@ -1,6 +1,6 @@
 # /as:epd-compare
 
-Compare 2+ products side-by-side on environmental impact metrics for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Validates comparability, normalizes declared units, generates percentage deltas, and checks LEED v4.1 MRc2 eligibility.
+Compare 2+ products side-by-side on environmental impact metrics for Claude Code. Validates comparability, normalizes declared units, generates percentage deltas, and checks LEED v4.1 MRc2 eligibility.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

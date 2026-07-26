@@ -1,6 +1,6 @@
 # /as:occupancy-calculator
 
-IBC occupancy load calculator for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Describe your building — get per-area occupant loads from IBC Table 1004.5, gross vs net area handling, egress requirements, and exportable reports.
+IBC occupancy load calculator for Claude Code. Describe your building — get per-area occupant loads from IBC Table 1004.5, gross vs net area handling, egress requirements, and exportable reports.
 
 **Jurisdiction-aware.** The skill asks what state or city your project is in and uses the correct code source:
 - **New York City** — [NYC Building Code 2022](https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCbldg/) (based on IBC 2015 + NYC amendments)

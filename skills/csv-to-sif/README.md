@@ -1,6 +1,6 @@
 # /as:csv-to-sif
 
-Convert the local CSV FF&E product library to SIF (Standard Interchange Format) for dealer and procurement systems, for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Convert the local CSV FF&E product library to SIF (Standard Interchange Format) for dealer and procurement systems, for Claude Code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

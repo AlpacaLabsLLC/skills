@@ -1,6 +1,6 @@
 # /as:spec-writer
 
-CSI outline specification writer for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it a materials list, product schedule, or project description — get structured outline specs organized by MasterFormat 2020 divisions.
+CSI outline specification writer for Claude Code. Feed it a materials list, product schedule, or project description — get structured outline specs organized by MasterFormat 2020 divisions.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

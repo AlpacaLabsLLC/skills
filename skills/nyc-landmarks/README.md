@@ -1,6 +1,6 @@
 # /as:nyc-landmarks
 
-LPC landmark and historic district check for any NYC building as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Provide an address, BBL, or BIN and find out if the property is individually landmarked, in a historic district, or not designated — using the LPC Individual Landmark & Historic District Building Database. No API key required.
+LPC landmark and historic district check for any NYC building as a Claude Code skill. Provide an address, BBL, or BIN and find out if the property is individually landmarked, in a historic district, or not designated — using the LPC Individual Landmark & Historic District Building Database. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

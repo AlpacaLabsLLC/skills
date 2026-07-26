@@ -1,6 +1,6 @@
 # /as:demographics-analysis
 
-Demographics and market site analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get population, income, age distribution, housing market data, and employment statistics — sourced exclusively from Census Bureau, BLS, HUD, and other governmental databases.
+Demographics and market site analysis for Claude Code. Provide an address and get population, income, age distribution, housing market data, and employment statistics — sourced exclusively from Census Bureau, BLS, HUD, and other governmental databases.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

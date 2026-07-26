@@ -1,6 +1,6 @@
 # /as:environmental-analysis
 
-Climate and environmental site analysis for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Provide an address and get temperature, precipitation, wind, sun angles, flood zones, seismic risk, soil conditions, and topography — sourced exclusively from governmental and scientific databases.
+Climate and environmental site analysis for Claude Code. Provide an address and get temperature, precipitation, wind, sun angles, flood zones, seismic risk, soil conditions, and topography — sourced exclusively from governmental and scientific databases.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

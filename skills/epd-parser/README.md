@@ -1,6 +1,6 @@
 # /as:epd-parser
 
-Extract structured environmental impact data from EPD PDFs for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Parses Environmental Product Declaration PDFs — extracting GWP, life cycle stages, program operator metadata, and LEED eligibility into a standardized 42-column schema.
+Extract structured environmental impact data from EPD PDFs for Claude Code. Parses Environmental Product Declaration PDFs — extracting GWP, life cycle stages, program operator metadata, and LEED eligibility into a standardized 42-column schema.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

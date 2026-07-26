@@ -1,6 +1,6 @@
 # /as:product-image-processor
 
-Batch product image processor for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Read the named `Image URL` and `Product Name` fields from `product-library.csv`, download at full resolution, normalize sizing, and remove backgrounds.
+Batch product image processor for Claude Code. Read the named `Image URL` and `Product Name` fields from `product-library.csv`, download at full resolution, normalize sizing, and remove backgrounds.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

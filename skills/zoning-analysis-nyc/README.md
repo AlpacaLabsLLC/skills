@@ -1,6 +1,6 @@
 # /as:zoning-analysis-nyc
 
-Zoning envelope analyzer for lots in New York City as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Provide an address, BBL, or BIN and get a full building envelope analysis using the [PLUTO](https://data.cityofnewyork.us/City-Government/Primary-Land-Use-Tax-Lot-Output-PLUTO-/64uk-42ks) open data API and the NYC Zoning Resolution.
+Zoning envelope analyzer for lots in New York City as a Claude Code skill. Provide an address, BBL, or BIN and get a full building envelope analysis using the [PLUTO](https://data.cityofnewyork.us/City-Government/Primary-Land-Use-Tax-Lot-Output-PLUTO-/64uk-42ks) open data API and the NYC Zoning Resolution.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

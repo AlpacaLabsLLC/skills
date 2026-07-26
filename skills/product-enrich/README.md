@@ -1,6 +1,6 @@
 # /as:product-enrich
 
-Auto-tag FF&E products with categories, colors, materials, and style tags using AI. for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Auto-tag FF&E products with categories, colors, materials, and style tags using AI. for Claude Code.
 
 Enrichment is previewed before approved named-field updates are applied atomically to the nearest project's `product-library.csv`.
 

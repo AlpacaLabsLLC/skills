@@ -1,6 +1,6 @@
 # /as:resize-images
 
-Batch-resizes project photos and renders for web, social, slides, and print — for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Asks for a source folder, outputs resized copies into clearly named subfolders. Originals are never modified.
+Batch-resizes project photos and renders for web, social, slides, and print — for Claude Code. Asks for a source folder, outputs resized copies into clearly named subfolders. Originals are never modified.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

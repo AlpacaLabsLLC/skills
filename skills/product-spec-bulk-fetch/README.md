@@ -1,6 +1,6 @@
 # /as:product-spec-bulk-fetch
 
-Bulk FF&E product spec extractor for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Feed it product-page URLs and optionally save standardized rows to `product-library.csv`.
+Bulk FF&E product spec extractor for Claude Code. Feed it product-page URLs and optionally save standardized rows to `product-library.csv`.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

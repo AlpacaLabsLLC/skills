@@ -1,6 +1,6 @@
 # /as:product-pair
 
-Suggest complementary products that pair well with a given item — side tables for sofas, task lights for desks, etc. for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Suggest complementary products that pair well with a given item — side tables for sofas, task lights for desks, etc. for Claude Code.
 
 Results are shown in Markdown; selected pairings can be appended to the nearest project's `product-library.csv` after approval.
 

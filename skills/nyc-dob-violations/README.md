@@ -1,6 +1,6 @@
 # /as:nyc-dob-violations
 
-DOB and ECB violation lookup for any NYC building as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries DOB violations, ECB (Environmental Control Board) violations, and active/open violations — flagging open items prominently. No API key required.
+DOB and ECB violation lookup for any NYC building as a Claude Code skill. Queries DOB violations, ECB (Environmental Control Board) violations, and active/open violations — flagging open items prominently. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

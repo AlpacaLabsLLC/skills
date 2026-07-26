@@ -1,6 +1,6 @@
 # /as:nyc-bsa
 
-BSA variance and special permit lookup for any NYC property as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. Queries the Board of Standards and Appeals application database for variances, special permits, and appeals — records available from 1998 to present. No API key required.
+BSA variance and special permit lookup for any NYC property as a Claude Code skill. Queries the Board of Standards and Appeals application database for variances, special permits, and appeals — records available from 1998 to present. No API key required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 
