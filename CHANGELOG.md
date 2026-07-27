@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `scripts/audit-skill-context.sh` now measures descriptions written as plain multi-line YAML scalars. A bare `description:` followed by indented continuation lines is valid YAML and folds like `>`, but only the `>` and `|` block indicators were matched, so the continuation lines were dropped and the skill was reported with a zero-character description. No bundled skill uses that form today, so measured totals and `docs/reports/v1-4-skill-context-optimization.md` are unchanged; the defect was latent. The script also accepts an optional skills root, which lets the parser be tested against fixtures, and `tests/test-context-audit-description-styles.sh` covers all five description styles.
+
 ## [1.4.2] - 2026-08-10
 
 ### Added

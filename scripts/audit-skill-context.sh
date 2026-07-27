@@ -6,7 +6,9 @@ export LC_ALL=C
 export LANG=C
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
-skills_root="${repo_root}/skills"
+# Optional skills root, so this can be pointed at a fixture tree in tests.
+# Defaults to this repository's skills/ directory.
+skills_root="${1:-${repo_root}/skills}"
 
 awk '
 function ceil4(n) { return int((n + 3) / 4) }
@@ -39,6 +41,11 @@ in_front && /^description:[[:space:]]*/ {
   if (style == ">" || style == "|-" || style == "|" || style == ">-") {
     in_desc = 1; folded = (substr(style, 1, 1) == ">"); seen_desc = 1; next
   }
+  # A bare "description:" followed by indented lines is a valid plain
+  # multi-line YAML scalar and folds like ">". Without this branch the
+  # continuation lines match no rule, are dropped, and the skill is reported
+  # with a zero-character description.
+  if (style == "") { in_desc = 1; folded = 1; seen_desc = 1; next }
   if ((substr(line,1,1) == "\"" && substr(line,length(line),1) == "\"") || (substr(line,1,1) == "\047" && substr(line,length(line),1) == "\047")) line = substr(line,2,length(line)-2)
   desc = line; desc_lines = 1; seen_desc = 1; in_desc = 0; next
 }
