@@ -84,7 +84,7 @@ def repository_files(root: Path) -> list[Path]:
 
 def read_json(path: Path, errors: list[str]) -> dict:
     try:
-        value = json.loads(path.read_text())
+        value = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:
         errors.append(f"{path}: missing required manifest")
         return {}
@@ -98,7 +98,7 @@ def read_json(path: Path, errors: list[str]) -> dict:
 
 
 def frontmatter_name(path: Path) -> str | None:
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     if not text.startswith("---\n"):
         return None
     end = text.find("\n---\n", 4)
@@ -189,7 +189,7 @@ def validate(root: Path) -> list[str]:
         if path.suffix.lower() not in TEXT_SUFFIXES:
             continue
         try:
-            text = path.read_text()
+            text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
 
@@ -243,7 +243,7 @@ def validate(root: Path) -> list[str]:
 
     # The state prefix is intentionally stable across the command rename.
     all_text = "\n".join(
-        path.read_text(errors="ignore")
+        path.read_text(encoding="utf-8", errors="ignore")
         for path in repository_files(root)
         if path.suffix.lower() in TEXT_SUFFIXES
         and path.relative_to(root).as_posix() not in VALIDATOR_ALLOWLIST

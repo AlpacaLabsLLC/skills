@@ -18,6 +18,15 @@
 
 set -uo pipefail
 
+# The checks below read repository markdown and print ✓/✗ status marks. Python
+# takes its default encoding from the platform, which is cp1252 on Windows, so
+# both halves fail there: reading a document containing box-drawing or em-dash
+# characters raises UnicodeDecodeError, and printing a check mark raises
+# UnicodeEncodeError. Each read below passes an explicit encoding; this pins the
+# output side once for every Python process this script starts, including
+# check-plugin-namespace.py.
+export PYTHONIOENCODING=utf-8
+
 cd "$(dirname "$0")/.." || exit 1
 
 FAIL=0
@@ -85,7 +94,7 @@ files = subprocess.check_output([
 files = [f for f in files if pathlib.Path(f).is_file()]
 errors = 0
 for f in files:
-    text = pathlib.Path(f).read_text()
+    text = pathlib.Path(f).read_text(encoding='utf-8')
     if not text.startswith('---\n'):
         print(f"  ✗ {f}: missing frontmatter delimiter")
         errors += 1
@@ -161,8 +170,8 @@ rule_count = sum(1 for p in pathlib.Path('rules').glob('*.md')
                  if p.name != 'README.md')
 hook_count = len(list(pathlib.Path('hooks').glob('*.sh')))
 
-readme = pathlib.Path('README.md').read_text()
-skill_catalog = pathlib.Path('skills/README.md').read_text()
+readme = pathlib.Path('README.md').read_text(encoding='utf-8')
+skill_catalog = pathlib.Path('skills/README.md').read_text(encoding='utf-8')
 plugin_namespace = 'as'
 
 # Every maintained numeric claim in the root README must match the tree. Skill
@@ -200,13 +209,13 @@ else:
 
 # Tool catalog headline. Catalog membership is checked above; do not maintain
 # an aggregate skill count in prose.
-menu = pathlib.Path('skills/tool-catalog/SKILL.md').read_text()
+menu = pathlib.Path('skills/tool-catalog/SKILL.md').read_text(encoding='utf-8')
 if '**Architecture Studio tools and' not in menu:
     errors.append("skills/tool-catalog/SKILL.md missing Architecture Studio tools headline")
 
 # Root plugin.json + single-entry marketplace.json.
-plugin = json.loads(pathlib.Path('.claude-plugin/plugin.json').read_text())
-mp = json.loads(pathlib.Path('.claude-plugin/marketplace.json').read_text())
+plugin = json.loads(pathlib.Path('.claude-plugin/plugin.json').read_text(encoding='utf-8'))
+mp = json.loads(pathlib.Path('.claude-plugin/marketplace.json').read_text(encoding='utf-8'))
 
 for key in ('name', 'version', 'description'):
     if not plugin.get(key):
@@ -251,7 +260,7 @@ link_re = re.compile(r'\]\((?!https?://|mailto:|#)([^)\s]+)(?:\s+"[^"]*")?\)')
 errors = 0
 for f in md_files:
     p = pathlib.Path(f)
-    text = p.read_text()
+    text = p.read_text(encoding='utf-8')
     base = p.parent
     for m in link_re.finditer(text):
         target = m.group(1).split('#')[0]
@@ -291,7 +300,7 @@ for filename in md_files:
         continue
     fences = sum(
         line.startswith('```')
-        for line in path.read_text(errors='replace').splitlines()
+        for line in path.read_text(encoding='utf-8', errors='replace').splitlines()
     )
     if fences % 2:
         print(f"  ✗ {filename}: unmatched triple-backtick code fence")
@@ -345,7 +354,7 @@ slash_re = re.compile(
 )
 errors = 0
 for f in files:
-    text = pathlib.Path(f).read_text()
+    text = pathlib.Path(f).read_text(encoding='utf-8')
     for i, line in enumerate(text.split('\n'), 1):
         for m in slash_re.finditer(line):
             namespace, command = m.groups()
@@ -431,7 +440,7 @@ runtime_outputs = {
 }
 for f in files:
     skill_dir = pathlib.Path(f).parent
-    text = pathlib.Path(f).read_text()
+    text = pathlib.Path(f).read_text(encoding='utf-8')
     for m in tok_re.finditer(text):
         t = m.group(1)
         if t in runtime_outputs:
