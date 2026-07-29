@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Architecture Studio — one plugin of skills, agents, and hooks for architects, designers, and AEC professionals: site research, zoning, programming, specifications, sustainability, materials research, presentations, and linked project records.",
-    "version": "1.4.0"
+    "version": "1.4.1"
   },
   "plugins": [
     {
