@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `scripts/lint.sh` and `scripts/check-plugin-namespace.py` now read repository files as UTF-8 explicitly, and `lint.sh` exports `PYTHONIOENCODING=utf-8` for the Python processes it starts. Both previously relied on Python's platform default encoding, which is cp1252 on Windows, where eight of the fourteen lint checks aborted: reading a document containing box-drawing or em-dash characters raised `UnicodeDecodeError`, and printing a `✓` status mark raised `UnicodeEncodeError`. Linux and macOS behavior is unchanged. `tests/test-lint-untracked.sh` passes on Windows as a result.
+
 ## [1.4.0] - 2026-07-26
 
 Architecture Studio v1.4.0 is a breaking migration release. It preserves the public `1.x` release sequence while replacing the installed plugin identity and introducing the studio/project workspace architecture.
