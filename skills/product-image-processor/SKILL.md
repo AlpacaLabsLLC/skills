@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:product-image-processor — Product Image Processor
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Read product image records from the nearest project's `product-library.csv`, download them, normalize sizing, and remove backgrounds. Saves output at each processing stage without mutating the library.
 
 Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Resolve the nearest ancestor containing `PROJECT.md`, strictly validate its `product-library.csv`, and address fields by the exact names `Image URL` and `Product Name`, never by position or letters.
@@ -23,7 +26,7 @@ If no arguments are provided, use the nearest project's `product-library.csv` an
 
 ## Step 2: Read URLs from CSV
 
-Run `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate product --project <project-root>` before reading. Parse the entire UTF-8 CSV strictly and select the named `Image URL` and `Product Name` fields.
+Run `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" validate product --project <project-root>` before reading. Parse the entire UTF-8 CSV strictly and select the named `Image URL` and `Product Name` fields.
 
 Build a list of `{ index, url, name }` entries. Skip empty rows.
 

@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:site-visit-report — Typed Field Evidence
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Create an auditable record of a site visit without turning limited observation, hearsay, or interpretation into verified professional conclusions.
 
 ## Usage
@@ -80,7 +83,7 @@ Use the visit date in the filename. Resolve and show the exact project-relative 
 - When the user explicitly asked to revise that exact report, preserve the original visit date, **Created** date, and sources; set **Updated** to today and add a concise revision note.
 - Otherwise preserve the existing file and select the next available suffix: `-02`, `-03`, and so on. Check the suffixed path before writing. Never overwrite merely because date and title match.
 
-Resolve the bundled template relative to the loaded `skills/site-visit-report/SKILL.md` when the harness exposes that path. On Claude Code, `${CLAUDE_PLUGIN_ROOT}/skills/site-visit-report/templates/site-visit-report.md` is the fallback. If bundled resources are unavailable, reproduce every section required by Step 3 plus visit metadata, sources, photos/files, limitations, and the disclaimer behavior below.
+Resolve the bundled template relative to the loaded `skills/site-visit-report/SKILL.md` when the harness exposes that path. On Claude Code, `<plugin-root>/skills/site-visit-report/templates/site-visit-report.md` is the fallback. If bundled resources are unavailable, reproduce every section required by Step 3 plus visit metadata, sources, photos/files, limitations, and the disclaimer behavior below.
 
 Write the complete report and confirm its saved path. At this point stop all other mutation and verify that `PROJECT.md`, `decisions/`, and `TASKS.md` were not changed by saving the report.
 

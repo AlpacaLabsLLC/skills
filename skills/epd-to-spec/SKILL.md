@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:epd-to-spec — EPD Specification Writer
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Takes EPD data, GWP limits, or a materials list and generates CSI-formatted specification sections that require Environmental Product Declarations and set maximum Global Warming Potential thresholds. Output follows the same three-part CSI SectionFormat used by `/as:spec-writer`.
 
 EPD fields follow [`schema/epd-schema.md`](../../schema/epd-schema.md). Accept pasted structured values, direct handoffs from `/as:epd-parser` or `/as:epd-compare`, or a validated project-local `epd-library.csv`; do not require a library.
@@ -75,7 +78,7 @@ Read the user's input and build an inventory:
 - **GWP threshold** — user-provided limit, EPD value, or industry baseline
 - **Declared unit** — must match the unit used in the GWP threshold
 
-If the user provided EPD data or a comparison report, extract the GWP values and declared units from there. Validate any `epd-library.csv` with `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate epd`; reject the FF&E schema. Validation is read-only; never invoke `init`, `import`, `append`, or `update`.
+If the user provided EPD data or a comparison report, extract the GWP values and declared units from there. Validate any `epd-library.csv` with `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" validate epd`; reject the FF&E schema. Validation is read-only; never invoke `init`, `import`, `append`, or `update`.
 
 If no GWP thresholds are specified, a published industry-average baseline may be used **only when you can cite its named source and publication year** (per the GWP Baseline Policy below) — always flag such thresholds `[VERIFY THRESHOLD]`. If no citable baseline is available, **do not use approximate from-memory numbers.** Instead, ask the user:
 

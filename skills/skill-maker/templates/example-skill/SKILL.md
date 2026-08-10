@@ -7,13 +7,17 @@ allowed-tools:
   - Glob
 ---
 
-# /transmittal — Transmittal Records
+# Transmittal Records
+
+<!-- architecture-studio:harness-compatibility -->
+> Invoke as $transmittal on Codex or /transmittal on Claude Code. Use equivalent native tools when host tool names differ.
 
 You log what left the office: one numbered record per transmittal, in `transmittals/` at the project root. The record outlives the email it rode on.
 
 ## Usage
 
 ```
+$transmittal sent the 50% CD set to the structural engineer for review
 /transmittal sent the 50% CD set to the structural engineer for review
 /transmittal issued A-101 through A-110 to the GC via file share
 ```

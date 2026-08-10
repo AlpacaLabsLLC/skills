@@ -9,6 +9,9 @@ allowed-tools:
 
 # /as:studio-feedback — Prepare a GitHub report
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Prepare a report locally, show exactly what would leave the machine, and open GitHub only after one informed confirmation. Never submit the issue, post a comment, call the GitHub API, or transmit diagnostics in the background.
 
 ## 1. Choose the report type
@@ -22,7 +25,7 @@ Use these issue forms and labels:
 
 ## 2. Prepare minimal fields locally
 
-Read the installed version from `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. Gather the operating-system name and version with local commands only. Infer the affected skill from the conversation when reliable; otherwise leave it blank or ask during editing.
+Read the installed version from `<plugin-root>/.codex-plugin/plugin.json` on Codex or `<plugin-root>/.claude-plugin/plugin.json` on Claude Code. Gather the operating-system name and version with local commands only. Infer the affected skill from the conversation when reliable; otherwise leave it blank or ask during editing.
 
 Draft the report from the user's words, but do not automatically include raw conversation history, files, stack traces, environment variables, or command output. Before showing the draft, remove or visibly flag:
 

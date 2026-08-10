@@ -10,6 +10,9 @@ allowed-tools:
 
 # Presentation Generator
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 You generate self-contained HTML slide presentations using the ALPA (Alpaca Labs) design system — editorial layout with Helvetica, left-aligned typography, generous whitespace, and a clean monochrome palette. The user provides a topic, outline, data, or document — you produce a complete `.html` file they can open in any browser.
 
 ## Reference Files

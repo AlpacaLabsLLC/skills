@@ -1,6 +1,6 @@
 # Architecture Studio extension patterns
 
-This is the canonical reference for extending Architecture Studio and contributing to its maintained Claude plugin. It applies to:
+This is the canonical reference for extending Architecture Studio and contributing to its maintained Codex and Claude Code plugin. It applies to:
 
 - [`AlpacaLabsLLC/skills-for-architects`](https://github.com/AlpacaLabsLLC/skills-for-architects) — one flat `as` plugin (this repo)
 - [`AlpacaLabsLLC/canoa`](https://github.com/AlpacaLabsLLC/canoa) — single-plugin marketplace, AI specifications manager for FF&E
@@ -14,7 +14,7 @@ Each skill does one thing. Frontmatter is short, body is focused. If a `SKILL.md
 
 - `name` matches the directory and is kebab-case
 - `description` is pushy and trigger-phrase-rich — model invocation depends on it picking your skill out of the dispatcher's pool
-- `allowed-tools` is scoped to what THIS skill actually needs, not the union of everything the plugin can touch
+- `allowed-tools` is a Claude Code permission hint scoped to what THIS skill needs. Codex uses its own permission model, so portable bodies must name capabilities generically and map host-specific tool names.
 - Optional flags: `disable-model-invocation: true` when a skill is slash-only. (Skills are slash-invocable by default; the legacy `user-invocable` flag is not part of the current frontmatter schema and was removed repo-wide in v1.2.0.)
 
 **Why:** smaller skills are easier to test, slash-invoke directly, restrict tool access on, and reason about. Monoliths drift; small skills stay honest. We split canoa's monolithic SKILL.md into 8 verb-scoped skills the same day we couldn't keep `/canoa:start`'s 200-line body internally consistent.
@@ -44,6 +44,7 @@ User-facing slash invocation:
 
 - Single-plugin: `/canoa`, `/canoa-find`, `/canoa-audit` (plugin name = dispatcher; sub-skills carry the prefix)
 - Multi-plugin: `/<plugin>:<skill>` (Claude Code/Cowork's namespacing) — but mention the family in marketplace docs
+- Codex: `$<skill>` after the plugin is installed; plugin namespacing remains package metadata rather than invocation syntax
 
 **Why:** the slash UX should immediately tell the user which product family they're invoking. `/canoa-find` and `/canoa-audit` are obviously a family. `/start` and `/audit` are anonymous.
 
@@ -85,12 +86,13 @@ Two version fields, two scopes — both pinned, both bumped on every shipped cha
 
 | Field | Where | Bumps when |
 |---|---|---|
-| `plugin.json` `version` | Per-plugin | The plugin's behavior changes — new skill, edited skill body, MCP tool added, etc. |
+| `.claude-plugin/plugin.json` `version` | Claude package | The plugin's behavior changes — new skill, edited skill body, MCP tool added, etc. |
+| `.codex-plugin/plugin.json` `version` | Codex package | Every cross-harness release; keep it equal to the Claude package version |
 | `marketplace.json` `metadata.version` | Marketplace-wide | Anything the repo ships changes — including marketplace-level docs, top-level scripts/hooks/lint, marketplace.json structure itself, even if no individual plugin's behavior moves |
 
 On EVERY shipped change:
 
-1. Bump the relevant `version`. Patch releases are compatible corrections. Minor releases normally add behavior and may carry an explicitly labeled breaking migration when preserving the project’s public release sequence is the clearer user contract. Major releases remain available for broader product-generation boundaries.
+1. Bump the relevant `version`. Cross-harness releases keep both plugin manifests and the Claude marketplace metadata on the same version. Patch releases are compatible corrections. Minor releases normally add behavior and may carry an explicitly labeled breaking migration when preserving the project's public release sequence is the clearer user contract. Major releases remain available for broader product-generation boundaries.
 2. Add a `CHANGELOG.md` entry under `## [X.Y.Z] - YYYY-MM-DD` describing what changed.
 3. Stage version bump + CHANGELOG + actual change in a single commit and push.
 4. **Tag the commit:** `git tag -a vX.Y.Z <sha> -m "vX.Y.Z — short description"` and `git push origin vX.Y.Z`.
@@ -111,7 +113,7 @@ If you ever need auto-publish on every commit (during very heavy iteration), dro
 | **Flat single-plugin** (canoa-style) | One plugin in the marketplace; the marketplace IS the plugin | `"./"` | `skills/<verb>/` at repo root |
 | **Multi-plugin nested** | Two or more independently installed plugins | `"./plugins/<name>"` | `plugins/<name>/skills/<verb>/` |
 
-For both: `.claude-plugin/marketplace.json` lives at the repo root. For single-plugin, `.claude-plugin/plugin.json` lives next to it. For multi-plugin, each plugin has its own `<plugin>/.claude-plugin/plugin.json`.
+For Claude Code, `.claude-plugin/marketplace.json` lives at the repo root. Codex-compatible repositories also carry `.agents/plugins/marketplace.json`. For a flat single plugin, `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json` both live at the plugin root; their versions and names stay aligned.
 
 Don't pick the multi-plugin layout for a single plugin — adds nesting without payoff and forces awkward `/plugin:start` slash UX. Don't pick the flat layout when shipping multiple plugins — they'll collide on skill names.
 
@@ -198,7 +200,7 @@ Architecture Studio has two nested but distinct boundaries:
 - `STUDIO.md` marks the studio root. It is a portable registry of descendant projects and is mutated only by `/as:studio`.
 - `PROJECT.md` marks a project root. Project facts and decision records are mutated only by `/as:project`; typed records keep their existing owners.
 - A studio is never inferred from plugin installation and the installed plugin cache is never a studio, project, or private-skill target.
-- Studio-owned skills live in `{studio-root}/.claude/skills/`. A project-only or global skill requires explicit user intent. The public catalog remains a separate contributor target.
+- Studio-owned skills live in `{studio-root}/.agents/skills/` on Codex or `{studio-root}/.claude/skills/` on Claude Code. A project-only or global skill requires explicit user intent. The public catalog remains a separate contributor target.
 - `/as:studio create-project` may call the project-owned scaffold helper, verify the result, and then register it. `/as:project init` inside a studio routes to that flow and does not mutate `STUDIO.md` or create a nested project.
 - Studio and project initialization preview exact targets, reject unsafe or colliding paths, and never overwrite or silently suffix identity-bearing folders.
 
@@ -226,10 +228,10 @@ See [`scripts/lint.sh`](./scripts/lint.sh) and [`.github/workflows/lint.yml`](./
 3. Create `.claude-plugin/marketplace.json` + `plugin.json` (version `0.1.0`, X.Y.Z pinned)
 4. Write the dispatcher skill first — establish the routing table
 5. Write each sub-skill as a thin shell with `allowed-tools` scoped
-6. Bundle MCP via `.mcp.json` with `${CLAUDE_PLUGIN_ROOT}` if needed
+6. Resolve bundled paths from the loaded `SKILL.md`. Claude Code may expose `${CLAUDE_PLUGIN_ROOT}`, but portable skill bodies use `<plugin-root>` and must not require that variable.
 7. Create top-level `agents/` for orchestration personas; multi-plugin: also `rules/`, `hooks/`
 8. README at repo root with diagram + skill table + install instructions
-9. CHANGELOG.md, LICENSE (MIT default), CLAUDE.md, `.gitignore` (`**/node_modules/`, per-user state dirs, `.wrangler/`)
+9. CHANGELOG.md, LICENSE (MIT default), AGENTS.md and/or CLAUDE.md as supported, `.gitignore` (`**/node_modules/`, per-user state dirs, `.wrangler/`)
 10. Public visibility unless strategy says otherwise
 11. CI lint on push (validates SKILL.md frontmatter, JSON manifests, and catalog consistency)
 

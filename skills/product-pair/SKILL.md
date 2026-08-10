@@ -15,6 +15,9 @@ allowed-tools:
 
 # /as:product-pair — Product Pairing
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 "What goes with this?" Takes a product and suggests complementary items across different categories — a side table for a sofa, a floor lamp for a reading chair, a rug for a dining table. Returns 5-8 pairings with reasoning rooted in design principles.
 
 ## When to Use
@@ -142,7 +145,7 @@ Neutral base grounds the navy. Contract-grade durability.
 
 ## Step 6: Save
 
-If the designer picks pairings, prepare complete rows for the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Preview all chosen pairings and the target path, then use the single confirmation gate. After approval, serialize the complete batch as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once so validation and replacement are atomic; never loop per row.
+If the designer picks pairings, prepare complete rows for the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Preview all chosen pairings and the target path, then use the single confirmation gate. After approval, serialize the complete batch as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once so validation and replacement are atomic; never loop per row.
 
 - `Tags`: append `pair:{source-product-name}` for traceability
 - `Notes`: `Paired with {source product}. {Design reasoning}`

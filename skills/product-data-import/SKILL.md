@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:product-data-import — Product Data Importer
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Takes raw product data and formats it as a Markdown preview or as rows in the nearest project's `product-library.csv`, using the shared 33-column schema.
 
 ## When to Use
@@ -107,7 +110,7 @@ The Markdown schedule is always available without a write. Persist structured pr
 
 ## Step 5: Save
 
-Read `../../schema/product-schema.md` for the exact header, category vocabulary, and values. Read `../../schema/csv-conventions.md` for parsing and mutation rules. Preview the complete batch, row count, totals, target path, and material field changes, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper owns batch validation and one atomic replacement; never loop per row or rewrite the persistent CSV directly.
+Read `../../schema/product-schema.md` for the exact header, category vocabulary, and values. Read `../../schema/csv-conventions.md` for parsing and mutation rules. Preview the complete batch, row count, totals, target path, and material field changes, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper owns batch validation and one atomic replacement; never loop per row or rewrite the persistent CSV directly.
 
 Skill-specific column values:
 - **AG (Source):** `product-data-import`

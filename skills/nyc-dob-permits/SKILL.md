@@ -10,6 +10,9 @@ allowed-tools:
 
 # /as:nyc-dob-permits — DOB Permit & Filing History
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Look up all DOB permits and job filings for any NYC building across both Legacy BIS and DOB NOW systems. No API key required.
 
 ## Usage

@@ -15,6 +15,9 @@ allowed-tools:
 
 # /as:epd-research — EPD Research
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Receives a brief describing a material or product category, searches the web for matching EPDs (Environmental Product Declarations), and returns a curated shortlist sorted by environmental impact. The shortlist is file-free by default; selected EPDs are persisted only on explicit request.
 
 ## How It Works
@@ -166,7 +169,7 @@ Do not create a file merely because the user selects or compares candidates. Whe
 - `Tags` — from brief context (e.g., "4000-psi, northeast, project-name")
 - `LEED Eligible` — based on EPD type and verification status
 
-Resolve the nearest ancestor containing `PROJECT.md` and target `<project-root>/epd-library.csv`. Preview the complete selected batch, target, and initialize-or-append action. Use one confirmation gate without a duplicate prose confirmation. Serialize all approved records as one JSON array. After approval, use `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" init epd` if needed, then invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append epd --row-json <batch.json>` exactly once. Never append in a per-record loop. The helper validates the complete CSV and writes the whole batch atomically. If no project root exists, keep the shortlist in conversation and offer `/as:project init`.
+Resolve the nearest ancestor containing `PROJECT.md` and target `<project-root>/epd-library.csv`. Preview the complete selected batch, target, and initialize-or-append action. Use one confirmation gate without a duplicate prose confirmation. Serialize all approved records as one JSON array. After approval, use `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" init epd` if needed, then invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append epd --row-json <batch.json>` exactly once. Never append in a per-record loop. The helper validates the complete CSV and writes the whole batch atomically. If no project root exists, keep the shortlist in conversation and offer `/as:project init`.
 
 ### After saving
 

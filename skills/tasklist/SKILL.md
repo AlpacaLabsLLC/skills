@@ -12,6 +12,9 @@ allowed-tools:
 
 # /as:tasklist — Canonical Project or Studio Task Register
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Own exactly one resolved `TASKS.md`: either a project's register or an opted-in studio portfolio register. Give every action a permanent identity, explicit lifecycle, and traceable source. This skill manages actions; `/as:workplan` may define future work, but it is neither required nor invoked implicitly.
 
 ## Usage

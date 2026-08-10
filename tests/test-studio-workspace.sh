@@ -13,8 +13,10 @@ STUDIO="$ROOT/smith-architects"
 "$SCRIPT" init "$STUDIO" "Smith Architects" "imperial" "United States" "New York" "New York City"
 [ -f "$STUDIO/STUDIO.md" ]
 [ -f "$STUDIO/CLAUDE.md" ]
+[ -f "$STUDIO/AGENTS.md" ]
 [ -f "$STUDIO/.mcp.json" ]
 [ -d "$STUDIO/.claude/skills" ]
+[ -d "$STUDIO/.agents/skills" ]
 [ -d "$STUDIO/projects" ]
 node -e 'const fs=require("fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if (Object.keys(v).length!==1 || typeof v.mcpServers!=="object" || v.mcpServers===null || Array.isArray(v.mcpServers) || Object.keys(v.mcpServers).length!==0) process.exit(1)' "$STUDIO/.mcp.json"
 grep -Fq '| Working units | imperial |' "$STUDIO/STUDIO.md"
@@ -24,6 +26,12 @@ grep -Fq '| City | New York City |' "$STUDIO/STUDIO.md"
 grep -Fq '| Task register | project |' "$STUDIO/STUDIO.md"
 grep -Fq '| Format version | 2 |' "$STUDIO/STUDIO.md"
 grep -Fq 'does not send them to or store them with ALPA' "$STUDIO/STUDIO.md"
+grep -Fq 'The studio skill is the only writer of this registry.' "$STUDIO/STUDIO.md"
+if grep -Fq '/as:' "$STUDIO/STUDIO.md"; then
+  echo "generated studio record contains a host-specific slash command" >&2
+  exit 1
+fi
+grep -Fq 'Firm-created Codex skills live in `.agents/skills/`.' "$STUDIO/AGENTS.md"
 
 cp "$STUDIO/STUDIO.md" "$ROOT/studio-v2.md"
 sed '/| Format version | 2 |/d' "$ROOT/studio-v2.md" > "$STUDIO/STUDIO.md"

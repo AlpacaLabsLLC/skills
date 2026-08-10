@@ -16,26 +16,22 @@
 
 </div>
 
-> A local-first framework for architecture firms to build, govern, and share their own AI-assisted workflows—use with [Claude](https://claude.ai) or [Claude Code](https://code.claude.com/docs).
+> A local-first framework for architecture firms to build, govern, and share their own AI-assisted workflows—use with [Codex](https://developers.openai.com/codex/) or [Claude Code](https://code.claude.com/docs).
 
 **Architecture Studio** provides a governance layer, persistent studio and project memory, and clear extension points for firm-wide and project-specific skills. The bundled AEC skills and agents are working reference implementations and starting templates: use them directly, study their patterns, or build procedures that reflect how your own practice works.
 
 Firm-created skills remain in the user-owned studio workspace, outside the installed plugin cache. They can stay private to a firm or project, or be developed for contribution back to the open-source project.
 
-**One plugin**—`as` v1.4.0—with **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+**One plugin**—`as` v1.5.0—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
 
-## What’s new in 1.4
+## What’s new in 1.5
 
-**Architecture Studio v1.4.0 is a breaking migration release.** It preserves the project’s public `1.x` release sequence while replacing the installed plugin identity and introducing the studio/project workspace architecture described below.
+Architecture Studio v1.5.0 adds Codex as a supported host without changing the `as` plugin identity or the user-owned studio/project record formats introduced in v1.4.
 
-- **A framework firms can extend.** Create firm-wide and project-specific skills that remain in the user-owned workspace and survive plugin updates.
-- **Working AEC reference implementations.** Bundled skills and agents demonstrate governed patterns for research, calculations, project records, provenance, and professional review.
-- **Local studio workspace.** `/as:studio` initializes user-owned settings, a project registry, firm skills, and an empty connector boundary without creating an ALPA account or cloud store.
-- **Durable project memory.** `/as:project` owns sourced facts and numbered decisions; meetings, site reports, plans, tasks, and confirmed time remain linked without duplicating canonical records.
-- **Extensible practice.** `/as:skill-maker` creates firm-wide or project-specific procedures outside the installed plugin cache.
-- **Portable product data.** FF&E uses project-local `product-library.csv`; EPD work remains PDF-first with optional `epd-library.csv` persistence. Google Sheets connectivity and XLS/XLSX support are not part of v1.4.
-- **Consent-based support.** `/as:studio-feedback` prepares reports for review without submitting them. Background update checking is disabled by default and can be enabled explicitly during studio setup.
-- **One installation, two use modes.** Use any built-in tool immediately, or create a studio workspace when persistent settings and records become useful. Choosing tools-only onboarding creates no workspace; a tool may still create the output you explicitly request.
+- **Codex-native packaging.** `.codex-plugin/plugin.json` and the Git marketplace entry let Codex install the repository as `as@skills-for-architects`.
+- **Cross-harness skills.** Every bundled skill maps Claude Code's `/as:<skill>` syntax to Codex's `$<skill>` syntax and resolves bundled scripts from the loaded skill path instead of a Claude-only environment variable.
+- **Portable workspaces.** Studio and project scaffolds create `AGENTS.md` plus `.agents/skills/` for Codex alongside the existing Claude Code files.
+- **Preserved boundaries.** Claude-specific agents and hooks remain available on Claude Code; Codex loads the shared skills and the same local project-record contracts.
 
 Full history is in the [CHANGELOG](./CHANGELOG.md).
 
@@ -47,11 +43,12 @@ ARCHITECTURE STUDIO PLUGIN                    USER-OWNED STUDIO
 
 skills-for-architects/                       studio/
 │                                            │
-├── rules/          GOVERNANCE               ├── STUDIO.md
-├── hooks/                                   ├── CLAUDE.md
-│                                            ├── .mcp.json
-├── skills/         REFERENCE TOOLING        ├── .claude/skills/
-├── agents/         REFERENCE ORCHESTRATION  │       FIRM EXTENSIONS
+├── .codex-plugin/  CODEX PACKAGE            ├── STUDIO.md
+├── .claude-plugin/ CLAUDE PACKAGE           ├── AGENTS.md + CLAUDE.md
+├── rules/          GOVERNANCE               ├── .mcp.json
+├── hooks/          CLAUDE AUTOMATION        ├── .agents/skills/
+├── skills/         SHARED TOOLING           ├── .claude/skills/
+├── agents/         CLAUDE ORCHESTRATION     │       FIRM EXTENSIONS
 │                                            ├── TASKS.md (optional portfolio mode)
 └── schema/         DATA CONTRACTS           └── projects/
                                                  └── project/
@@ -64,6 +61,7 @@ skills-for-architects/                       studio/
                                                      ├── TIMELOG.md
                                                      ├── product-library.csv
                                                      ├── epd-library.csv
+                                                     ├── .agents/skills/
                                                      └── .claude/skills/
                                                              PROJECT EXTENSIONS
 ```
@@ -79,8 +77,8 @@ Architecture Studio separates maintained plugin capabilities from the procedures
 | Layer | Location | Purpose |
 |-------|----------|---------|
 | Bundled reference skills | Installed plugin | Working AEC tools, examples, and reusable patterns maintained upstream |
-| Studio skills | `studio/.claude/skills/` | Firm standards, internal procedures, shared templates, and practice-specific workflows |
-| Project skills | `projects/<project>/.claude/skills/` | Client-, jurisdiction-, delivery-, or project-specific procedures |
+| Studio skills | `studio/.agents/skills/` (Codex) or `studio/.claude/skills/` (Claude Code) | Firm standards, internal procedures, shared templates, and practice-specific workflows |
+| Project skills | `projects/<project>/.agents/skills/` or `.claude/skills/` | Client-, jurisdiction-, delivery-, or project-specific procedures |
 | Upstream contributions | This repository | General-purpose capabilities proposed for the open-source project |
 
 `/as:skill-maker` helps turn a firm procedure into a structured skill at the correct ownership level. It follows Architecture Studio’s governance, provenance, and testing patterns without writing into the installed plugin cache.
@@ -88,6 +86,20 @@ Architecture Studio separates maintained plugin capabilities from the procedures
 ## Quick start
 
 ### Install
+
+**Codex:** add the Git marketplace, install the plugin, and start Codex:
+
+```bash
+codex plugin marketplace add AlpacaLabsLLC/skills-for-architects
+codex plugin add as@skills-for-architects
+codex
+```
+
+Then invoke the dispatcher:
+
+```text
+$studio
+```
 
 **Claude:** Open **Customize → Plugins → + → Add marketplace**, choose a repository source, enter `AlpacaLabsLLC/skills-for-architects`, and install **Architecture Studio**. Workspace, hook, and subagent behavior depends on the Claude surface and permissions your organization enables; the workflow below is tested with Claude Code.
 
@@ -105,22 +117,25 @@ After Claude Code opens, run:
 /as:studio
 ```
 
-The welcome offers four paths: set up a studio, use the tools without setup, learn with an example, or open an existing studio. Architecture Studio creates no studio, project, ALPA account, cloud store, or git repository until you approve an exact local target.
+The dispatcher offers paths to set up a studio, use the tools without setup, open an existing studio, or learn on a fictional practice project. Start the course with `$learn` on Codex or `/as:learn` on Claude Code. Architecture Studio creates no studio, project, ALPA account, cloud store, or git repository until you approve an exact local target.
 
 ### Use
 
-Describe a task through the studio entry point. It routes the request to the appropriate skill or agent:
+Describe a task through the studio entry point. It routes the request to the appropriate skill; on Claude Code it can also route to the bundled agents:
 
 ```text
+# Codex
+$studio task chair, mesh back, under $800
+$studio 123 Main St, Brooklyn NY
+
+# Claude Code
 /as:studio task chair, mesh back, under $800
 /as:studio 123 Main St, Brooklyn NY
-/as:studio I need a space program for 200 people
-/as:studio parse this EPD
 ```
 
-Use `/as:tool-catalog` for the complete menu. You can also select any Architecture Studio command from autocomplete—for example, `/as:environmental-analysis 123 Main St`. New to Claude Code? Start with `/as:learn`.
+Use `$tool-catalog` on Codex or `/as:tool-catalog` on Claude Code for the complete menu. You can also invoke a skill directly—for example, `$environmental-analysis 123 Main St` on Codex or `/as:environmental-analysis 123 Main St` on Claude Code. New to AI-assisted project work? Start with `$learn` on Codex or `/as:learn` on Claude Code.
 
-`as` is the technical plugin namespace for Architecture Studio. Copyable plugin commands combine that namespace with a skill name—for example, `/as:site-history`. Claude Code autocomplete may show a shorter label when it is unambiguous, but the namespaced form is the public documentation contract.
+`as` is the technical plugin namespace for Architecture Studio. Claude Code commands combine that namespace with a skill name, such as `/as:site-history`. Codex mentions the installed skill directly as `$site-history`.
 
 ### Upgrading to v1.4.0 (reinstall required)
 
@@ -156,19 +171,21 @@ Existing local welcome and update-check preferences remain in place because thei
 
 ### Three ways to use Architecture Studio
 
-- **Use the references.** Invoke the bundled skills and agents as installed. No studio workspace is required. Selecting tools-only onboarding creates no workspace files; an invoked tool may create only the output you ask it to produce.
+- **Use the references.** Invoke the bundled skills as installed; Claude Code also exposes the native agents. No studio workspace is required. Selecting tools-only onboarding creates no workspace files; an invoked tool may create only the output you ask it to produce.
 - **Build your practice layer.** Create a studio when you want persistent settings, linked projects, and firm- or project-specific skills.
 - **Contribute upstream.** Generalize a capability that benefits other practices and propose it to the open-source project.
 
 All three paths use the same plugin architecture. You can begin with the reference tools and create a studio later without migration or cleanup.
 
-### Claude Code dependency
+### Host setup
 
-To use Architecture Studio with Claude Code, open the terminal available on your operating system and install Claude Code by following the current [Claude Code setup instructions](https://code.claude.com/docs/en/setup). Then launch Claude Code, run the two plugin commands under **Install** above, and invoke `/as:studio`. The optional `/as:learn` course begins after Claude Code is running.
+For Codex, follow the current [Codex setup documentation](https://developers.openai.com/codex/) and the Codex install commands above. For Claude Code, follow the current [Claude Code setup instructions](https://code.claude.com/docs/en/setup), then run the marketplace and plugin commands above. Invoke `$studio` on Codex or `/as:studio` on Claude Code. The bundled course is available as `$learn` on Codex and `/as:learn` on Claude Code; it clearly branches where Claude-native agents, hooks, and `/clear` have no Codex equivalent.
 
 ## Bundled reference agents
 
-Agents are working orchestration examples as well as immediately usable tools. Describe your task and the agent decides which skills to call, in what order, and where professional judgment is required.
+These seven native agents are available on Claude Code. Codex users can run the same underlying skills directly or through `$studio`; the Codex package does not register the Claude agent files as Codex roles.
+
+Agents are working orchestration examples as well as immediately usable Claude Code tools. Describe your task and the agent decides which skills to call, in what order, and where professional judgment is required.
 
 | Agent | Domain | What it does |
 |-------|--------|--------------|
@@ -189,7 +206,7 @@ All bundled skills live in one flat catalog and install together. They make Arch
 | Layer | Group | Description |
 |-------|-------|-------------|
 | Firm operations | Dispatcher | Studio setup and routing, the tool menu, skill creation, and reviewed feedback |
-| Firm operations | Learn | Guided, resumable introduction to Claude Code for architects |
+| Firm operations | Learn | Guided, resumable introduction to Codex and Claude Code for architects |
 | Project management | Project records | Facts, decisions, `/as:workplan`, meetings, site reports, tasks, and confirmed time |
 | Practice and design | Due diligence | NYC landmarks, permits, violations, ownership, housing, and BSA records |
 | Practice and design | Site planning | Environmental, mobility, demographic, and site-history research |
@@ -220,7 +237,7 @@ See the [rules index](./rules/README.md) for the enforcement boundary.
 
 ## Hooks
 
-Event-driven automations ship with the plugin and register when it is enabled. No manual settings merge is required.
+These event-driven automations are Claude Code-specific. They register with the Claude package when it is enabled; the Codex manifest intentionally omits them.
 
 | Hook | Event | What it does |
 |------|-------|--------------|
@@ -235,7 +252,7 @@ See the [hooks index](./hooks/README.md) for behavior and customization.
 
 ## Data and privacy
 
-Architecture Studio runs inside the user’s own Claude or Claude Code session. Model-side data controls, retention, and account or organization policies remain managed directly between the user and Anthropic; available settings depend on the Anthropic account, plan, and administrator policy. Review and manage those controls through Anthropic’s [Privacy Center](https://privacy.claude.com/) and the settings provided for the user’s Claude account or organization.
+Architecture Studio runs inside the user's own Codex or Claude Code session. Model-side data controls, retention, and account or organization policies remain managed by the selected provider. Review OpenAI's [privacy policy](https://openai.com/policies/privacy-policy/) for Codex or Anthropic's [Privacy Center](https://privacy.claude.com/) for Claude, together with the settings and administrator policies for the active account.
 
 - Architecture Studio does not upload or store studio or project records with ALPA.
 - Prompts and files sent to the configured LLM are handled under that provider account and its data terms.

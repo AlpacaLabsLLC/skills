@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:csv-to-sif — CSV to SIF Converter
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Converts the nearest project's `product-library.csv` into a SIF output file for dealer and procurement systems such as Hedberg, CAP, CET, Cyncly Worksheet, ProjectMatrix, Studio Webware, and Design Manager.
 
 ## When to Use
@@ -129,7 +132,7 @@ AD=54dia x 28.5H in
 
 ## Step 1: Accept Input
 
-Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Default to the nearest ancestor containing `PROJECT.md` and validate its `product-library.csv` with `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate product --project <project-root>` before conversion. This skill is read-only with respect to the CSV; its structured output remains SIF.
+Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Default to the nearest ancestor containing `PROJECT.md` and validate its `product-library.csv` with `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" validate product --project <project-root>` before conversion. This skill is read-only with respect to the CSV; its structured output remains SIF.
 
 **CSV file:**
 ```

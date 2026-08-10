@@ -15,6 +15,9 @@ allowed-tools:
 
 # /as:workplan — Plan Before Acting
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Create a durable plan another person or agent can execute without rediscovering the scope, decisions, dependencies, or checks. **The plan is the deliverable. Do not execute it.**
 
 ## Usage
@@ -149,7 +152,7 @@ Resolve and show the exact target path before writing. Check whether it exists. 
 
 Use project-relative paths inside the plan. Never put machine-specific absolute paths in the artifact.
 
-Resolve the bundled template relative to the loaded `skills/workplan/SKILL.md` when the harness exposes that resource path. On Claude Code, `${CLAUDE_PLUGIN_ROOT}/skills/workplan/templates/plan.md` is the fallback. Adapt the template to the request.
+Resolve the bundled template relative to the loaded `skills/workplan/SKILL.md` when the harness exposes that resource path. On Claude Code, `<plugin-root>/skills/workplan/templates/plan.md` is the fallback. Adapt the template to the request.
 
 If no bundled-resource path is available, reproduce the complete contract below rather than reducing it to headings: title; created date, review status, planning mode, and depth metadata; every required section; Included and Excluded subsections; stable R/A/D/W identifiers; and for every work unit, Produces, Depends on, Covers, Governed by, Work boundary, and Verification fields.
 
@@ -221,7 +224,7 @@ Do not begin execution without the user's direction. If the active harness canno
 
 A private work plan normally does not need Architecture Studio's professional disclaimer because it organizes work rather than making regulated findings. A plan the user might submit to a client or authority does require it, as does any plan that embeds substantive conclusions about zoning, building-code compliance, occupancy, life safety, structural or MEP adequacy, or environmental risk.
 
-Prefer replacing regulated conclusions with references to specialist outputs. When the disclaimer is required, resolve `rules/professional-disclaimer.md` relative to the loaded Architecture Studio plugin root (on Claude Code, `${CLAUDE_PLUGIN_ROOT}/rules/professional-disclaimer.md`) and append its canonical block and marker at the end of the plan. If that bundled rule cannot be located, use this exact fallback at the end of the plan:
+Prefer replacing regulated conclusions with references to specialist outputs. When the disclaimer is required, resolve `rules/professional-disclaimer.md` relative to the loaded Architecture Studio plugin root (on Claude Code, `<plugin-root>/rules/professional-disclaimer.md`) and append its canonical block and marker at the end of the plan. If that bundled rule cannot be located, use this exact fallback at the end of the plan:
 
 ```markdown
 > **Disclaimer:** This is an AI-generated analysis for preliminary planning purposes. All findings must be verified by a licensed professional before use in design, permitting, or regulatory submissions.

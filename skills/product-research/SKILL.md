@@ -15,6 +15,9 @@ allowed-tools:
 
 # /as:product-research — Product Research
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Receives a brief from a designer, researches products across the web, and returns a curated shortlist. Selected products can be saved to the nearest project's `product-library.csv`.
 
 ## How It Works
@@ -146,7 +149,7 @@ When the designer picks candidates ("save 1, 3, and 5"), prepare rows for the ne
 
 ### Row format
 
-Read `../../schema/product-schema.md` for the exact 33-column row contract and `../../schema/csv-conventions.md` for local-file rules. Preview all selected products and the target path, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper validates the complete batch and library before one atomic replacement; never loop per row or hand-edit persistent CSV.
+Read `../../schema/product-schema.md` for the exact 33-column row contract and `../../schema/csv-conventions.md` for local-file rules. Preview all selected products and the target path, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper validates the complete batch and library before one atomic replacement; never loop per row or hand-edit persistent CSV.
 
 Skill-specific column values:
 - **AG (Source):** `research`

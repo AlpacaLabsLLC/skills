@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:epd-compare — EPD Comparator
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Compare 2 or more products side-by-side on environmental impact metrics. Validates comparability (declared units, system boundaries, PCR alignment), generates comparison tables with percentage deltas, and checks LEED v4.1 MRc2 eligibility.
 
 This skill reads EPD records but does not persist or modify them. Fields follow [`schema/epd-schema.md`](../../schema/epd-schema.md), which is distinct from the FF&E product schema. Output is a markdown comparison report.
@@ -26,7 +29,7 @@ The user provides EPD data in one of these ways:
 3. **From prior skills** — "compare the EPDs I just parsed/found" (uses structured data from the current conversation)
 4. **Mixed** — combine pasted, prior, and canonical local CSV records
 
-If the user doesn't specify a source, first use structured EPD data from the current conversation. Otherwise ask for pasted values or an EPD CSV path. When reading `epd-library.csv`, validate it with `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" validate epd`; reject FF&E-shaped or malformed files. Validation is read-only; never invoke `init`, `import`, `append`, or `update`.
+If the user doesn't specify a source, first use structured EPD data from the current conversation. Otherwise ask for pasted values or an EPD CSV path. When reading `epd-library.csv`, validate it with `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" validate epd`; reject FF&E-shaped or malformed files. Validation is read-only; never invoke `init`, `import`, `append`, or `update`.
 
 ## Workflow
 

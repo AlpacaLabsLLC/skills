@@ -7,9 +7,11 @@ Architecture Studio separates the installed plugin from the user-owned worksurfa
 ```text
 studio/
 ├── STUDIO.md                 settings and project registry
-├── CLAUDE.md                 shared working instructions
+├── AGENTS.md                 Codex working instructions
+├── CLAUDE.md                 Claude Code working instructions
 ├── .mcp.json                 studio-only connector boundary
-├── .claude/skills/           firm-created skills
+├── .agents/skills/           firm-created Codex skills
+├── .claude/skills/           firm-created Claude Code skills
 ├── TASKS.md                  optional portfolio-mode action register
 └── projects/
 ```
@@ -23,7 +25,8 @@ studio/
 ```text
 projects/example/
 ├── PROJECT.md                sourced project facts
-├── CLAUDE.md                 project working instructions
+├── AGENTS.md                 Codex project instructions
+├── CLAUDE.md                 Claude Code project instructions
 ├── decisions/                durable reasoning and supersession history
 ├── meetings/                 typed meeting records
 ├── site-reports/             field observations and limitations
@@ -32,7 +35,8 @@ projects/example/
 ├── TIMELOG.md                user-confirmed time
 ├── product-library.csv       optional FF&E library
 ├── epd-library.csv           optional EPD library
-└── .claude/skills/           project-only skills
+├── .agents/skills/           project-only Codex skills
+└── .claude/skills/           project-only Claude Code skills
 ```
 
 ## Canonical ownership
@@ -54,8 +58,8 @@ Records cross-reference one another by stable identifiers. Meetings and site rep
 
 Studios default to project task mode: each project has one writable `TASKS.md`, and an all-project list is a read-only merged view. A studio may explicitly choose portfolio task mode, where one studio-root `TASKS.md` is authoritative and every task carries a Project ID. The modes are mutually exclusive; populated registers require a previewed migration rather than an automatic merge or split.
 
-Canonical studio and project records use a one-writer operating model in workspace format 2. Task-mode changes preflight all affected registers and keep rollback copies until the new topology and manifest commit together. Simultaneous edits from multiple Claude sessions or synchronized-folder clients are not supported.
+Canonical studio and project records use a one-writer operating model in workspace format 2. Task-mode changes preflight all affected registers and keep rollback copies until the new topology and manifest commit together. Simultaneous edits from multiple Codex or Claude sessions, or synchronized-folder clients, are not supported.
 
 This structure keeps records readable without Architecture Studio and lets them travel through the firm’s existing local, network, or synchronized storage system.
 
-Project initialization creates the empty `.claude/skills/` directory shown above. Skills created there are project-only; firm-wide skills belong at the studio root. Start or restart Claude Code from the intended studio or project scope if a newly created skill is not visible in autocomplete.
+Project initialization creates both empty skill roots shown above. Skills created under the active host's project root are project-only; firm-wide skills belong at the studio root. Start or restart Codex or Claude Code from the intended studio or project scope if a newly created skill is not visible.

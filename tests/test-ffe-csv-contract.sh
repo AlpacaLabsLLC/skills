@@ -47,8 +47,8 @@ for skill in "${mutators[@]}"; do
     echo "$file must delegate persistent mutation to csv-library.py" >&2
     exit 1
   }
-  rg -Fq '${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py' "$file" || {
-    echo "$file must resolve the helper through CLAUDE_PLUGIN_ROOT" >&2
+  rg -Fq '<plugin-root>/skills/master-schedule/scripts/csv-library.py' "$file" || {
+    echo "$file must resolve the helper through the portable plugin root" >&2
     exit 1
   }
   rg -q -i 'preview' "$file" || {

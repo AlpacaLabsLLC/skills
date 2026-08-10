@@ -78,11 +78,12 @@ init_project() {
     die "target directory is not empty: $target"
   fi
 
-  mkdir -p "$target/decisions" "$target/meetings" "$target/site-reports" "$target/docs/plans" "$target/.claude/skills"
+  mkdir -p "$target/decisions" "$target/meetings" "$target/site-reports" "$target/docs/plans" "$target/.claude/skills" "$target/.agents/skills"
   created=$(date +%Y-%m-%d)
-  tasks_record="resolved by /as:tasklist from this project and its owning studio"
+  tasks_record="resolved by the tasklist skill from this project and the studio skill that owns it"
   render_project "$TEMPLATE_DIR/PROJECT.md" "$target/PROJECT.md" "$name" "$project_id" "$created" "$tasks_record"
   render_project "$TEMPLATE_DIR/CLAUDE.md" "$target/CLAUDE.md" "$name" "$project_id" "$created"
+  render_project "$TEMPLATE_DIR/AGENTS.md" "$target/AGENTS.md" "$name" "$project_id" "$created"
   if [ "$task_mode" = project ]; then
     cp "$TEMPLATE_DIR/TASKS.md" "$target/TASKS.md"
   fi
