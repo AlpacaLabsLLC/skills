@@ -22,11 +22,11 @@
 
 Firm-created skills remain in the user-owned studio workspace, outside the installed plugin cache. They can stay private to a firm or project, or be developed for contribution back to the open-source project.
 
-**One plugin**—`as` v1.5.0—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+**One plugin**—`as` v1.4.2—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
 
-## What’s new in 1.5
+## What’s new in 1.4.2
 
-Architecture Studio v1.5.0 adds Codex as a supported host without changing the `as` plugin identity or the user-owned studio/project record formats introduced in v1.4.
+Architecture Studio v1.4.2 adds Codex as a supported host without changing the `as` plugin identity or the user-owned studio/project record formats introduced in v1.4.
 
 - **Codex-native packaging.** `.codex-plugin/plugin.json` and the Git marketplace entry let Codex install the repository as `as@skills-for-architects`.
 - **Cross-harness skills.** Every bundled skill maps Claude Code's `/as:<skill>` syntax to Codex's `$<skill>` syntax and resolves bundled scripts from the loaded skill path instead of a Claude-only environment variable.
