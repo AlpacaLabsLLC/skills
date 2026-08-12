@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:meeting-minutes — Typed Project Meeting Records
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Create an auditable record of what occurred in a meeting without silently turning discussion into project facts, durable decisions, or assigned tasks.
 
 ## Usage
@@ -79,7 +82,7 @@ Resolve and show the exact project-relative target. If it already exists:
 - When the user explicitly asked to revise that exact record, preserve the original event date, **Created** date, and sources; set **Updated** to today and add a concise revision note.
 - Otherwise preserve the existing file and choose the next available suffix: `-02`, `-03`, and so on. Check the suffixed path before writing. Never overwrite merely because the title and date match.
 
-Resolve the bundled template relative to the loaded `skills/meeting-minutes/SKILL.md` when the harness exposes that path. On Claude Code, `${CLAUDE_PLUGIN_ROOT}/skills/meeting-minutes/templates/meeting-minutes.md` is the fallback. If bundled resources are unavailable, reproduce every section listed in Step 3 plus meeting metadata, attendance, agenda, sources, discussion, and limitations.
+Resolve the bundled template relative to the loaded `skills/meeting-minutes/SKILL.md` when the harness exposes that path. On Claude Code, `<plugin-root>/skills/meeting-minutes/templates/meeting-minutes.md` is the fallback. If bundled resources are unavailable, reproduce every section listed in Step 3 plus meeting metadata, attendance, agenda, sources, discussion, and limitations.
 
 Write the minutes completely. Confirm the saved path. At this point, stop all mutation and verify that `PROJECT.md`, `decisions/`, and `TASKS.md` were not changed by the save operation.
 

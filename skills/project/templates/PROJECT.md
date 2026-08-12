@@ -1,6 +1,6 @@
 # Project — {{PROJECT_NAME}}
 
-> Maintained by `/as:project` and the project team.
+> Maintained by the project skill and the project team.
 > Every fact carries a source and date. Decision rationale lives only in `decisions/`.
 
 ## Identity

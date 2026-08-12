@@ -4,4 +4,4 @@
 - Treat `decisions/*.md` as the sole decision source of truth.
 - Preserve typed ownership for meetings, site reports, tasks, plans, and time.
 - Use project-relative links and never persist machine-specific absolute paths.
-- Project-specific Claude Code skills live in `.claude/skills/`; Codex skills use the parallel `.agents/skills/` root.
+- Project-specific Codex skills live in `.agents/skills/`; Claude Code skills use the parallel `.claude/skills/` root.

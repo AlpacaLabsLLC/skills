@@ -15,6 +15,9 @@ allowed-tools:
 
 # /as:product-match — Product Match
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 "Find me something like this." Takes a product — by name, image, or description — and searches the web for similar alternatives. Returns 5-10 matches with specs, pricing, and links.
 
 ## When to Use
@@ -151,7 +154,7 @@ Available in COM.
 
 ## Step 6: Save
 
-If the designer picks matches, prepare complete rows for the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Preview all chosen matches and the target path, then use the single confirmation gate. After approval, serialize the complete batch as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once so validation and replacement are atomic; never loop per row.
+If the designer picks matches, prepare complete rows for the nearest project-root `product-library.csv`. Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Preview all chosen matches and the target path, then use the single confirmation gate. After approval, serialize the complete batch as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once so validation and replacement are atomic; never loop per row.
 
 - `Tags`: append `match:{source-product-name}` so matches are traceable
 - `Notes`: `Matched from {source product}. {Why reasoning}`

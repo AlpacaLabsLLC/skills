@@ -14,6 +14,9 @@ allowed-tools:
 
 # /as:product-spec-bulk-fetch — Bulk Product Spec Fetcher
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Extract structured FF&E data from a list of product page URLs. Outputs a standardized schedule ready for design specs, procurement, or import into [Norma](https://norma.llc).
 
 ## Input
@@ -109,7 +112,7 @@ Show a summary table in markdown with all successful + partial results. Flag any
 The results table is the Markdown output. If the user asks to save, preview the selected row count, incomplete fields, and target `product-library.csv`, then use the single confirmation gate.
 
 ### Step 6: Save
-After approval, serialize all complete canonical rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. Set `Clipped At` to the current timestamp and `Source` to `bulk-fetch`. The helper validates the complete batch and library before one atomic replacement; never loop per row.
+After approval, serialize all complete canonical rows as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. Set `Clipped At` to the current timestamp and `Source` to `bulk-fetch`. The helper validates the complete batch and library before one atomic replacement; never loop per row.
 
 Do not write a secondary structured export. A Markdown report may be retained separately.
 

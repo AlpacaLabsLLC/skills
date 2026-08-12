@@ -1,6 +1,6 @@
 # Project context resolution
 
-Project-record skills must run `${CLAUDE_PLUGIN_ROOT}/skills/project/scripts/resolve-context.sh` from the current directory or an explicit user-selected directory before reading or writing records. Its first tab-separated field is authoritative:
+Project-record skills must run `<plugin-root>/skills/project/scripts/resolve-context.sh` from the current directory or an explicit user-selected directory before reading or writing records. Its first tab-separated field is authoritative:
 
 - `project`: use the returned project root and Project ID. The remaining fields give the validated owning studio (`-` for standalone), task mode, and canonical task-register path. Never independently guess portfolio versus project task storage.
 - `studio-picker`: show only the following validated manifest rows and require selection before writing.

@@ -1,0 +1,44 @@
+{
+  "name": "as",
+  "version": "1.4.2",
+  "description": "Architecture Studio — governed AEC skills and portable studio workflows for Codex and Claude Code, spanning project records, due diligence, site planning, zoning, programming, specifications, sustainability, FF&E, materials research, and presentations.",
+  "author": {
+    "name": "ALPA",
+    "email": "hello@alpa.llc",
+    "url": "https://alpa.llc"
+  },
+  "homepage": "https://alpa.llc/skills",
+  "repository": "https://github.com/AlpacaLabsLLC/skills-for-architects",
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "AEC",
+    "due-diligence",
+    "zoning",
+    "site-planning",
+    "programming",
+    "specifications",
+    "sustainability",
+    "FF&E",
+    "materials"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Architecture Studio",
+    "shortDescription": "Governed AEC skills for Codex and Claude Code",
+    "longDescription": "Architecture Studio gives architects, designers, and AEC teams a local-first catalog of governed skills for project records, due diligence, site planning, zoning, programming, specifications, sustainability, FF&E, materials research, and presentations.",
+    "developerName": "ALPA",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://alpa.llc/skills",
+    "defaultPrompt": [
+      "Set up an Architecture Studio workspace",
+      "Research due diligence for an NYC property",
+      "Build a workplace program from this brief"
+    ]
+  }
+}

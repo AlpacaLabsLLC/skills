@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:epd-parser — EPD PDF Parser
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Extract structured environmental impact data from EPD (Environmental Product Declaration) PDF files. Uses PyMuPDF for text extraction and Claude's reasoning to parse varying EPD formats into a standardized 42-column schema.
 
 EPDs follow ISO 14025 / ISO 21930 / EN 15804 and report life cycle environmental impacts of building products. This skill reads those PDFs and structures the data for comparison, specification, and LEED documentation.
@@ -162,7 +165,7 @@ Do not create a file by default. Only when the user explicitly asks to save reus
 2. Build complete records using [`schema/epd-schema.md`](../../schema/epd-schema.md), with `Parsed At` as an ISO 8601 timestamp and `Source` as `epd-parser`.
 3. Preview the records, target path, and whether this initializes or appends.
 4. Use one confirmation gate; do not ask the same confirmation first in prose.
-5. Serialize all approved records as one JSON array, preserving canonical field names. After approval, use `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" init epd` if needed, then invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append epd --row-json <batch.json>` exactly once. Never append in a per-record loop. The helper validates the entire file, rejects FF&E or malformed headers, and writes the whole batch atomically.
+5. Serialize all approved records as one JSON array, preserving canonical field names. After approval, use `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" init epd` if needed, then invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append epd --row-json <batch.json>` exactly once. Never append in a per-record loop. The helper validates the entire file, rejects FF&E or malformed headers, and writes the whole batch atomically.
 
 If no project root exists, keep the result in conversation and offer `/as:project init`; do not invent another CSV destination.
 

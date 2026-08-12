@@ -12,4 +12,4 @@ The single interface for Architecture Studio project setup and memory.
 /as:project migrate
 ```
 
-`PROJECT.md` owns sourced current facts. `decisions/*.md` owns durable reasoning and status. There is no duplicated Decisions table. When a project belongs to a studio, create it through `/as:studio create-project` so `/as:studio` remains the only writer of `STUDIO.md`.
+`PROJECT.md` owns sourced current facts. `decisions/*.md` owns durable reasoning and status. There is no duplicated Decisions table. When a project belongs to a studio, create it through the studio skill so that skill remains the only writer of `STUDIO.md`. Project scaffolds include `AGENTS.md` and `.agents/skills/` for Codex alongside `CLAUDE.md` and `.claude/skills/` for Claude Code.

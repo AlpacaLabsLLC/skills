@@ -26,7 +26,7 @@ grep -q 'max parseable number + 1' "$SKILL"
 grep -q 'create and verify the replacement first' "$SKILL"
 grep -q 'Migration removes the legacy Decisions table only when it is lossless' "$SKILL"
 grep -q 'PROJECT.md` is the only implicit project boundary' "$SKILL"
-grep -q 'exact created path and `.claude/skills/` extension path' "$SKILL"
+grep -q 'exact created path plus the `.agents/skills/`.*`.claude/skills/`' "$SKILL"
 
 grep -q '\[decisions/\](decisions/)' "$TEMPLATE"
 ! grep -q '^## Decisions$' "$TEMPLATE"

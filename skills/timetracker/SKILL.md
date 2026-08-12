@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:timetracker — Evidence-Based Manual Time Tracking
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Reconstruct defensible work descriptions from project evidence, ask the user for every duration, preview the proposed rows, and append confirmed entries to one project-level `TIMELOG.md`.
 
 ## Usage
@@ -142,7 +145,7 @@ The original and correction remain in the audit trail. Do not calculate net bill
 
 ## Bundled template
 
-Resolve `templates/timelog.md` relative to the loaded `skills/timetracker/SKILL.md` when the harness exposes that location. On Claude Code, `${CLAUDE_PLUGIN_ROOT}/skills/timetracker/templates/timelog.md` is the fallback. If the bundled resource cannot be resolved, create the exact table contract documented below rather than searching unrelated filesystem locations.
+Resolve `templates/timelog.md` relative to the loaded `skills/timetracker/SKILL.md` when the harness exposes that location. On Claude Code, `<plugin-root>/skills/timetracker/templates/timelog.md` is the fallback. If the bundled resource cannot be resolved, create the exact table contract documented below rather than searching unrelated filesystem locations.
 
 Required entry columns, in order:
 

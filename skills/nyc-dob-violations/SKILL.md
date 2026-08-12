@@ -10,6 +10,9 @@ allowed-tools:
 
 # /as:nyc-dob-violations — DOB & ECB Violations
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Look up DOB violations and ECB (Environmental Control Board) violations for any NYC building. Flags open violations prominently. No API key required.
 
 ## Usage

@@ -1,6 +1,6 @@
 # Tooling catalog
 
-Architecture Studio skills install together in one flat catalog so every workflow can be invoked directly. These groups describe what the tools do; they are not separate plugins or installation packages.
+Architecture Studio skills install together in one flat catalog so every workflow can be invoked directly. The links below use Claude Code's `/as:<skill>` namespace; Codex invokes the same installed skills as `$<skill>`. These groups describe what the tools do; they are not separate plugins or installation packages.
 
 ## Firm operations
 
@@ -8,7 +8,7 @@ Architecture Studio skills install together in one flat catalog so every workflo
 |-------|-------------|
 | [`/as:studio`](./studio) | Set up and inspect the studio, route work, and create projects |
 | [`/as:tool-catalog`](./tool-catalog) | Show the available skills and agents |
-| [`/as:learn`](./learn) | Guided, resumable introduction to Claude Code for architects |
+| [`/as:learn`](./learn) | Guided, resumable introduction to Codex and Claude Code for architects (use `$learn` on Codex) |
 | [`/as:skill-maker`](./skill-maker) | Create studio-wide or project-specific procedures outside the plugin cache |
 | [`/as:studio-feedback`](./studio-feedback) | Prepare a reviewed bug report or feature request without automatic submission |
 

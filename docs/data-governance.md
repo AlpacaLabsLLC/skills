@@ -14,9 +14,11 @@ Architecture Studio is local-first: its durable records are files in the user-se
 
 Research skills contact the public sources named in their documentation only when the user runs them.
 
-Background update checking is disabled by default. If enabled explicitly through `/as:studio`, it makes at most one bare request per 24 hours to `version.alpa.llc`, sends no project content or Architecture Studio identifier, fails silently, and notifies once per newer version. Cloudflare still processes ordinary request metadata such as IP address, request headers, and timestamps.
+Background update checking is available only on Claude Code, whose package installs the lifecycle hook, and it is disabled by default. If enabled explicitly through `/as:studio`, it makes at most one bare request per 24 hours to `version.alpa.llc`, sends no project content or Architecture Studio identifier, fails silently, and notifies once per newer version. Cloudflare still processes ordinary request metadata such as IP address, request headers, and timestamps.
 
-`/as:studio-feedback` prepares report fields locally. It never files an issue automatically. Opening the reviewed, prefilled GitHub URL transmits the displayed query parameters immediately to GitHub.
+The Codex package does not install that lifecycle hook. `$studio updates status`, `$studio updates enable`, and `$studio updates disable` report that background checking is unavailable; they do not write an enablement marker or cache and do not contact the endpoint.
+
+The studio-feedback skill prepares report fields locally. It never files an issue automatically. Opening the reviewed, prefilled GitHub URL transmits the displayed query parameters immediately to GitHub.
 
 ## Connectors
 

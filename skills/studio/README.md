@@ -18,7 +18,7 @@ Studio setup records working units, default country/state-or-region/city, and th
 /as:studio I need a space program for 200 people
 ```
 
-`STUDIO.md` is the sole studio manifest and `/as:studio` is its only writer. Studio-owned custom skills live in `.claude/skills/`; project memory remains owned by `/as:project`. New studios also reserve a studio-only connector boundary with an empty `.mcp.json`; no connector or authentication is configured, and project scaffolds never receive this file.
+`STUDIO.md` is the sole studio manifest and the studio skill is its only writer. Studio-owned custom skills live in `.agents/skills/` on Codex or `.claude/skills/` on Claude Code; project memory remains owned by the project skill. New studios also reserve a studio-only connector boundary with an empty `.mcp.json`; no connector or authentication is configured, and project scaffolds never receive this file.
 
 Studios default to project task mode, with one canonical `TASKS.md` per project. `/as:studio tasks mode portfolio` can move an empty studio to one studio-root register; populated registers require an explicit migration so two writable task sources can never drift.
 

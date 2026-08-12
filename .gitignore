@@ -10,3 +10,4 @@
 # Local
 .env
 .env.local
+.worktrees/

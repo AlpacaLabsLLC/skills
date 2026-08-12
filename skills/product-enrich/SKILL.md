@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:product-enrich — Product Enrichment
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Takes product rows from the nearest project's `product-library.csv` or pasted data and proposes missing category, color, material, and style metadata.
 
 ## When to Use
@@ -106,7 +109,7 @@ Flag any products where enrichment is uncertain:
 ### To the project library
 Read `../../schema/product-schema.md` and `../../schema/csv-conventions.md`. Map enrichment only to canonical named fields: `Category`, `Materials`, `Colors/Finishes`, and appended `Tags`; place noncanonical subcategory detail in `Notes`. Do not overwrite a populated field unless the preview explicitly calls that out.
 
-For multiple enriched rows, materialize the complete proposed 33-column CSV as a temporary or user-visible review file. Validate it, preview every material change and the target `product-library.csv` once, then use the single confirmation gate. After approval, invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" import product --project <project-root> --source <review.csv>` exactly once for one atomic replacement; never loop `update`. A genuinely single-record enrichment may use the same plugin-root helper's `update` command once with a uniquely matching stable field.
+For multiple enriched rows, materialize the complete proposed 33-column CSV as a temporary or user-visible review file. Validate it, preview every material change and the target `product-library.csv` once, then use the single confirmation gate. After approval, invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" import product --project <project-root> --source <review.csv>` exactly once for one atomic replacement; never loop `update`. A genuinely single-record enrichment may use the same plugin-root helper's `update` command once with a uniquely matching stable field.
 
 ### To conversation
 Output the enriched table in markdown.

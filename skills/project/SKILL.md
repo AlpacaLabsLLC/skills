@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:project — Project Setup and Memory
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 `/as:project` is the only project-memory interface. It owns current facts in `PROJECT.md` and durable reasoning in `decisions/*.md` without combining those record types or duplicating a decision index.
 
 ## Commands
@@ -40,7 +43,7 @@ allowed-tools:
 
 ## Resolve the project root
 
-Run `${CLAUDE_PLUGIN_ROOT}/skills/project/scripts/resolve-context.sh` from the current or explicitly supplied directory and follow `references/context-resolution.md`. `PROJECT.md` is the only implicit project boundary. A nearer project inside a monorepo wins over outer repository metadata; typed-record directories, task/time files, Claude instructions, git roots, and the current directory never establish a project. Stop on `invalid`; use the validated picker for `studio-picker`; and never write before one exact project is resolved.
+Run `<plugin-root>/skills/project/scripts/resolve-context.sh` from the current or explicitly supplied directory and follow `references/context-resolution.md`. `PROJECT.md` is the only implicit project boundary. A nearer project inside a monorepo wins over outer repository metadata; typed-record directories, task/time files, Claude instructions, git roots, and the current directory never establish a project. Stop on `invalid`; use the validated picker for `studio-picker`; and never write before one exact project is resolved.
 
 ## `/as:project init`
 
@@ -49,8 +52,8 @@ Run `${CLAUDE_PLUGIN_ROOT}/skills/project/scripts/resolve-context.sh` from the c
 3. Outside a studio, ask whether to initialize a studio or create a standalone project. Standalone creation requires explicit confirmation.
 4. Gather the project name, optional ID, and exact target. Normalize the directory to lowercase kebab-case, prefixing a supplied ID. When no ID is supplied, use the folder slug as the stable local ID. Reject unsafe names, separators, dot segments, control characters, existing files, and non-empty directories. Never silently suffix a project identity.
 5. Preview the exact path and full bundle. State that no git repository, ALPA account, or cloud service will be created.
-6. After confirmation, run `${CLAUDE_PLUGIN_ROOT}/skills/project/scripts/project-workspace.sh init <target> <name> <project-id> project` and verify every file and directory. Standalone projects always use a project-local task register; portfolio mode belongs to a studio.
-7. Report the exact created path and `.claude/skills/` extension path. Explain that Claude Code should be started or restarted from the intended project directory if new project-only skills are not visible.
+6. After confirmation, run `<plugin-root>/skills/project/scripts/project-workspace.sh init <target> <name> <project-id> project` and verify every file and directory. Standalone projects always use a project-local task register; portfolio mode belongs to a studio.
+7. Report the exact created path plus the `.agents/skills/` (Codex) and `.claude/skills/` (Claude Code) extension paths. Explain that the active harness should be restarted from the intended project directory if new project-only skills are not visible.
 
 ## `/as:project status`
 

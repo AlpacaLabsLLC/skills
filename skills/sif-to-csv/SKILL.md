@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:sif-to-csv — SIF to CSV Converter
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Converts a SIF input from a dealer or procurement system into a human-readable preview and canonical product rows. Translates field codes, expands options and attributes, calculates pricing, and computes totals.
 
 ## When to Use
@@ -166,7 +169,7 @@ Show the parsed table in Markdown. For persistence, write only to the nearest pr
 - `Image URL` ← ImageURL; `Tags` ← TG; `Status` ← `quoted`; `Source` ← `sif-to-csv`
 - `Notes` ← `From SIF: {ST}. Discount: {S-}%. Qty: {QT} · Ext: ${ext_sell}`
 
-Preview the complete batch's row mappings, totals, warnings, and target path, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper validates the complete batch and library before one atomic replacement; never loop per row.
+Preview the complete batch's row mappings, totals, warnings, and target path, then use the single confirmation gate. After approval, serialize all complete rows as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The helper validates the complete batch and library before one atomic replacement; never loop per row.
 
 ## Step 5: Summary
 

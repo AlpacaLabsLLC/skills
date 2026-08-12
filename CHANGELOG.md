@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-08-10
+
+### Added
+
+- Added `.codex-plugin/plugin.json` and a repository Git marketplace at `.agents/plugins/marketplace.json`, allowing Codex to install Architecture Studio as `as@skills-for-architects`.
+- Added Codex `AGENTS.md` templates and `.agents/skills/` roots to new studio and project workspaces alongside the existing Claude Code files.
+- Added a Codex compatibility contract test covering manifests, marketplace metadata, skill portability, workspace scaffolds, and documented installation commands.
+
+### Changed
+
+- All bundled skills now translate Architecture Studio invocation syntax by host: `$skill-name` on Codex and `/as:skill-name` on Claude Code.
+- Bundled scripts and references resolve from the loaded skill path through portable `<skill-root>` and `<plugin-root>` placeholders instead of requiring Claude-only environment variables.
+- Skill Maker now targets `.agents/skills/` on Codex and `.claude/skills/` on Claude Code while preserving catalog, studio, project, and global ownership boundaries.
+- Installation, data-governance, deployment, workspace, and contribution documentation now distinguishes the shared skill catalog from Claude Code-only native agents and hooks.
+
+### Compatibility
+
+- The studio/project record formats and `as` plugin identity are unchanged. Existing v1.4 workspaces remain valid; new scaffolds add empty Codex instruction and skill roots without moving or duplicating existing Claude Code skills.
+- The bundled course is available as `$learn` on Codex and `/as:learn` on Claude Code. Its shared exercises preserve the six-module progress format while clearly branching for Codex's `AGENTS.md`, `.agents/skills/`, and new-session surfaces versus Claude Code's `CLAUDE.md`, `.claude/skills/`, and `/clear`; Claude-native agents and hooks remain unavailable on Codex.
+
 ## [1.4.1] - 2026-07-29
 
 ### Fixed
@@ -216,7 +236,8 @@ First public release.
 - **3 hooks** — post-write disclaimer check, post-output metadata, pre-commit spec lint.
 - Marketplace install: `claude plugin marketplace add AlpacaLabsLLC/skills-for-architects`.
 
-[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.2...HEAD
+[1.4.2]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.2
 [1.4.1]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.1
 [1.4.0]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.0
 [1.3.0]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.3.0

@@ -106,9 +106,10 @@ init_studio() {
     die "target directory is not empty: $target"
   fi
 
-  mkdir -p "$target/.claude/skills" "$target/projects"
+  mkdir -p "$target/.claude/skills" "$target/.agents/skills" "$target/projects"
   render "$TEMPLATE_DIR/STUDIO.md" "$target/STUDIO.md" "$name" "$working_units" "$country" "$state_region" "$city"
   render "$TEMPLATE_DIR/CLAUDE.md" "$target/CLAUDE.md" "$name" "$working_units" "$country" "$state_region" "$city"
+  render "$TEMPLATE_DIR/AGENTS.md" "$target/AGENTS.md" "$name" "$working_units" "$country" "$state_region" "$city"
   cp "$TEMPLATE_DIR/.mcp.json" "$target/.mcp.json"
   printf 'created studio: %s\n' "$target"
 }

@@ -13,6 +13,9 @@ allowed-tools:
 
 # /as:product-spec-pdf-parser — PDF Product Spec Parser
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Extract structured FF&E data from product PDF files — price books, fact sheets, configurator sheets, and spec sheets. Uses PyMuPDF for text extraction and Claude's reasoning to parse wildly varying PDF layouts into a standardized schedule.
 
 ## Input
@@ -134,7 +137,7 @@ If persistence was requested, use this results table as the change preview and p
 
 ### Step 5: Write output
 
-Without persistence, leave the result as Markdown. After approval to persist, serialize all complete canonical rows as one JSON array and invoke `python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The shared helper validates the complete batch and CSV before one atomic replacement; never loop per row. PDF-specific data stays in `Notes`; do not create extra columns or secondary structured exports.
+Without persistence, leave the result as Markdown. After approval to persist, serialize all complete canonical rows as one JSON array and invoke `python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py" append product --project <project-root> --row-json <batch.json>` exactly once. The shared helper validates the complete batch and CSV before one atomic replacement; never loop per row. PDF-specific data stays in `Notes`; do not create extra columns or secondary structured exports.
 
 ## Edge Cases
 

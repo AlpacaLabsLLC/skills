@@ -2,7 +2,7 @@
 
 Contributions should preserve Architecture Studio’s governance, memory ownership, and portable file contracts.
 
-Private firm and project skills belong in the user-owned studio workspace and do not require an upstream contribution. Use `/as:skill-maker` there. The process below is for general-purpose work proposed to the maintained public plugin.
+Private firm and project skills belong in the user-owned studio workspace and do not require an upstream contribution. Use `$skill-maker` on Codex or `/as:skill-maker` on Claude Code. The process below is for general-purpose work proposed to the maintained public plugin.
 
 ## Add or change a skill
 
@@ -16,7 +16,7 @@ Private firm and project skills belong in the user-owned studio workspace and do
 
 Read [PATTERNS.md](./PATTERNS.md) for naming, layout, dispatcher behavior, versioning, and lessons from prior defects.
 
-Do not include client data, firm secrets, credentials, or proprietary procedures in a pull request. Catalog contributions use namespaced public commands such as `/as:site-history`; private workspace skills use their local `/{name}` command when discovered in that scope.
+Do not include client data, firm secrets, credentials, or proprietary procedures in a pull request. Codex invokes catalog and private skills as `$name`; Claude Code uses namespaced catalog commands such as `/as:site-history` and local `/{name}` commands for private workspace skills.
 
 ## Documentation ownership
 

@@ -1,6 +1,6 @@
 # Architecture Studio — {{STUDIO_NAME}}
 
-> Portable studio manifest. `/as:studio` is the only writer of this registry.
+> Portable studio manifest. The studio skill is the only writer of this registry.
 > Project details remain in each project’s `PROJECT.md`.
 
 ## Studio defaults

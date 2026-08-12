@@ -1,26 +1,29 @@
 ---
 name: tool-catalog
-description: Show all available Architecture Studio skills, agents, and their namespaced commands. Use when the user runs /as:tool-catalog, asks "what can you do" or "what skills are available", or wants a directory of plugin commands. Do not use for Claude Code's native /skills command.
+description: Show the available Architecture Studio skills and their host-appropriate commands, plus Claude Code's native Architecture Studio agents. Use when the user invokes tool-catalog, asks "what can you do" or "what skills are available", or wants a directory of plugin commands. Do not use for a host's native skill-list command.
 allowed-tools:
   - Read
 ---
 
 # /as:tool-catalog — What's Available
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 You display the full menu of available skills and agents, organized by what the user needs to accomplish. This is a read-only help command.
 
 ## On Start
 
-Print the following menu. Do not read any files — the menu is static.
+Print the following menu. Do not read any files — the menu is static. On Codex, render every `/as:<skill>` entry as `$<skill>` before printing. On Claude Code, preserve the namespaced slash commands. Keep the agents section labeled Claude Code-only on both hosts.
 
 ## Output
 
 ```
 # Architecture Studio
 
-**Architecture Studio tools and 7 agents** — type `/as:studio [your task]` to get routed, or call any plugin skill by its namespaced command.
+**Architecture Studio skills for Codex and Claude Code** — use the studio dispatcher for routing or call a skill directly. Claude Code also includes 7 native agents.
 
-## Agents — describe your task, they figure out the rest
+## Claude Code agents — describe your task, they figure out the rest
 
 | Agent | What it does |
 |-------|-------------|
@@ -101,8 +104,8 @@ Print the following menu. Do not read any files — the menu is static.
 
 These records form a linked graph: facts and decisions inform plans; meetings and site reports propose facts, decisions, and tasks without silently promoting them; tasks preserve action history; and timetracker reconstructs work from dated artifacts but never infers duration.
 
-### Learn — new to Claude Code?
-/as:learn — guided hands-on course for architects, resumable anytime
+### Learn — new to AI-assisted project work?
+/as:learn — guided hands-on Codex and Claude Code course for architects, resumable anytime
 ```
 
 That's it. Do not add commentary, suggestions, or follow-up questions. Just print the menu.

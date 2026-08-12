@@ -10,6 +10,9 @@ allowed-tools:
 
 # /as:resize-images — Image Resizer for Web, Social, and Print
 
+<!-- architecture-studio:harness-compatibility -->
+> Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
+
 Resize project photos and renders for web publishing, social media, and print layouts. Always asks the user for the source folder before doing anything. Outputs resized copies into clearly named subfolders — originals are never modified.
 
 ## Step 1: Ask for the source folder
@@ -54,7 +57,7 @@ Stop if Pillow is unavailable.
 Run the bundled processor once, passing the source folder and selected modes:
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/resize-images/scripts/resize_images.py" "<folder>" web social slides print
+python3 "<plugin-root>/skills/resize-images/scripts/resize_images.py" "<folder>" web social slides print
 ```
 
 Include only selected modes. The script creates the matching `resized-<mode>/` folders, preserves originals, reports each output, continues past corrupt inputs, and exits nonzero if any input fails. Never recreate or modify the script inline.

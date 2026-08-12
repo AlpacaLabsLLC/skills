@@ -25,7 +25,7 @@ done
 
 for skill in epd-research epd-parser epd-compare epd-to-spec; do
   file="skills/$skill/SKILL.md"
-  rg -q 'python3 "\$\{CLAUDE_PLUGIN_ROOT\}/skills/master-schedule/scripts/csv-library\.py"' "$file" || {
+  rg -q 'python3 "<plugin-root>/skills/master-schedule/scripts/csv-library\.py"' "$file" || {
     echo "$file does not use the plugin-root helper invocation" >&2
     exit 1
   }
@@ -79,7 +79,7 @@ for path in [
     assert "EPD Link,Manufacturer,Product Name" not in text, f"duplicated header in {path}"
     for line in text.splitlines():
         if "skills/master-schedule/scripts/csv-library.py" in line:
-            assert 'python3 "${CLAUDE_PLUGIN_ROOT}/skills/master-schedule/scripts/csv-library.py"' in line, (
+            assert 'python3 "<plugin-root>/skills/master-schedule/scripts/csv-library.py"' in line, (
                 f"cwd/repository-relative helper invocation in {path}: {line}"
             )
 PY

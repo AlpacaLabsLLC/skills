@@ -5,6 +5,8 @@
 #   skills/<name>/SKILL.md + README.md   — all skills, flat, one dir each
 #   agents/<name>.md                     — native subagents (documentation lives outside this directory)
 #   hooks/<name>.sh + hooks/hooks.json   — event-driven automations
+#   .codex-plugin/plugin.json            — Codex plugin manifest
+#   .agents/plugins/marketplace.json     — Codex Git marketplace
 #   .claude-plugin/plugin.json           — the one plugin manifest
 #   .claude-plugin/marketplace.json      — single-entry marketplace, source "./"
 #
@@ -210,8 +212,8 @@ else:
 # Tool catalog headline. Catalog membership is checked above; do not maintain
 # an aggregate skill count in prose.
 menu = pathlib.Path('skills/tool-catalog/SKILL.md').read_text(encoding='utf-8')
-if '**Architecture Studio tools and' not in menu:
-    errors.append("skills/tool-catalog/SKILL.md missing Architecture Studio tools headline")
+if '**Architecture Studio skills for Codex and Claude Code**' not in menu:
+    errors.append("skills/tool-catalog/SKILL.md missing cross-harness Architecture Studio headline")
 
 # Root plugin.json + single-entry marketplace.json.
 plugin = json.loads(pathlib.Path('.claude-plugin/plugin.json').read_text(encoding='utf-8'))
@@ -447,10 +449,17 @@ for f in files:
             # Workplan creates this project-local destination at runtime. It is
             # deliberately not bundled in the flat plugin package.
             continue
-        if t.startswith('${CLAUDE_PLUGIN_ROOT}/'):
-            rel = t[len('${CLAUDE_PLUGIN_ROOT}/'):]
+        if t.startswith('<plugin-root>/'):
+            rel = t[len('<plugin-root>/'):]
             checked += 1
             if not (root / rel).exists():
+                print(f"  ✗ {f}: references missing file {t}")
+                errors += 1
+            continue
+        if t.startswith('<skill-root>/'):
+            rel = t[len('<skill-root>/'):]
+            checked += 1
+            if not (skill_dir / rel).exists():
                 print(f"  ✗ {f}: references missing file {t}")
                 errors += 1
             continue

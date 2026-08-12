@@ -125,8 +125,33 @@ PY
 
 grep -Fq '/as:studio updates enable' skills/studio/SKILL.md
 grep -Fq '/as:studio updates disable' skills/studio/SKILL.md
-grep -Fq '${CLAUDE_SKILL_DIR}/scripts/update-preference.sh' skills/studio/SKILL.md
+grep -Fq '<skill-root>/scripts/update-preference.sh' skills/studio/SKILL.md
 grep -Fq 'disabled by default' skills/studio/SKILL.md
 rg -q 'Cloudflare.*processes ordinary request metadata' README.md
+
+# The preference helper remains a Claude Code feature; Codex must stop before
+# resolving update state or mutating its marker.
+python3 - <<'PY'
+from pathlib import Path
+
+studio = Path('skills/studio/SKILL.md').read_text(encoding='utf-8')
+updates = studio.split('### `/as:studio updates status|enable|disable`', 1)[1].split('### `/as:studio tasks mode project|portfolio`', 1)[0]
+codex = updates.split('- **Codex:**', 1)[1].split('- **Claude Code:**', 1)[0]
+claude = updates.split('- **Claude Code:**', 1)[1]
+
+assert 'background update checking is unavailable' in codex
+assert all(command in codex for command in ('`status`', '`enable`', '`disable`'))
+assert 'Do not open a confirmation gate' in codex
+assert 'run `<skill-root>/scripts/update-preference.sh`' in codex
+assert 'create, remove, or inspect `.architecture-studio-update-check-enabled`' in codex
+
+for command in ('status', 'enable', 'disable'):
+    assert f'<skill-root>/scripts/update-preference.sh {command}' in claude
+
+governance = Path('docs/data-governance.md').read_text(encoding='utf-8')
+assert 'available only on Claude Code' in governance
+assert 'The Codex package does not install that lifecycle hook' in governance
+assert 'do not write an enablement marker or cache' in governance
+PY
 
 echo "✓ update checking is opt-in, throttled, fail-silent, and once per version"

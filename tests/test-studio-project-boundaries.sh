@@ -46,10 +46,10 @@ grep -q 'Run `/as:studio` later' "$STUDIO"
 grep -q 'Would you like this to automatically check for updates?' "$STUDIO"
 ! grep -q 'any already-known basics' "$STUDIO"
 grep -q 'do not gather facts that this creation flow does not persist' "$STUDIO"
-grep -q 'exact absolute project path and its `.claude/skills/` path' "$STUDIO"
-grep -q 'restart Claude Code from that project root' "$STUDIO"
-grep -q 'exact absolute studio path and `.claude/skills/` path' "$STUDIO"
-grep -q 'restart Claude Code from the studio root' "$STUDIO"
+grep -q 'exact absolute project path plus its `.agents/skills/` and `.claude/skills/` paths' "$STUDIO"
+grep -q 'restart the active harness from that project root' "$STUDIO"
+grep -q 'exact absolute studio path and both skill roots' "$STUDIO"
+grep -q 'restart the active harness from the studio root' "$STUDIO"
 ! grep -q 'skip for now' "$STUDIO"
 grep -q '\.mcp\.json' "$STUDIO"
 grep -q 'empty-reserved' "$STUDIO"
@@ -59,5 +59,54 @@ if find skills/project -name .mcp.json -print -quit | grep -q .; then
   echo "project skill unexpectedly contains an MCP manifest" >&2
   exit 1
 fi
+
+# Host-specific onboarding and dispatch must not expose Claude-only affordances
+# as executable Codex routes.
+python3 - <<'PY'
+from pathlib import Path
+
+studio = Path('skills/studio/SKILL.md').read_text(encoding='utf-8')
+welcome = studio.split('## Welcome and no-argument behavior', 1)[1].split('### Single-gate rule', 1)[0]
+routing = studio.split('## Task routing', 1)[1].split('## What `/as:studio` does not do', 1)[0]
+
+assert '**Claude Code:** present these four outcomes' in welcome
+assert '**Codex:** present these four outcomes' in welcome
+assert 'continue directly into `$studio init`' in welcome
+assert 'point to `$tool-catalog`' in welcome
+assert 'hand off to `$learn`' in welcome
+
+claude_routes = routing.split('### Claude Code native-agent routes', 1)[1].split('### Codex skill routes and synthesis', 1)[0]
+for agent in (
+    'Site Planner agent',
+    'NYC Zoning Expert agent',
+    'Workplace Strategist agent',
+    'Product & Materials Researcher agent',
+    'FF&E Designer agent',
+    'Sustainability Specialist agent',
+    'Brand Manager agent',
+):
+    assert agent in claude_routes, agent
+
+codex_routes = routing.split('### Codex skill routes and synthesis', 1)[1]
+expected_lanes = {
+    'Site context': ('$environmental-analysis', '$mobility-analysis', '$demographics-analysis', '$site-history'),
+    'NYC zoning': ('$nyc-property-report', '$zoning-analysis-nyc', '$zoning-envelope'),
+    'Programming': ('$workplace-programmer', '$occupancy-calculator'),
+    'Specifications': ('$spec-writer', '$epd-to-spec'),
+    'Materials and FF&E': ('$product-research', '$master-schedule'),
+    'Sustainability': ('$epd-research', '$epd-parser', '$epd-compare', '$epd-to-spec'),
+    'Presentations': ('$color-palette-generator', '$resize-images', '$slide-deck-generator'),
+}
+for lane, skills in expected_lanes.items():
+    assert f'| {lane} |' in codex_routes, lane
+    for skill in skills:
+        assert skill in codex_routes, f'{lane}: {skill}'
+
+assert '$studio 123 Main St, Brooklyn NY' in codex_routes
+assert '$studio task chair, mesh back, under $800' in codex_routes
+assert 'On Codex, render every suggested command as `$<skill-name>`' in codex_routes
+assert 'never emit a Claude-style slash command' in codex_routes
+assert 'On Claude Code, render skills as `/as:<skill-name>`' in codex_routes
+PY
 
 echo "✓ studio and project boundaries have distinct owners"
