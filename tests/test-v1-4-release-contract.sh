@@ -9,18 +9,20 @@ from pathlib import Path
 
 plugin = json.loads(Path('.claude-plugin/plugin.json').read_text())
 marketplace = json.loads(Path('.claude-plugin/marketplace.json').read_text())
-assert plugin['version'] == '1.4.2'
-assert marketplace['metadata']['version'] == '1.4.2'
+assert plugin['version'] == '1.4.3'
+assert marketplace['metadata']['version'] == '1.4.3'
 assert plugin['description'].startswith('Architecture Studio —')
 assert marketplace['plugins'][0]['description'].startswith('Architecture Studio —')
 PY
 
 grep -q '^## \[Unreleased\]$' CHANGELOG.md
+grep -q '^## \[1\.4\.3\] - 2026-08-13$' CHANGELOG.md
 grep -q '^## \[1\.4\.2\] - 2026-08-10$' CHANGELOG.md
 grep -q '^## \[1\.4\.1\] - 2026-07-29$' CHANGELOG.md
 grep -q '^## \[1\.4\.0\] - 2026-07-26$' CHANGELOG.md
 grep -q 'sequential `major.minor.patch` release scheme' CHANGELOG.md
-grep -q '^\[Unreleased\]: .*compare/v1\.4\.2\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[Unreleased\]: .*compare/v1\.4\.3\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[1\.4\.3\]: .*releases/tag/v1\.4\.3$' CHANGELOG.md
 grep -q '^\[1\.4\.2\]: .*releases/tag/v1\.4\.2$' CHANGELOG.md
 grep -q '^\[1\.4\.1\]: .*releases/tag/v1\.4\.1$' CHANGELOG.md
 grep -q '^\[1\.4\.0\]: .*releases/tag/v1\.4\.0$' CHANGELOG.md
