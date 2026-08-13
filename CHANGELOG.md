@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `scripts/audit-skill-context.sh` now reads the description with the YAML parser instead of reconstructing it in AWK. A frontmatter description may be inline, quoted, folded, literal, or a plain multi-line scalar, and each form folds, chomps, and strips comments by its own rules. Six were measured wrong: a bare `description:` followed by indented continuation lines reported zero characters, a trailing `#` comment was counted as description text, a full-line comment likewise, a blank line inside a plain scalar folded to a space rather than a newline, a multi-line quoted scalar was truncated at its first line, and clip-chomped `>` and `|` scalars lost their final line break. Lengths are still byte lengths under `LC_ALL=C`, so every measured total is unchanged and `docs/reports/v1-4-skill-context-optimization.md` still reconciles exactly. PyYAML is now required to run the audit; it is already installed in CI for `scripts/lint.sh`. The script also accepts an optional skills root, which lets the parser be tested against fixtures, and `tests/test-context-audit-description-styles.sh` covers all sixteen description forms.
+
 ## [1.4.2] - 2026-08-10
 
 ### Added
