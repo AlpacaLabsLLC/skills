@@ -100,6 +100,19 @@ On EVERY shipped change:
 
 If a single change touches both plugin behavior and marketplace-level state, bump both versions in the same commit (one tag, one release — pick the higher-scope version for the tag name).
 
+**The version string is hardcoded in more places than the manifests.** A release that bumps only the JSON files fails the suite. Grep before committing — `grep -rn '<previous-version>' --include='*.json' --include='*.sh' --include='*.md' .` — and expect to touch:
+
+| Location | What |
+|---|---|
+| `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json` | The three `version` fields |
+| `CHANGELOG.md` | The `## [X.Y.Z] - YYYY-MM-DD` heading **and** both link refs at the bottom — the `[Unreleased]: …compare/vX.Y.Z...HEAD` target moves to the new tag, and a `[X.Y.Z]: …releases/tag/vX.Y.Z` line is added |
+| `tests/test-v1-4-release-contract.sh` | Asserts the plugin and marketplace versions, the CHANGELOG headings, and the exact compare-link target. **Fails until updated.** |
+| `tests/test-project-records-integration.sh` | Asserts the installed plugin version. **Fails until updated.** |
+| `README.md` | The `as vX.Y.Z` identity line, and a "What's new" section for anything user-facing |
+| `docs/firm-deployment.md` | Opens by naming the current version |
+
+Run the full suite before tagging. The two tests above encode the release contract deliberately, so a bump that forgets a surface cannot ship quietly.
+
 **Three artifacts must move together:** JSON `version` field, git tag, GitHub release. Bumping JSON without tagging leaves discoverability holes (no `git checkout v1.1.0`, no shareable release URL). Tagging without bumping JSON breaks Cowork's update mechanism. Cutting a release without a CHANGELOG entry leaves the release notes empty.
 
 **Why:** Cowork and Claude Code pin to `plugin.json` `version` for plugin updates — without a bump, `/plugin marketplace update` reports "already up to date" even when new commits exist (canoa 2026-05-08: three commits, no bump, Cowork served `0.1.0` indefinitely). The marketplace `metadata.version` is more of a documentation pin than a functional one (`/plugin marketplace update` re-fetches regardless), but bumping it gives every shipped change a clear version trail in CHANGELOG. Git tags + GitHub releases give the same change a discoverable surface for humans — release URLs link from PRs, CHANGELOGs, and external docs; tags let `git checkout` against a known release point. We hit the gap three times on 2026-05-08: canoa shipped without a plugin.json bump; skills-for-architects shipped PATTERNS.md without a marketplace bump; both repos accumulated commits without git tags or GitHub releases. Bump discipline = every push leaves a trail across all three artifacts.

@@ -24,6 +24,10 @@ Firm-created skills remain in the user-owned studio workspace, outside the insta
 
 **One plugin**—`as` v1.4.3—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
 
+## What’s new in 1.4.3
+
+A maintenance patch. `scripts/audit-skill-context.sh` now reads skill descriptions with the YAML parser instead of reconstructing them, correcting six frontmatter forms that were measured wrong — most visibly a plain multi-line description, which reported zero characters. No bundled skill used an affected form, so every published measurement is unchanged and no skill, record format, or command behavior moves. Upgrading from 1.4.2 requires nothing.
+
 ## What’s new in 1.4.2
 
 Architecture Studio v1.4.2 adds Codex as a supported host without changing the `as` plugin identity or the user-owned studio/project record formats introduced in v1.4.

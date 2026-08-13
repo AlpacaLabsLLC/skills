@@ -4,6 +4,18 @@ Contributions should preserve Architecture Studio’s governance, memory ownersh
 
 Private firm and project skills belong in the user-owned studio workspace and do not require an upstream contribution. Use `$skill-maker` on Codex or `/as:skill-maker` on Claude Code. The process below is for general-purpose work proposed to the maintained public plugin.
 
+## Local prerequisites
+
+`./scripts/lint.sh` and the test suite degrade quietly when a tool is absent — checks are skipped with a notice rather than failing, and CI enforces them afterwards. Install these so a local run means what it says:
+
+| Tool | Needed for | Without it |
+|---|---|---|
+| `python3` with `pyyaml` (`pip install pyyaml`) | SKILL.md frontmatter validation in `scripts/lint.sh`; `scripts/audit-skill-context.sh` | Frontmatter, JSON, count, and link checks skip; the audit script exits with an install hint |
+| `jq` | JSON manifest checks | Manifest validation skips |
+| `shellcheck` | Shell-script analysis | Skipped locally with a notice; CI enforces it |
+
+A run that reports `all checks passed` with skip notices above it has not verified everything. Read the notices.
+
 ## Add or change a skill
 
 1. Fork the repository and create a focused branch.
