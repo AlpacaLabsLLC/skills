@@ -28,6 +28,30 @@ bad_payload=$(printf '%s' '{not-json' | PATH="$fake_bin" CLAUDE_PLUGIN_ROOT="$PW
 printf '%s' "$bad_payload" | grep -q 'decision'
 printf '%s' "$bad_payload" | grep -q 'stopped safely'
 
+# Documenting the marker is not emitting it. Prose that cites the marker
+# inline — inside backticks, mid-sentence — is not a regulatory output and
+# must not be blocked. Substring matching blocked every edit to CHANGELOG.md,
+# PATTERNS.md, hooks/README.md, rules/README.md, and skill-maker's SKILL.md.
+documented="$root/documents-the-marker.md"
+printf 'Use HTML comment markers (e.g. `<!-- architecture-studio:requires-disclaimer -->`) that skills emit.\n' > "$documented"
+documented_payload=$(FILE_PATH="$documented" python3 -c 'import json,os; print(json.dumps({"tool_input":{"file_path":os.environ["FILE_PATH"]}}))')
+documented_out=$(printf '%s' "$documented_payload" | CLAUDE_PLUGIN_ROOT="$PWD" bash hooks/post-write-disclaimer-check.sh)
+[ -z "$documented_out" ] || { echo "inline marker citation must not block: $documented_out" >&2; exit 1; }
+
+# Every repository file that merely documents the convention stays silent.
+for documented_file in CHANGELOG.md PATTERNS.md hooks/README.md rules/README.md skills/skill-maker/SKILL.md; do
+  repo_payload=$(FILE_PATH="$PWD/$documented_file" python3 -c 'import json,os; print(json.dumps({"tool_input":{"file_path":os.environ["FILE_PATH"]}}))')
+  repo_out=$(printf '%s' "$repo_payload" | CLAUDE_PLUGIN_ROOT="$PWD" bash hooks/post-write-disclaimer-check.sh)
+  [ -z "$repo_out" ] || { echo "$documented_file documents the marker and must not block: $repo_out" >&2; exit 1; }
+done
+
+# A real regulatory output still carries both, and still passes.
+compliant="$root/compliant-report.md"
+printf 'FAR is 3.4.\n\nAI-generated analysis for preliminary planning purposes.\n\n<!-- architecture-studio:requires-disclaimer -->\n' > "$compliant"
+compliant_payload=$(FILE_PATH="$compliant" python3 -c 'import json,os; print(json.dumps({"tool_input":{"file_path":os.environ["FILE_PATH"]}}))')
+compliant_out=$(printf '%s' "$compliant_payload" | CLAUDE_PLUGIN_ROOT="$PWD" bash hooks/post-write-disclaimer-check.sh)
+[ -z "$compliant_out" ] || { echo "compliant regulatory output must not block: $compliant_out" >&2; exit 1; }
+
 hook="$PWD/hooks/pre-commit-spec-lint.sh"
 repo="$root/repo with space"
 mkdir -p "$repo"

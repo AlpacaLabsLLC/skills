@@ -10,6 +10,9 @@
 #   - This hook is marker-driven: if the marker is present, the canonical
 #     disclaimer text must also be present. If the marker is absent, the
 #     hook stays silent — the skill considered the output non-regulatory.
+#   - "Present" means the marker occupies its own line. Prose that documents
+#     the convention cites the marker inline inside backticks and is not a
+#     regulatory output, so it is correctly ignored.
 #   - Both Write and Edit provide `tool_input.file_path`; Edit carries no
 #     full content, so the hook always reads the file from disk.
 #   - On findings it emits PostToolUse JSON `{"decision": "block", ...}` on
@@ -46,11 +49,18 @@ fi
 [ -f "$FILE_PATH" ] || exit 0
 [ -s "$FILE_PATH" ] || exit 0
 
-MARKER='<!-- architecture-studio:requires-disclaimer -->'
+# The marker is an end-of-file sentinel occupying its own line. Matching it
+# as a whole line (rather than anywhere in the text) is what separates a
+# marker in USE from a marker being DOCUMENTED: prose that explains the
+# convention cites it inline, inside backticks, mid-sentence. Substring
+# matching blocked every edit to CHANGELOG.md, PATTERNS.md, hooks/README.md,
+# rules/README.md, and skills/skill-maker/SKILL.md — none of which is a
+# regulatory output.
+MARKER_RE='^[[:space:]]*<!-- architecture-studio:requires-disclaimer -->[[:space:]]*$'
 DISCLAIMER_PHRASE='AI-generated analysis for preliminary planning purposes'
 
 # If no marker, this isn't a regulatory output; nothing to check.
-if ! grep -qF "$MARKER" "$FILE_PATH"; then
+if ! grep -qE "$MARKER_RE" "$FILE_PATH"; then
   exit 0
 fi
 
@@ -62,7 +72,7 @@ if ! grep -qF "$DISCLAIMER_PHRASE" "$FILE_PATH"; then
 fi
 
 # Marker should be a single end-of-file sentinel; flag duplicates.
-MARKER_COUNT=$(grep -cF "$MARKER" "$FILE_PATH")
+MARKER_COUNT=$(grep -cE "$MARKER_RE" "$FILE_PATH")
 if [ "$MARKER_COUNT" -gt 1 ]; then
   [ -n "$PROBLEMS" ] && PROBLEMS="$PROBLEMS
 "
