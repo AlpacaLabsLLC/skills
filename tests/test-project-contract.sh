@@ -31,4 +31,9 @@ grep -q 'exact created path plus the `.agents/skills/`.*`.claude/skills/`' "$SKI
 grep -q '\[decisions/\](decisions/)' "$TEMPLATE"
 ! grep -q '^## Decisions$' "$TEMPLATE"
 
+# Commercial records: status relays agreement term and cap read-only; ownership handoffs are named
+grep -q 'agreement/AGREEMENT.md' skills/project/SKILL.md
+grep -q 'never recompute its numbers' skills/project/SKILL.md
+grep -q '`/as:proposal` owns `PROPOSALS.md`' skills/project/SKILL.md
+
 echo "✓ /project unifies setup, facts, decisions, and lossless migration"

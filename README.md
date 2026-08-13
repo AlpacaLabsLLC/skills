@@ -212,6 +212,7 @@ All bundled skills live in one flat catalog and install together. They make Arch
 | Firm operations | Dispatcher | Studio setup and routing, the tool menu, skill creation, and reviewed feedback |
 | Firm operations | Learn | Guided, resumable introduction to Codex and Claude Code for architects |
 | Project management | Project records | Facts, decisions, `/as:workplan`, meetings, site reports, tasks, and confirmed time |
+| Project management | Commercial records | Numbered proposals, promoted agreements with an advisory scope guard, and append-only invoice ledgers |
 | Practice and design | Due diligence | NYC landmarks, permits, violations, ownership, housing, and BSA records |
 | Practice and design | Site planning | Environmental, mobility, demographic, and site-history research |
 | Practice and design | Zoning analysis | NYC zoning analysis and interactive buildable-envelope visualization |

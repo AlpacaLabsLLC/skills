@@ -86,4 +86,9 @@ fi
 malformed_after="$(shasum -a 256 "$malformed" | awk '{print $1}')"
 [ "$malformed_before" = "$malformed_after" ] || { echo "malformed fixture was not preserved" >&2; exit 1; }
 
+# Scope guard: advisory agreement check in Add and Import previews
+grep -q 'agreement/AGREEMENT.md' skills/tasklist/SKILL.md
+grep -q 'needs-SOW' skills/tasklist/SKILL.md
+grep -c 'advisory only; the user decides' skills/tasklist/SKILL.md | grep -q '^2$'
+
 echo "✓ tasks contract covers permanent IDs, lifecycle history, confirmed imports, duplicate sources, and malformed-file preservation"

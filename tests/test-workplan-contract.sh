@@ -85,4 +85,9 @@ grep -q '/as:workplan' skills/studio/SKILL.md
 grep -q '^## Task routing$' skills/studio/SKILL.md
 grep -q 'Explicit work plan.*`/as:workplan`' skills/studio/SKILL.md
 
+# Scope guard: validation checklist compares work units against the agreement
+grep -q 'agreement/AGREEMENT.md' skills/workplan/SKILL.md
+grep -q 'needs-SOW' skills/workplan/SKILL.md
+grep -q 'advisory only; the user decides' skills/workplan/SKILL.md
+
 echo "✓ workplan contract preserves planning, AEC, portability, and handoff boundaries"

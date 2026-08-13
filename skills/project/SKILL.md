@@ -57,7 +57,7 @@ Run `<plugin-root>/skills/project/scripts/resolve-context.sh` from the current o
 
 ## `/as:project status`
 
-Read `PROJECT.md`, scan `decisions/*.md` directly, and summarize known facts, record counts, decision statuses, open tasks, and recent dated records. If an owning `STUDIO.md` declares portfolio task mode, read open tasks for this Project ID from the studio-root register; otherwise read the project register. Report duplicate decision numbers or malformed files. Do not consult or create a decision index.
+Read `PROJECT.md`, scan `decisions/*.md` directly, and summarize known facts, record counts, decision statuses, open tasks, and recent dated records. When `agreement/AGREEMENT.md` exists, also report the agreement term (Effective date → Term end) and, when `INVOICES.md` exists, relay cap consumption from the invoice skill's status script read-only — never recompute its numbers. If an owning `STUDIO.md` declares portfolio task mode, read open tasks for this Project ID from the studio-root register; otherwise read the project register. Report duplicate decision numbers or malformed files. Do not consult or create a decision index.
 
 ## Facts: `update` and `remember`
 
@@ -114,6 +114,7 @@ Migration removes the legacy Decisions table only when it is lossless:
 - `/as:workplan` reads facts and decision files but writes only its plan.
 - `/as:tasklist` owns task rows in the canonical project or portfolio `TASKS.md`; `/as:studio` alone owns the studio task-mode setting; `/as:timetracker` owns `TIMELOG.md`.
 - Project registration state and archive belong to `/as:studio`, not `/as:project`.
+- `/as:proposal` owns `PROPOSALS.md` and `proposals/`; `/as:agreement` owns `agreement/`; `/as:invoice` owns `INVOICES.md`.
 
 ## Collaboration and harness boundary
 

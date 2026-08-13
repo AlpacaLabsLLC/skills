@@ -26,6 +26,9 @@ Project records form a linked graph of plain files. `/as:project` is the setup a
 | [`/as:site-visit-report`](./site-visit-report) | Record field observations, reported information, limitations, and follow-up candidates |
 | [`/as:tasklist`](./tasklist) | Maintain project tasks or an opted-in studio portfolio register |
 | [`/as:timetracker`](./timetracker) | Reconstruct activity and append only user-confirmed time |
+| [`/as:proposal`](./proposal) | Create and track numbered fee proposals from draft to acceptance |
+| [`/as:agreement`](./agreement) | Promote an accepted proposal into contract context and check work against its scope |
+| [`/as:invoice`](./invoice) | Record invoices against the agreement with cap warnings and gap detection |
 
 ## Practice and design
 

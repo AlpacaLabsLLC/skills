@@ -196,6 +196,7 @@ Before presenting the plan, verify:
 8. External responsibilities name an owner or source when known.
 9. The plan does not silently conduct specialist or regulated analysis.
 10. Another person or agent can begin without rediscovering the approach.
+11. If the project has `agreement/AGREEMENT.md`, work units were compared against its scope blocks and any `needs-SOW` or `out-of-scope` finding is surfaced in the plan — advisory only; the user decides.
 
 Fix structural omissions before presenting the artifact. Do not expand scope merely to make the plan look comprehensive.
 

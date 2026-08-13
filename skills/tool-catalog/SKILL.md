@@ -101,6 +101,9 @@ Print the following menu. Do not read any files — the menu is static. On Codex
 /as:site-visit-report — turn field notes into an evidence-aware site report
 /as:tasklist — manage the canonical TASKS.md action register
 /as:timetracker — reconstruct daily or weekly work and record user-confirmed time
+/as:proposal — create and track numbered fee proposals from draft to acceptance
+/as:agreement — turn an accepted proposal into contract context and guard scope against it
+/as:invoice — record invoices against the agreement, watch the cap and billing gaps
 
 These records form a linked graph: facts and decisions inform plans; meetings and site reports propose facts, decisions, and tasks without silently promoting them; tasks preserve action history; and timetracker reconstructs work from dated artifacts but never infers duration.
 

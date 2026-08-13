@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROPOSAL_NUMBER}} — {{TITLE}}</title>
+<style>
+  /* Neutral letter-format export rendered FROM the canonical markdown record.
+     Replace the brand block below with your studio identity; the .md file in
+     proposals/ remains the record the register points at. */
+  :root {
+    --ink: #111111;
+    --muted: #666666;
+    --hairline: #dddddd;
+    --brand-accent: #333333; /* brand slot */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); font-size: 13px; line-height: 1.6; background: #f4f4f4; }
+  .page { width: 8.5in; min-height: 11in; margin: 24px auto; padding: 1in; background: #fff; }
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; width: auto; min-height: auto; }
+    @page { size: letter; margin: 1in; }
+  }
+  header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+  .studio { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; } /* brand slot */
+  .number { font-size: 12px; color: var(--muted); }
+  h1 { font-size: 26px; line-height: 1.2; margin: 28px 0 4px; }
+  .meta { width: 100%; border-collapse: collapse; margin: 18px 0; }
+  .meta td { padding: 6px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  .meta td:first-child { width: 140px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  h2 { font-size: 15px; margin: 26px 0 8px; color: var(--brand-accent); }
+  table.body-table { width: 100%; border-collapse: collapse; }
+  table.body-table th, table.body-table td { text-align: left; padding: 7px 8px 7px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  table.body-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  ul { padding-left: 18px; }
+  .signatures { display: flex; gap: 48px; margin-top: 28px; }
+  .signatures div { flex: 1; }
+  .sig-line { border-bottom: 1px solid var(--ink); height: 40px; margin-bottom: 6px; }
+  .sig-label { font-size: 11px; color: var(--muted); }
+  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--hairline); font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <span class="studio">{{STUDIO_NAME}}</span>
+    <span class="number">PROPOSAL {{PROPOSAL_NUMBER}}</span>
+  </header>
+
+  <h1>{{TITLE}}</h1>
+
+  <table class="meta">
+    <tr><td>Date</td><td>{{DATE}}</td></tr>
+    <tr><td>To</td><td>{{CLIENT}}</td></tr>
+    <tr><td>From</td><td>{{STUDIO_NAME}}</td></tr>
+    <tr><td>Project</td><td>{{PROJECT_NAME}}</td></tr>
+    <tr><td>Term</td><td>{{TERM}}</td></tr>
+  </table>
+
+  <h2>Scope of services</h2>
+  {{SCOPE_TABLE}}
+
+  <h2>Not included</h2>
+  {{NOT_INCLUDED_LIST}}
+
+  <h2>Fees</h2>
+  {{FEES_TABLE}}
+
+  <h2>Terms and conditions</h2>
+  {{TERMS_BLOCK}}
+
+  <h2>Acceptance</h2>
+  <div class="signatures">
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">{{STUDIO_NAME}} — name, title, date</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">{{CLIENT}} — name, title, date</div>
+    </div>
+  </div>
+
+  <footer>
+    <span>{{STUDIO_NAME}}</span>
+    <span>{{PROPOSAL_NUMBER}}</span>
+  </footer>
+</div>
+</body>
+</html>

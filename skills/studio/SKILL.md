@@ -216,6 +216,9 @@ If the input is not a studio-management command, classify and route it. Prefer t
 | Field notes or site-visit report | `$site-visit-report` on Codex or `/as:site-visit-report` on Claude Code |
 | Tasks or action register | `$tasklist` on Codex or `/as:tasklist` on Claude Code |
 | Daily/weekly time reconstruction | `$timetracker` on Codex or `/as:timetracker` on Claude Code |
+| Proposal, quote, or fee letter | `$proposal` on Codex or `/as:proposal` on Claude Code |
+| Contract, agreement, SOW, or “is this in scope” | `$agreement` on Codex or `/as:agreement` on Claude Code |
+| Invoice, billing, running balance, or payment status | `$invoice` on Codex or `/as:invoice` on Claude Code |
 | Explicit work plan, sequence, coordination, delivery plan | `$workplan` on Codex or `/as:workplan` on Claude Code |
 | Bug report, broken skill, or feature request for Architecture Studio | `$studio-feedback` on Codex or `/as:studio-feedback` on Claude Code |
 | CSI specification writing without a sustainability focus | `$spec-writer` on Codex or `/as:spec-writer` on Claude Code |

@@ -101,7 +101,7 @@ Treat missing required columns, duplicate IDs, invalid IDs or statuses, unparsea
 ### Add
 
 1. Require one resolved project identity even when writing the portfolio register. Parse the requested description, owner, due date, source, and optional related link. Ask only for missing information that materially changes the task; `Unassigned`, `—`, and the current date are valid explicit defaults. For a direct instruction with no file source, allocate the next unused `conversation:YYYY-MM-DD#instruction-N` token for that date and show it in the preview.
-2. Validate the full register and run the normalized source-path plus source-item duplicate check.
+2. Validate the full register and run the normalized source-path plus source-item duplicate check. If the resolved project has `agreement/AGREEMENT.md`, compare the proposed task against its `### In scope` / `### Not in scope` / `### Requires SOW` blocks and surface any `needs-SOW` or `out-of-scope` finding in the preview — advisory only; the user decides.
 3. Preview the exact proposed row. Wait for confirmation.
 4. Allocate the next monotonic ID, append the row, and append its creation history event.
 
@@ -131,7 +131,7 @@ Imports may read any user-specified artifact. Common sources are `plans/`, `meet
 
 1. Read the named source and identify candidate actions without changing `TASKS.md`.
 2. Label candidates by their existing stable item ID. If the source has no stable item ID, propose one or cite the nearest heading plus an unambiguous item label; do not fabricate a false anchor.
-3. Preview description, owner, due date, normalized source path/item, and optional plan-unit or decision link for every candidate.
+3. Preview description, owner, due date, normalized source path/item, and optional plan-unit or decision link for every candidate. If the resolved project has `agreement/AGREEMENT.md`, compare each candidate against its scope blocks and surface `needs-SOW` or `out-of-scope` findings in the same preview — advisory only; the user decides.
 4. Ask the user to select individual candidates. “Import all” is allowed only when the preview is visible and the user explicitly confirms it.
 5. Before appending each selected candidate, compare the normalized project-relative source path plus exact source item against every task, regardless of status.
 6. For a match, show the existing ID and offer:
