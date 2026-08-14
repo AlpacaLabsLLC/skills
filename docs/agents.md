@@ -2,13 +2,14 @@
 
 Agents are autonomous specialists that orchestrate multiple skills to complete a complex task. Unlike skills (single-purpose, invoked directly), agents assess the situation, choose a path, and exercise judgment.
 
-All seven agents ship with the **Architecture Studio** plugin (`as`; this `agents/` directory), so installing the plugin registers each one as a native Claude Code subagent — Claude can delegate to it automatically, and `/as:studio` routes to it by name.
+All eight agents ship with the **Architecture Studio** plugin (`as`; this `agents/` directory), so installing the plugin registers each one as a native Claude Code subagent — Claude can delegate to it automatically, and `/as:studio` routes to it by name.
 
 ## Available Agents
 
 | Agent | Domain | Skills it orchestrates |
 |-------|--------|----------------------|
 | [site-planner](../agents/site-planner.md) | Site Planning | environmental-analysis, mobility-analysis, demographics-analysis, site-history |
+| [austin-zoning-expert](../agents/austin-zoning-expert.md) | Due Diligence + Zoning | zoning-analysis-austin, zoning-envelope, plus direct official-source permit, case, historic, variance, and county-record research |
 | [nyc-zoning-expert](../agents/nyc-zoning-expert.md) | Due Diligence + Zoning | nyc-landmarks, nyc-dob-permits, nyc-dob-violations, nyc-acris, nyc-hpd, nyc-bsa, nyc-property-report, zoning-analysis-nyc, zoning-envelope |
 | [workplace-strategist](../agents/workplace-strategist.md) | Programming | occupancy-calculator, workplace-programmer |
 | [sustainability-specialist](../agents/sustainability-specialist.md) | Sustainability | epd-research, epd-compare, epd-parser, epd-to-spec |
@@ -33,8 +34,8 @@ Address or site
 site-planner
       → climate, transit, demographics, neighborhood context
       ↓
-nyc-zoning-expert
-      → property records, zoning envelope, 3D visualization
+austin-zoning-expert or nyc-zoning-expert
+      → parcel records, zoning controls, mapped constraints, envelope
       ↓
 workplace-strategist
       → occupancy compliance, zone allocation, room schedule

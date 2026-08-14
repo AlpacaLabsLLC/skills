@@ -22,7 +22,7 @@
 
 Firm-created skills remain in the user-owned studio workspace, outside the installed plugin cache. They can stay private to a firm or project, or be developed for contribution back to the open-source project.
 
-**One plugin**—`as` v1.4.3—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+**One plugin**—`as` v1.4.3—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **8 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
 
 ## What’s new in 1.4.3
 
@@ -187,13 +187,14 @@ For Codex, follow the current [Codex setup documentation](https://developers.ope
 
 ## Bundled reference agents
 
-These seven native agents are available on Claude Code. Codex users can run the same underlying skills directly or through `$studio`; the Codex package does not register the Claude agent files as Codex roles.
+These eight native agents are available on Claude Code. Codex users can run the same underlying skills directly or through `$studio`; the Codex package does not register the Claude agent files as Codex roles.
 
 Agents are working orchestration examples as well as immediately usable Claude Code tools. Describe your task and the agent decides which skills to call, in what order, and where professional judgment is required.
 
 | Agent | Domain | What it does |
 |-------|--------|--------------|
 | [site-planner](./agents/site-planner.md) | Site planning | Runs separate environmental, mobility, demographic, and history streams before synthesis |
+| [austin-zoning-expert](./agents/austin-zoning-expert.md) | Due diligence + zoning | Combines Austin parcel, zoning, ordinance, mapped-constraint, case, and envelope research |
 | [nyc-zoning-expert](./agents/nyc-zoning-expert.md) | Due diligence + zoning | Combines NYC property research, zoning analysis, buildable envelope, and visualization |
 | [workplace-strategist](./agents/workplace-strategist.md) | Programming | Translates headcount and work style into occupancy-informed programs and room schedules |
 | [product-and-materials-researcher](./agents/product-and-materials-researcher.md) | Materials research | Finds products, extracts specifications, classifies data, and identifies alternatives |

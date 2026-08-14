@@ -399,6 +399,7 @@ nyc-hpd
 nyc-bsa
 nyc-property-report
 zoning-analysis-nyc
+zoning-analysis-austin
 zoning-envelope
 occupancy-calculator
 epd-to-spec
