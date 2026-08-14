@@ -49,6 +49,7 @@ Project records form a linked graph of plain files. `/as:project` is the setup a
 | [`/as:mobility-analysis`](./mobility-analysis) | Transit, walkability, cycling, and pedestrian infrastructure |
 | [`/as:demographics-analysis`](./demographics-analysis) | Population, income, age, housing, and employment |
 | [`/as:site-history`](./site-history) | Neighborhood context, landmarks, activity, and planned development |
+| [`/as:zoning-analysis-austin`](./zoning-analysis-austin) | Austin zoning, overlays, site controls, mapped constraints, and preliminary development capacity |
 | [`/as:zoning-analysis-nyc`](./zoning-analysis-nyc) | NYC FAR, height, setback, and use analysis |
 | [`/as:zoning-envelope`](./zoning-envelope) | Self-contained interactive 3D zoning envelope |
 
