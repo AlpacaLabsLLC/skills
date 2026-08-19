@@ -26,7 +26,11 @@ A run that reports `all checks passed` with skip notices above it has not verifi
 6. Add focused contract coverage and run `./scripts/lint.sh` plus the relevant tests.
 7. Open a pull request describing the behavior, verification, and representative output.
 
-A defect noticed but not fixed becomes an issue in the same session. Work turns up adjacent problems worth keeping — a latent bug, a contract two files disagree on, a rough edge in a script. Filing it takes a minute and is the only thing that carries the finding past the conversation that produced it.
+## Finding and backlog policy
+
+Keep adjacent findings from feature work in the active local task register. This includes speculative improvements, latent inconsistencies, refactors, rough edges, and follow-up ideas that have not been accepted for public work. If no local task register is available, report the finding to the maintainer and ask where it belongs; do not create a tracked backlog file or a GitHub artifact by default.
+
+GitHub issues are a public coordination surface, not the repository's automatic internal backlog. Create one only after explicit maintainer triage determines that the finding is a confirmed public defect, an accepted feature, or work that requires community coordination. Never open a GitHub issue merely because feature work exposed an adjacent possibility.
 
 Read [PATTERNS.md](./PATTERNS.md) for naming, layout, dispatcher behavior, versioning, and lessons from prior defects.
 
