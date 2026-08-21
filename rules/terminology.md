@@ -1,6 +1,6 @@
 # Terminology
 
-Use standard AEC terminology in all skill outputs. This improves consistency and ensures outputs read as professional documents.
+This rule governs style and first-use, not factual definitions. For neutral professional-practice terms, AIA document-family orientation, document purpose, and source boundaries, consult the [architecture-knowledge corpus](../skills/architecture-knowledge/references/README.md).
 
 ## Preferred Terms
 
@@ -20,17 +20,19 @@ Use standard AEC terminology in all skill outputs. This improves consistency and
 | AHJ | authority having jurisdiction (spell out on first mention) |
 | FF&E | furniture, fixtures, and equipment (spell out on first mention) |
 
-## Abbreviation Rules
+## First use
 
-- **Define on first use**, then abbreviate throughout: "Gross Square Feet (GSF)" → "GSF"
-- **Never assume** the reader knows an abbreviation — even common ones like HVAC get defined once
-- **Domain-specific abbreviations** (FAR, FOS, FOT, NSF, USF, RSF) must always be defined on first use
+- Define an abbreviation on first use, then use it consistently.
+- Do not assume the reader knows an abbreviation.
+- Domain-specific abbreviations such as FAR, FOS, FOT, NSF, USF, and RSF must always be defined on first use.
+- Preserve a user-supplied term when it is the name of a project record, product, or organization.
 
-## Material Names
+## Style
 
-- Use industry-standard names: "gypsum wall board" not "plasterboard"
-- For products: use the generic material name, not brand names (unless specifying a sole-source product)
-- Capitalize proprietary names: "Corian", "Trespa", "Viroc" — lowercase generic equivalents: "solid surface", "HPL panel", "fiber cement"
+- Prefer clear generic names over informal shorthand unless the user requests the shorthand.
+- Identify proprietary names as supplied; do not silently treat a brand name as a generic requirement.
+- Capitalize proprietary names and lowercase their generic equivalents.
+- Do not turn corpus terminology into a project fact, a contract interpretation, a regulatory conclusion, or a permission to act.
 
 ## Numeric Style
 

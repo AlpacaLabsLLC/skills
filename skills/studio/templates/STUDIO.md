@@ -7,7 +7,7 @@
 
 | Setting | Default |
 |---|---|
-| Format version | 2 |
+| Format version | 3 |
 | Working units | {{WORKING_UNITS}} |
 | Country | {{COUNTRY}} |
 | State / region | {{STATE_REGION}} |
@@ -18,9 +18,16 @@
 
 This local version stores studio and project records in this workspace. Architecture Studio does not send them to or store them with ALPA. Content provided to the configured LLM is handled by that provider under the user’s account and data terms. Future cloud-based versions may require an account and use different storage.
 
+## Studio resources
+
+- Firm-wide standards and reusable templates: `standards/`
+- External references, including code references: `references/`
+
+Project work and project outputs remain inside their owning project under `projects/`.
+
 ## Projects
 
 <!-- projects:start -->
-| Project ID | Project | Folder | Registration | Registered |
-|---|---|---|---|---|
+| Project ID | Project | Client | Code | Type | Status | Folder | Opened |
+|---|---|---|---|---|---|---|---|
 <!-- projects:end -->

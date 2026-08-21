@@ -38,6 +38,8 @@ grep -q 'no-projects' "$SKILL"
 grep -q 'Cross-skill invocation.*optional conveniences, never runtime requirements' "$SKILL"
 grep -q 'do not fabricate a false anchor' "$SKILL"
 grep -q 'regardless of status' "$SKILL"
+grep -q 'every uniquely registered project, regardless of status' "$SKILL"
+! grep -q 'active or on-hold project' "$SKILL"
 grep -q 'Updating a completed or cancelled task preserves its closure date and history' "$SKILL"
 
 header='| ID | Description | Owner | Due | Status | Created | Updated | Completed | Cancelled | Source | Related |'

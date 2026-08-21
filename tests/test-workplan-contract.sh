@@ -83,7 +83,7 @@ grep -q '/as:workplan' README.md
 grep -q '/as:workplan' skills/tool-catalog/SKILL.md
 grep -q '/as:workplan' skills/studio/SKILL.md
 grep -q '^## Task routing$' skills/studio/SKILL.md
-grep -q 'Explicit work plan.*`/as:workplan`' skills/studio/SKILL.md
+grep -q 'Actual work or submission plan.*`/as:workplan`' skills/studio/SKILL.md
 
 # Scope guard: validation checklist compares work units against the agreement
 grep -q 'agreement/AGREEMENT.md' skills/workplan/SKILL.md

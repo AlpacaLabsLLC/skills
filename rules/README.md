@@ -7,8 +7,8 @@ Rules are cross-cutting conventions that shape every skill output across the who
 | [units-and-measurements](./units-and-measurements.md) | Imperial/metric defaults, area types (GSF/USF/RSF), dimension formatting |
 | [code-citations](./code-citations.md) | Building code references — edition years, section symbols, jurisdiction awareness |
 | [professional-disclaimer](./professional-disclaimer.md) | Disclaimer language, what AI outputs can and cannot claim |
-| [csi-formatting](./csi-formatting.md) | MasterFormat 2018 section numbers, three-part structure, cross-references |
-| [terminology](./terminology.md) | AEC standard terms, abbreviation conventions, material names |
+| [csi-formatting](./csi-formatting.md) | Limited MasterFormat 2020 compatibility baseline, edition-neutral three-part organization, cross-references |
+| [terminology](./terminology.md) | Style and first-use conventions; linked architecture-knowledge corpus for factual orientation |
 | [output-formatting](./output-formatting.md) | Tables, headings, source attribution, file naming, list structure |
 | [transparency](./transparency.md) | Show your work — link sources, expose inputs, make outputs verifiable |
 

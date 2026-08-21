@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Breaking
+
+- **Universal project and commercial records.** The next minor release introduces an explicit workspace migration from format 2 to format 3, gives every internal or client project one durable identity, and keeps proposals, agreement context, and invoice ledgers inside that project. This migration is not patch-compatible and will not receive a final version until dogfood validates migration and rollback behavior. Status and scope context remain advisory and user-directed.
+
+### Added
+
+- **Architecture knowledge.** Added the read-only `$architecture-knowledge` / `/as:architecture-knowledge` skill with a compact, source-backed US professional-practice corpus for phases, CD terminology, roles, delivery methods, high-level AIA family relationships, and CSI/NCS context. It supplies original summaries and source links only; it does not reproduce licensed material, select forms, interpret clauses, or decide project obligations.
+
+### Changed
+
+- **CSI edition clarity.** The specification writer retains its limited MasterFormat 2020 compatibility mapping while shared terminology records current CSI edition context separately and requires project-edition verification for applied work.
+
 ## [1.4.3] - 2026-08-13
 
 ### Fixed

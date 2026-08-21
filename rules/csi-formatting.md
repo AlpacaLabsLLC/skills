@@ -4,7 +4,7 @@ These conventions apply whenever referencing or writing construction specificati
 
 ## MasterFormat
 
-- Use **MasterFormat 2018** edition division numbers
+- Use the limited MasterFormat 2020 compatibility baseline carried by this plugin; it is not a licensed number-and-title corpus. Verify every selected number and title against the project's licensed edition before issue.
 - Six-digit section numbers with spaces: `09 29 00 — Gypsum Board`
 - Not: `092900`, `09-29-00`, or `09.29.00`
 - Always include the section title after an em dash: `07 21 13 — Board Insulation`
@@ -38,9 +38,9 @@ These conventions apply whenever referencing or writing construction specificati
 | 32 | Exterior Improvements |
 | 33 | Utilities |
 
-## Three-Part Section Structure
+## Three-Part Section Organization
 
-When writing specification sections, always use the CSI three-part format:
+This three-part organization is edition-neutral and distinct from selecting a MasterFormat edition or section number. When writing specification sections, use:
 
 - **Part 1 — General:** references, submittals, quality assurance, delivery/storage
 - **Part 2 — Products:** manufacturers, materials, fabrication, source quality

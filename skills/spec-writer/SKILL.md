@@ -15,7 +15,9 @@ allowed-tools:
 <!-- architecture-studio:harness-compatibility -->
 > Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
 
-Takes a materials list, product schedule, or project description and produces outline specifications organized by CSI MasterFormat 2020 divisions. Output is a structured `.md` file ready for review by a senior specifier.
+Takes a materials list, product schedule, or project description and produces outline specifications organized by CSI MasterFormat 2020 divisions. Output is a structured `.md` file ready for review by a senior specifier. The included mapping is a limited MasterFormat 2020 compatibility baseline, not a substitute for the project's licensed edition; verify selected numbers and titles against the project's licensed edition before issue.
+
+For neutral terminology, consult `<plugin-root>/skills/architecture-knowledge/references/` as terminology context only. It is not record authority, a mutation path, permission, or gate; `/as:spec-writer` remains responsible for the outline specification.
 
 ## Project context
 
@@ -141,6 +143,7 @@ Generated: [date]
 Project Type: [type]
 Divisions: [count]
 Sections: [count]
+CSI basis: limited MasterFormat 2020 compatibility baseline — verify against the project's licensed edition before issue.
 
 ---
 

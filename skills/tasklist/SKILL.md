@@ -77,7 +77,7 @@ The task table has these required columns:
 | Source | Canonically relative Markdown link with an exact heading/stable item ID, or `conversation:YYYY-MM-DD#instruction-N` |
 | Related | Optional plan-unit or decision link, otherwise `—` |
 
-The portfolio schema adds `Project ID` immediately after `ID`. Every value must match one eligible active or on-hold project in the current studio manifest. File links are relative to the studio register and begin with that project's registered path; validation also confirms they remain within that project. Portfolio task IDs remain permanent across the studio; project-filtered views never change them.
+The portfolio schema adds `Project ID` immediately after `ID`. The eligible set is every uniquely registered project, regardless of status, in the current studio manifest; each value must match exactly one. File links are relative to the studio register and begin with that project's registered path; validation also confirms they remain within that project. Portfolio task IDs remain permanent across the studio; project-filtered views never change them. Status is advisory context, not task permission.
 
 Lifecycle history lives under `## History`, one append-only bullet per change:
 

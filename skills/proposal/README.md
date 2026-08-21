@@ -1,16 +1,18 @@
 # /as:proposal
 
-Numbered fee proposals with a studio-wide register and permanent numbering.
+Project-local fee proposals with human-readable date/title/revision filenames and checksum-protected issued terms.
 
 ```text
 /as:proposal create
 /as:proposal list
-/as:proposal status ALPA-0004
-/as:proposal send ALPA-0004
-/as:proposal accept ALPA-0004
-/as:proposal decline ALPA-0004
-/as:proposal supersede ALPA-0003
+/as:proposal status proposals/2026-08-design-services-proposal-rev-01.md
+/as:proposal send proposals/2026-08-design-services-proposal-rev-01.md
+/as:proposal accept proposals/2026-08-design-services-proposal-rev-01.md
+/as:proposal decline proposals/2026-08-design-services-proposal-rev-01.md
+/as:proposal supersede proposals/2026-08-design-services-proposal-rev-01.md
 /as:proposal verify
 ```
 
-`PROPOSALS.md` at the studio root (or standalone project root) is the allocation and status ledger; numbered markdown documents in each project's `proposals/` directory are the content records. Numbers are never reused. Accepting a proposal hands off to `/as:agreement promote`, which turns it into contract context; invoicing belongs to `/as:invoice`. The bundled terms-and-conditions clause library is drafting guidance, not legal advice.
+Every markdown file in the selected project's `proposals/` directory is canonical. There is no studio-wide proposal register or firm-wide proposal number. Human-facing revisions use `Rev. 01`, `Rev. 02`, and so on; filenames use the filesystem-safe equivalent `rev-01`, `rev-02`. Sending stores a SHA-256 checksum of the issued-terms block; lifecycle evidence remains editable outside that block, while changed terms use a new revision. The skill records user-directed actions without enforcing a proposal, agreement, invoice, or project-status sequence. The bundled clause library remains drafting guidance, not legal advice.
+
+For client-facing HTML, put the studio's branded template at `standards/proposal-letter.html`. The skill prefers that firm-owned standard and falls back to its bundled neutral template. HTML exports are derived from the canonical project-local Markdown proposal and use the project ID plus local revision rather than a global proposal number.

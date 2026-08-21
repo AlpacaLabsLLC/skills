@@ -14,9 +14,16 @@ done
 
 grep -q '^name: invoice$' "$SKILL"
 
-for command in init record status reconcile; do
+for command in init record status reconcile send void; do
   grep -q "/as:invoice $command" "$SKILL" || { echo "missing command: $command"; exit 1; }
+  grep -q "/as:invoice $command" "$README" || { echo "README missing command: $command"; exit 1; }
 done
+
+# Agent-native lifecycle commands keep one confirmation gate and use the ledger helper.
+grep -A8 '## `/as:invoice send' "$SKILL" | grep -q 'confirm'
+grep -A8 '## `/as:invoice send' "$SKILL" | grep -q 'set-lifecycle.*sent'
+grep -A8 '## `/as:invoice void' "$SKILL" | grep -q 'confirm'
+grep -A8 '## `/as:invoice void' "$SKILL" | grep -q 'set-lifecycle.*void'
 
 # The activity firewall, in timetracker language
 grep -q 'Every amount comes from the agreement or the user' "$SKILL"
@@ -36,6 +43,9 @@ grep -q 'never asserts payment happened' "$SKILL"
 # Ownership
 grep -q 'only writer of `INVOICES.md`' "$SKILL"
 grep -q 'resolve-context.sh' "$SKILL"
+grep -q 'agreement is optional context, not a prerequisite' "$SKILL"
+grep -q 'project status.*never.*gate\|never.*gate.*project status' "$SKILL"
+! grep -q 'PROPOSALS.md' "$SKILL"
 
 # Template contract
 grep -q '<!-- invoices:start -->' "$TEMPLATE"

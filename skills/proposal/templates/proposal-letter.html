@@ -3,89 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{PROPOSAL_NUMBER}} — {{TITLE}}</title>
+<title>{{TITLE}} — {{CLIENT}}</title>
 <style>
-  /* Neutral letter-format export rendered FROM the canonical markdown record.
-     Replace the brand block below with your studio identity; the .md file in
-     proposals/ remains the record the register points at. */
+  /* Generic fallback for a client-facing export rendered from the canonical
+     project-local Markdown record. A studio may override this file at
+     standards/proposal-letter.html. */
   :root {
-    --ink: #111111;
-    --muted: #666666;
-    --hairline: #dddddd;
-    --brand-accent: #333333; /* brand slot */
+    --ink: #0a0a0a;
+    --muted: #6b6b6b;
+    --hairline: #e4e4e4;
+    --accent: #444444;
+    --mark: #fff09a;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); font-size: 13px; line-height: 1.6; background: #f4f4f4; }
-  .page { width: 8.5in; min-height: 11in; margin: 24px auto; padding: 1in; background: #fff; }
-  @media print {
-    body { background: #fff; }
-    .page { margin: 0; width: auto; min-height: auto; }
-    @page { size: letter; margin: 1in; }
+  html { background: #f2f2f2; }
+  body { color: var(--ink); font: 400 12.5px/1.65 var(--sans); }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 24px auto;
+    padding: 0.85in 0.9in;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   }
-  header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
-  .studio { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; } /* brand slot */
-  .number { font-size: 12px; color: var(--muted); }
-  h1 { font-size: 26px; line-height: 1.2; margin: 28px 0 4px; }
-  .meta { width: 100%; border-collapse: collapse; margin: 18px 0; }
-  .meta td { padding: 6px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
-  .meta td:first-child { width: 140px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
-  h2 { font-size: 15px; margin: 26px 0 8px; color: var(--brand-accent); }
-  table.body-table { width: 100%; border-collapse: collapse; }
-  table.body-table th, table.body-table td { text-align: left; padding: 7px 8px 7px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
-  table.body-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
-  ul { padding-left: 18px; }
-  .signatures { display: flex; gap: 48px; margin-top: 28px; }
-  .signatures div { flex: 1; }
-  .sig-line { border-bottom: 1px solid var(--ink); height: 40px; margin-bottom: 6px; }
-  .sig-label { font-size: 11px; color: var(--muted); }
-  footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--hairline); font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 4px;
+    background: var(--mark);
+    font: 700 18px/1 var(--sans);
+  }
+  .wordmark { font: 600 20px/1 var(--sans); letter-spacing: -0.01em; }
+  .doc-id { color: var(--muted); font-size: 10.5px; text-align: right; }
+  .doc-id strong {
+    display: block;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .status { text-transform: uppercase; }
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.2fr 1fr;
+    gap: 16px;
+    padding: 18px 0;
+  }
+  .label {
+    margin-bottom: 3px;
+    color: var(--muted);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .value { font-size: 11.5px; overflow-wrap: anywhere; }
+  h1 {
+    margin: 36px 0 6px;
+    font: 600 33px/1.12 var(--sans);
+    letter-spacing: -0.022em;
+  }
+  .subtitle { color: var(--muted); font-size: 12.5px; }
+  .section { margin-top: 30px; }
+  .section-head { margin-bottom: 12px; }
+  h2 { font: 600 16.5px/1.25 var(--sans); letter-spacing: -0.01em; }
+  table.data-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .data-table .col-item { width: 28%; }
+  .data-table .col-detail { width: 34%; }
+  .data-table .col-result { width: 38%; }
+  .data-table th {
+    padding: 7px 16px 7px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--hairline);
+    color: var(--muted);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  .data-table td {
+    height: 64px;
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+  }
+  .data-table th:last-child, .data-table td:last-child { padding-right: 0; }
+  .data-table .cell-primary { font: 600 12.5px/1.4 var(--sans); }
+  .data-table .cell-fee { font: 600 15px/1.4 var(--sans); }
+  .tbd { background: var(--mark); padding: 0 4px; font-weight: 600; }
+  ol.tc { list-style: none; counter-reset: tc; color: #444; font-size: 11px; }
+  ol.tc li {
+    position: relative;
+    padding: 8px 0 8px 28px;
+    border-top: 1px solid var(--hairline);
+    counter-increment: tc;
+  }
+  ol.tc li:last-child { border-bottom: 1px solid var(--hairline); }
+  ol.tc li::before {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    color: var(--muted);
+    font-size: 9.5px;
+    content: counter(tc, decimal-leading-zero);
+  }
+  ol.tc strong { color: var(--ink); font: 600 11px/1.4 var(--sans); }
+  .legal-caution { margin-top: 10px; color: var(--muted); font-size: 9.5px; }
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 22px; }
+  .sig-entity { font: 600 13px/1.4 var(--sans); }
+  .sig-line { height: 44px; margin-bottom: 6px; border-bottom: 1px solid var(--ink); }
+  .sig-detail { padding: 2px 0; color: var(--muted); font-size: 11px; }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 38px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+    color: var(--muted);
+    font-size: 10px;
+  }
+  @media print {
+    html { background: #fff; }
+    .page { width: auto; min-height: auto; margin: 0; padding: 0; box-shadow: none; }
+    .data-table tr, ol.tc li, .sig-grid { break-inside: avoid; }
+    @page { size: letter; margin: 0.85in 0.9in; }
+  }
+  @media (max-width: 760px) {
+    html { background: #fff; }
+    .page { width: 100%; min-height: 0; margin: 0; padding: 32px 22px; box-shadow: none; }
+    .masthead { flex-direction: column; gap: 12px; }
+    .doc-id { text-align: left; }
+    .meta { grid-template-columns: 1fr 1fr; }
+    h1 { margin-top: 28px; font-size: 29px; }
+    .data-table col { width: auto; }
+    .data-table thead { display: none; }
+    .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+    .data-table tbody tr { height: auto; padding: 10px 0; border-top: 1px solid var(--hairline); }
+    .data-table tbody tr:last-child { border-bottom: 1px solid var(--hairline); }
+    .data-table td {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 12px;
+      height: auto;
+      padding: 3px 0;
+      border: 0;
+      vertical-align: top;
+    }
+    .data-table td::before {
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      content: attr(data-label);
+    }
+    .data-table .cell-fee { font-size: 13px; }
+    .sig-grid { grid-template-columns: 1fr; gap: 26px; }
+    .foot { flex-direction: column; gap: 4px; }
+  }
 </style>
 </head>
 <body>
-<div class="page">
-  <header>
-    <span class="studio">{{STUDIO_NAME}}</span>
-    <span class="number">PROPOSAL {{PROPOSAL_NUMBER}}</span>
+<main class="page">
+  <header class="masthead">
+    <div class="brand"><span class="brand-mark">{{STUDIO_INITIAL}}</span><span class="wordmark">{{STUDIO_NAME}}</span></div>
+    <div class="doc-id"><strong>PROPOSAL {{REVISION}}</strong>{{PROJECT_ID}} · <span class="status">{{STATUS}}</span></div>
   </header>
 
-  <h1>{{TITLE}}</h1>
-
-  <table class="meta">
-    <tr><td>Date</td><td>{{DATE}}</td></tr>
-    <tr><td>To</td><td>{{CLIENT}}</td></tr>
-    <tr><td>From</td><td>{{STUDIO_NAME}}</td></tr>
-    <tr><td>Project</td><td>{{PROJECT_NAME}}</td></tr>
-    <tr><td>Term</td><td>{{TERM}}</td></tr>
-  </table>
-
-  <h2>Scope of services</h2>
-  {{SCOPE_TABLE}}
-
-  <h2>Not included</h2>
-  {{NOT_INCLUDED_LIST}}
-
-  <h2>Fees</h2>
-  {{FEES_TABLE}}
-
-  <h2>Terms and conditions</h2>
-  {{TERMS_BLOCK}}
-
-  <h2>Acceptance</h2>
-  <div class="signatures">
-    <div>
-      <div class="sig-line"></div>
-      <div class="sig-label">{{STUDIO_NAME}} — name, title, date</div>
-    </div>
-    <div>
-      <div class="sig-line"></div>
-      <div class="sig-label">{{CLIENT}} — name, title, date</div>
-    </div>
+  <div class="meta">
+    <div><div class="label">Date</div><div class="value">{{DATE}}</div></div>
+    <div><div class="label">To</div><div class="value">{{CLIENT}}</div></div>
+    <div><div class="label">From</div><div class="value">{{FROM}}</div></div>
+    <div><div class="label">Term</div><div class="value">{{TERM}}</div></div>
   </div>
 
-  <footer>
-    <span>{{STUDIO_NAME}}</span>
-    <span>{{PROPOSAL_NUMBER}}</span>
-  </footer>
-</div>
+  <h1>{{TITLE}}</h1>
+  <p class="subtitle">Prepared for {{CLIENT}}</p>
+
+  <section class="section"><div class="section-head"><h2>Scope of services</h2></div>{{SCOPE_BLOCK}}</section>
+  <section class="section"><div class="section-head"><h2>Fees</h2></div>{{FEES_BLOCK}}</section>
+  <section class="section"><div class="section-head"><h2>Not included</h2></div>{{NOT_INCLUDED_BLOCK}}</section>
+  <section class="section"><div class="section-head"><h2>Terms &amp; conditions</h2></div>{{TERMS_BLOCK}}</section>
+  <section class="section"><div class="section-head"><h2>Acceptance</h2></div>{{ACCEPTANCE_BLOCK}}</section>
+
+  <footer class="foot"><span>{{STUDIO_LEGAL_NAME}}</span><span>{{PROJECT_ID}} · {{REVISION}} · {{STATUS}}</span></footer>
+</main>
 </body>
 </html>

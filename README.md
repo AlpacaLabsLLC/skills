@@ -24,6 +24,12 @@ Firm-created skills remain in the user-owned studio workspace, outside the insta
 
 **One plugin**—`as` v1.4.3—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
 
+## Unreleased changes
+
+This branch adds a read-only, source-backed architecture-knowledge skill for shared US professional-practice vocabulary. Ask `$architecture-knowledge` on Codex or `/as:architecture-knowledge` on Claude Code about terms such as “CD set,” AIA document relationships, or CSI/NCS context. It gives concise orientation with sources and boundaries rather than contract text, legal interpretation, or project-specific conclusions.
+
+The workspace migration from format 2 to format 3 is breaking, not a compatible patch update. It is planned for the next minor release only after dogfood validates migration and rollback behavior; no final next-minor version has been assigned. The new format gives universal projects durable identity and moves commercial records into their owning project.
+
 ## What’s new in 1.4.3
 
 A maintenance patch. `scripts/audit-skill-context.sh` now reads skill descriptions with the YAML parser instead of reconstructing them, correcting six frontmatter forms that were measured wrong — most visibly a plain multi-line description, which reported zero characters. No bundled skill used an affected form, so every published measurement is unchanged and no skill, record format, or command behavior moves. Upgrading from 1.4.2 requires nothing.
@@ -53,6 +59,8 @@ skills-for-architects/                       studio/
 ├── hooks/          CLAUDE AUTOMATION        ├── .agents/skills/
 ├── skills/         SHARED TOOLING           ├── .claude/skills/
 ├── agents/         CLAUDE ORCHESTRATION     │       FIRM EXTENSIONS
+│                                            ├── standards/
+│                                            ├── references/
 │                                            ├── TASKS.md (optional portfolio mode)
 └── schema/         DATA CONTRACTS           └── projects/
                                                  └── project/
@@ -212,7 +220,8 @@ All bundled skills live in one flat catalog and install together. They make Arch
 | Firm operations | Dispatcher | Studio setup and routing, the tool menu, skill creation, and reviewed feedback |
 | Firm operations | Learn | Guided, resumable introduction to Codex and Claude Code for architects |
 | Project management | Project records | Facts, decisions, `/as:workplan`, meetings, site reports, tasks, and confirmed time |
-| Project management | Commercial records | Numbered proposals, promoted agreements with an advisory scope guard, and append-only invoice ledgers |
+| Project management | Commercial records | Project-local proposals with protected issued terms, optional agreement context with an advisory scope guard, and append-only invoice ledgers |
+| Professional practice | Architecture knowledge | Source-backed US vocabulary for phases, CD terminology, AIA relationships, and CSI/NCS context |
 | Practice and design | Due diligence | NYC landmarks, permits, violations, ownership, housing, and BSA records |
 | Practice and design | Site planning | Environmental, mobility, demographic, and site-history research |
 | Practice and design | Zoning analysis | NYC zoning analysis and interactive buildable-envelope visualization |
@@ -233,8 +242,8 @@ Cross-cutting conventions shape every skill’s output. Two are hook-enforced; f
 | [units-and-measurements](./rules/units-and-measurements.md) | Imperial and metric defaults, area types, and dimensions |
 | [code-citations](./rules/code-citations.md) | Edition years, jurisdiction awareness, and building-code references |
 | [professional-disclaimer](./rules/professional-disclaimer.md) | Required disclaimer language and limits on regulated output |
-| [csi-formatting](./rules/csi-formatting.md) | MasterFormat section numbers and three-part structure |
-| [terminology](./rules/terminology.md) | AEC terminology, abbreviations, and material names |
+| [csi-formatting](./rules/csi-formatting.md) | Limited MasterFormat 2020 compatibility baseline and edition-neutral three-part organization |
+| [terminology](./rules/terminology.md) | Style and first-use conventions; architecture knowledge is linked from the rule |
 | [output-formatting](./rules/output-formatting.md) | Tables, source attribution, file naming, and list structure |
 | [transparency](./rules/transparency.md) | Visible inputs, assumptions, calculations, and sources |
 

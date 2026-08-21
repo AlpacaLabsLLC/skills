@@ -101,11 +101,14 @@ Print the following menu. Do not read any files — the menu is static. On Codex
 /as:site-visit-report — turn field notes into an evidence-aware site report
 /as:tasklist — manage the canonical TASKS.md action register
 /as:timetracker — reconstruct daily or weekly work and record user-confirmed time
-/as:proposal — create and track numbered fee proposals from draft to acceptance
-/as:agreement — turn an accepted proposal into contract context and guard scope against it
-/as:invoice — record invoices against the agreement, watch the cap and billing gaps
+/as:proposal — maintain project-local fee proposals and protect issued terms
+/as:agreement — maintain sourced contract context and check scope advisories
+/as:invoice — record user-directed invoices, watch the cap and billing gaps
 
 These records form a linked graph: facts and decisions inform plans; meetings and site reports propose facts, decisions, and tasks without silently promoting them; tasks preserve action history; and timetracker reconstructs work from dated artifacts but never infers duration.
+
+### Professional Practice Knowledge
+/as:architecture-knowledge [term] — source-backed US terminology for questions such as “What is a CD set?”, AIA document relationships, or CSI/NCS context
 
 ### Learn — new to AI-assisted project work?
 /as:learn — guided hands-on Codex and Claude Code course for architects, resumable anytime

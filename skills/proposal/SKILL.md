@@ -1,6 +1,6 @@
 ---
 name: proposal
-description: Create and track numbered fee proposals — draft, send, accept, decline, or supersede a proposal, quote, fee letter, or scope-of-services offer, with a studio-wide register and permanent numbering. Use when the user wants to propose work to a client, issue a quote, list proposals, or record a proposal's outcome. Acceptance hands off to /as:agreement.
+description: Create and maintain project-local fee proposals — draft, send, accept, decline, supersede, list, or verify a proposal, quote, fee letter, or scope-of-services offer. Use when the user wants to propose work to a client, issue a quote, or record a proposal outcome. Issued terms are checksum-protected and acceptance may hand off to /as:agreement.
 allowed-tools:
   - Read
   - Write
@@ -11,78 +11,84 @@ allowed-tools:
   - AskUserQuestion
 ---
 
-# /as:proposal — Numbered Fee Proposals
+# /as:proposal — Project-local fee proposals
 
 <!-- architecture-studio:harness-compatibility -->
 > Harness note: use `/as:<skill>` on Claude Code and `$<skill>` on Codex. Resolve `<skill-root>` as the directory containing this loaded `SKILL.md` and `<plugin-root>` as the plugin root that contains `skills/`, and use equivalent native tools when host tool names differ.
 
-`/as:proposal` owns the proposal register (`PROPOSALS.md`) and every registered `proposals/` directory. It creates numbered proposal documents, tracks their lifecycle, and hands accepted proposals to `/as:agreement`.
+`/as:proposal` owns only project-local `proposals/`. Each proposal markdown file is its own canonical record; there is no studio-wide register, allocation ledger, permanent firm-wide number, or duplicate proposal summary in `PROJECT.md`.
 
 ## Commands
 
 ```text
 /as:proposal create
 /as:proposal list
-/as:proposal status <number>
-/as:proposal send <number>
-/as:proposal accept <number>
-/as:proposal decline <number>
-/as:proposal supersede <number>
+/as:proposal status <project-relative proposal path>
+/as:proposal send <project-relative proposal path>
+/as:proposal accept <project-relative proposal path>
+/as:proposal decline <project-relative proposal path>
+/as:proposal supersede <project-relative proposal path>
 /as:proposal verify
 ```
 
 ## Hard rules
 
-1. **One writer.** `/as:proposal` is the only writer of `PROPOSALS.md` and of registered `proposals/` directories. It never writes `STUDIO.md`, `PROJECT.md`, `decisions/`, `agreement/`, `INVOICES.md`, tasks, or time records.
-2. **Permanent identity.** Numbers are `{PREFIX}-{NNNN}`, allocated as max parseable number + 1, zero-padded to four digits. Numbers are never reused or renumbered; a replaced proposal is `superseded by {PREFIX}-{NNNN}`, never deleted.
-3. **One register at the resolved root.** Run the shared resolver at `<plugin-root>/skills/project/scripts/resolve-context.sh` and follow `skills/project/references/context-resolution.md`. When a studio resolves, the register is `<studio-root>/PROPOSALS.md` and proposal files live in `projects/<folder>/proposals/`; for a standalone project, the register is `<project-root>/PROPOSALS.md` and files live in `proposals/`. Never reimplement resolution or maintain a second register.
-4. **Script-mediated mutation.** Every register or file mutation runs through `<skill-root>/scripts/proposal-register.sh` after a preview and one confirmation gate. After the script runs, re-read the register and report exact paths.
-5. **Malformed means blocked, not empty.** A register that fails format or prefix validation blocks mutation and is preserved byte-for-byte; report the problem instead of fixing it silently.
-6. **Legal caution is mandatory.** Any assembled terms and conditions carry this sentence verbatim: "These clauses are drafting guidance, not legal advice; have a licensed attorney review before signing."
-7. **Files are canonical.** The register row is the allocation and status ledger; the proposal document is the content record. Neither is duplicated into `PROJECT.md`; facts worth promoting go through `/as:project`.
+1. **One writer.** `/as:proposal` is the only writer of project-local `proposals/`. It never writes `STUDIO.md`, `PROJECT.md`, `decisions/`, `agreement/`, `INVOICES.md`, tasks, time records, or project status.
+2. **Local identity.** The normal filename is `YYYY-MM-SHORT-TITLE-proposal-rev-NN.md`: lowercase kebab-case short title, explicit local revision, no global number. Show the revision in documents as `Rev. NN` (`Rev. 01`, `Rev. 02`, and so on); use the filesystem-safe `rev-NN` token only in filenames and script arguments. The user chooses a new revision or clearer short title when a path collides; never overwrite, silently suffix, or infer that two differently named records are revisions of one another.
+3. **Resolved project.** Run `<plugin-root>/skills/project/scripts/resolve-context.sh` and follow `skills/project/references/context-resolution.md`. A selected format-version-3 project is the only proposal root. Never reimplement resolution or make the studio root a proposal owner.
+4. **Issued-term integrity.** The exact content between `<!-- issued-terms:start -->` and `<!-- issued-terms:end -->` is the proposal's terms. `send` records its SHA-256 checksum outside that block. Later lifecycle evidence stays outside the block; changing issued terms requires a new revision rather than replacing the checksum.
+5. **User-owned workflow.** Type and status are context. The tool records the user's action and does not enforce a proposal → agreement → invoice sequence, project-status transition, or commercial-management policy. Acceptance can freeze a draft directly when an earlier send was not recorded.
+6. **Malformed means preserved.** Marker, metadata, filename, or checksum failures block script mutation and are reported without repair. The user decides the correction.
+7. **Legal caution is mandatory.** Any assembled terms and conditions carry this sentence verbatim: "These clauses are drafting guidance, not legal advice; have a licensed attorney review before signing."
 
-## Resolve the register root
+## Resolve the project
 
-Run the shared resolver from the current directory. `project` verdict inside a studio → the studio root holds the register; standalone `project` verdict → the project root; `studio-picker` → require a selection before writing; `no-context` or `invalid` → stop and report. The register root and the owning project decide where the proposal file lives.
+Run the shared resolver from the current directory. `project` uses its returned project root, type, and status; `studio-picker` requires the user to choose one returned project before writing; `no-projects`, `no-context`, or `invalid` stops proposal work. Do not filter by status. An archived, lost, prospective, internal, or otherwise unusual project may merit a short warning, but a valid selected project remains usable.
 
 ## `/as:proposal create`
 
-1. Resolve the register root and owning project. Gather client, title, and issue date from the conversation; ask one grouped question only for missing pieces. Derive a lowercase kebab-case slug from the title.
-2. If no `PROPOSALS.md` exists at the root, this is first use: propose a prefix (2–6 uppercase letters/digits, defaulting from the studio or project name) and include register creation in the same single gate as the first proposal — one gate covers both.
-3. Preview the allocated number (via `proposal-register.sh allocate` when the register exists), the exact file path, and the register row. Wait for confirmation.
-4. Run `init` (first use only), then `create <root> <relative-proposals-dir> <project-id> <client> <title> <slug> <date>`. The script scaffolds the document from the bundled template with `> **[TO CONFIRM: …]**` slots and registers it as `draft`.
-5. Fill remaining content — scope of services, fees, terms assembled from `references/tc-library.md` — through previewed Edits to the proposal file. Unknown values stay as TO CONFIRM slots; never invent terms.
-6. Re-read the register, verify the row and file, and report both exact paths. For a client-facing letter, offer to render `templates/proposal-letter.html` from the markdown record; the register always points at the `.md`.
+1. Gather the client, normal-case title, proposal date, short lowercase kebab title, and explicit local revision. Suggest `Rev. 01` for a new proposal series, but do not assume lineage merely because another proposal exists.
+2. Build `proposals/YYYY-MM-SHORT-TITLE-proposal-rev-NN.md`. If it exists, stop and ask the user whether this is a new revision or a distinct proposal with another short title.
+3. Preview the exact path and initial issued-terms template, then wait for one confirmation.
+4. Run `<skill-root>/scripts/proposal-workspace.sh create <project-root> <client> <title> <short-title> <date> <rev-NN>`.
+5. Fill scope, fees, exclusions, payment terms, and selected clauses from `references/tc-library.md` through previewed edits. Unknowns remain TO CONFIRM; do not invent them or block creation.
+6. Re-read and report the exact project-relative path. For a client-facing HTML letter, prefer `<studio-root>/standards/proposal-letter.html` when it exists; use the bundled `<skill-root>/templates/proposal-letter.html` as the fallback. Render from the markdown record and keep that markdown file canonical.
 
 ## `/as:proposal list` and `status`
 
-Read-only. `list` prints the register rows, optionally filtered by project or status, and flags drift (rows whose file is missing) without fixing it. `status <number>` shows the row plus the document's TO CONFIRM slots still open.
+Read-only. `list` discovers markdown records directly in the selected project's `proposals/` directory and may filter the returned rows conversationally. `status` reports metadata, lifecycle, open TO CONFIRM text, and checksum integrity. Neither command repairs or creates an index.
 
-## `/as:proposal send`, `decline`
+## `/as:proposal send`
 
-Preview the status transition, confirm once, run `set-status <root> <number> <sent|declined>`, re-read, and report. `send` is also the moment to remind the user of open TO CONFIRM slots — sending with unresolved slots requires an explicit acknowledgment in the same gate.
+1. Read the complete record and point out remaining TO CONFIRM text as context, without treating it as a software gate.
+2. Preview the lifecycle event and checksum that will freeze the current issued terms. Confirm once.
+3. Run `<skill-root>/scripts/proposal-workspace.sh send <proposal-file> <date> [actor] [evidence]`, re-read the record, and verify the stored SHA-256.
+4. If an existing checksum no longer matches, stop. Preserve the issued record and create a new revision for changed terms.
 
-## `/as:proposal accept`
+## `/as:proposal accept`, `decline`, and `supersede`
 
-1. Gather acceptance evidence: date, who accepted, and how (signature, email, e-signature envelope). Ask once if missing.
-2. Preview: the status transition and an Acceptance-section addendum on the proposal document recording date/who/how. One gate.
-3. Run `set-status <root> <number> accepted`, apply the previewed Edit to the document, re-read both, and report.
-4. Hand off: "Run `/as:agreement promote <number>`."
+Gather whatever date, actor, evidence, and related-path detail the user wants recorded; do not invent missing evidence or police the business sequence. Preview one lifecycle row and status update, then run:
 
-## `/as:proposal supersede`
+```text
+proposal-workspace.sh set-status <proposal-file> <accepted|declined|superseded|draft> <date> [actor] [evidence] [related-path]
+```
 
-A superseded proposal needs a successor. Create the replacement first (normal `create` flow), then preview and run `set-status <root> <number> superseded <successor>`. The old document is never edited or deleted.
+`accept` verifies an existing issued checksum or freezes the current terms if no earlier send was recorded. Other lifecycle events preserve and verify any existing checksum. A successor is normally another project-relative proposal path, but the tool does not create it or require one automatically.
+
+After acceptance, offer the optional handoff `agreement promote <project-relative proposal path>`. The agreement cites the proposal path and checksum; it does not copy the proposal. `/as:proposal` never changes project status.
 
 ## `/as:proposal verify`
 
-Run `proposal-register.sh verify <root>` and report its findings verbatim: missing files, unknown statuses, unsafe paths. Never repair automatically; propose fixes as previewed follow-ups.
+Run `<skill-root>/scripts/proposal-workspace.sh verify <project-root>`. Report invalid filenames, metadata, marker boundaries, symlinks, and checksum mismatches verbatim. Do not repair or re-freeze a record automatically.
+
+Format-version-2 studio migration is owned by `/as:studio`. It converts every registered global proposal into a project-local file, preserves the old document inside the protected terms, records the former firm-wide number as `Legacy number`, carries its lifecycle status, and checksums any issued record. The obsolete global register is removed only after the complete workspace transaction verifies; rollback restores it and the original files.
 
 ## Typed record handoffs
 
-- Accepted proposals become contract context through `/as:agreement promote`; `/as:proposal` never writes `agreement/`.
-- Invoicing against an accepted proposal belongs to `/as:invoice`.
-- Facts worth `PROJECT.md` (client identity, engagement term) go through `/as:project`.
+- `/as:agreement` may cite an accepted proposal by project-relative path and checksum, but either record remains independently owned.
+- `/as:invoice` may use proposal context or explicit user direction; `/as:proposal` never authorizes or blocks billing.
+- Facts worth adding to `PROJECT.md` go through `/as:project`.
 
 ## Collaboration and harness boundary
 
-Structured questions and cross-skill invocation are enhancements; when unavailable, preserve completed work and print the exact follow-up command. A harness permission prompt is a separate security boundary, never a reason to add another conversational confirmation.
+Structured questions and cross-skill invocation are enhancements. When unavailable, preserve completed work and print the exact follow-up path or command. A harness permission prompt is a separate security boundary, never a reason to add another conversational confirmation.

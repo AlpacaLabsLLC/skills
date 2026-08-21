@@ -10,8 +10,10 @@ Studio setup records working units, default country/state-or-region/city, and th
 /as:studio init
 /as:studio status
 /as:studio create-project
-/as:studio register-project projects/2401-museum-expansion
-/as:studio archive-project 2401
+/as:studio register-project projects/2026-08-SMI-MUSEUM-EXPANSION
+/as:studio set-project-status 2026-08-SMI-MUSEUM-EXPANSION on-hold
+/as:studio archive-project 2026-08-SMI-MUSEUM-EXPANSION
+/as:studio migrate migration.tsv
 /as:studio updates status
 /as:studio updates enable
 /as:studio updates disable
@@ -19,6 +21,14 @@ Studio setup records working units, default country/state-or-region/city, and th
 ```
 
 `STUDIO.md` is the sole studio manifest and the studio skill is its only writer. Studio-owned custom skills live in `.agents/skills/` on Codex or `.claude/skills/` on Claude Code; project memory remains owned by the project skill. New studios also reserve a studio-only connector boundary with an empty `.mcp.json`; no connector or authentication is configured, and project scaffolds never receive this file.
+
+New studios include `standards/` for firm-wide standards and reusable templates, plus `references/` for external source material such as code references. Project work and project outputs stay inside `projects/`; there is no separate workspace `templates/` folder.
+
+Workspace format 3 registers all internal and client work in one section-bounded, header-keyed Projects table: Project ID, Project, Client, Code, Type, Status, Folder, and Opened. IDs and folder names are the same immutable uppercase `YYYY-MM-CCC-PROJECT-NAME` value. Every valid unique row remains resolvable regardless of status; status supplies advisory context and never blocks confirmed work.
+
+Studio migration is transactional and recovery-aware. Rename intent is journaled before any project folder moves, successful verification emits a tab-separated `migration-verification` summary, and verified rollbacks remove their temporary transaction. If any restore cannot be verified, the command reports the failed operation and preserves the hidden transaction directory with snapshots, the rename journal, and `ROLLBACK-FAILURES.tsv` for manual recovery.
+
+Project and Client remain distinct when constructing an ID. For client `SOM` and project `Strategy consulting`, use `YYYY-MM-SOM-STRATEGY-CONSULTING`; do not repeat the client name in the project slug.
 
 Studios default to project task mode, with one canonical `TASKS.md` per project. `/as:studio tasks mode portfolio` can move an empty studio to one studio-root register; populated registers require an explicit migration so two writable task sources can never drift.
 

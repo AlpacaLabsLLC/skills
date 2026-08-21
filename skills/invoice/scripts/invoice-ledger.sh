@@ -16,14 +16,17 @@ validate_root() {
   case "$1" in
     *$'\n'*|*$'\r'*|*$'\t'*) die "project root contains control characters" ;;
   esac
-  [ -d "$1" ] || die "project root is not a directory: $1"
+  [ -d "$1" ] && [ ! -L "$1" ] || die "project root is missing or symlinked: $1"
 }
 
 validate_text() {
   [ -n "${2:-}" ] || die "$1 is required"
   case "$2" in
-    *'|'*|*$'\n'*|*$'\r'*) die "$1 contains a reserved character" ;;
+    *'|'*|*'\'*) die "$1 contains a reserved character" ;;
   esac
+  if printf '%s' "$2" | LC_ALL=C grep -q '[[:cntrl:]]'; then
+    die "$1 contains a control character"
+  fi
 }
 
 validate_date() {
@@ -45,11 +48,88 @@ trim_field() {
   ' "$1"
 }
 
+field_count() {
+  awk -F'|' -v key="$2" '
+    function trim(s){gsub(/^[ \t]+|[ \t]+$/, "", s); return s}
+    /^\|/ && trim($2)==key {count++}
+    END {print count + 0}
+  ' "$1"
+}
+
+validate_ledger_file() {
+  file=$1
+  [ -f "$file" ] && [ ! -L "$file" ] || die "ledger file is missing or symlinked: $file"
+
+  [ "$(field_count "$file" "Format version")" = 1 ] || die "ledger must contain exactly one Format version setting"
+  version=$(trim_field "$file" "Format version")
+  [ "$version" = 2 ] || die "ledger format version is ${version:-absent}; version 2 is required (migrate explicitly before writing)"
+
+  [ "$(field_count "$file" "Maximum Total Cost")" = 1 ] || die "ledger must contain exactly one Maximum Total Cost setting"
+  maximum_total_cost=$(trim_field "$file" "Maximum Total Cost")
+  [ -n "$maximum_total_cost" ] || die "Maximum Total Cost is blank; use literal 'none' for an uncapped ledger"
+  case "$maximum_total_cost" in
+    none) ;;
+    *) validate_amount "maximum total cost" "$maximum_total_cost" ;;
+  esac
+
+  awk '
+    /^[[:space:]]*<!-- invoices:start -->[[:space:]]*$/ {starts++; start_line=NR}
+    /^[[:space:]]*<!-- invoices:end -->[[:space:]]*$/ {ends++; end_line=NR}
+    END {exit (starts == 1 && ends == 1 && start_line < end_line) ? 0 : 1}
+  ' "$file" || die "ledger must contain one ordered invoices marker pair"
+
+  if grep -Eq '\{\{[A-Z_]+\}\}' "$file"; then
+    die "ledger contains an unresolved template placeholder"
+  fi
+}
+
 require_ledger() {
   validate_root "$1"
-  [ -f "$1/INVOICES.md" ] || die "INVOICES.md not found at $1"
-  version=$(trim_field "$1/INVOICES.md" "Format version")
-  [ "$version" = 2 ] || die "ledger format version is ${version:-absent}; version 2 is required (migrate explicitly before writing)"
+  validate_ledger_file "$1/INVOICES.md"
+}
+
+amount_to_cents() {
+  case "$1" in
+    *.*)
+      whole=${1%%.*}
+      fraction=${1#*.}
+      ;;
+    *)
+      whole=$1
+      fraction=00
+      ;;
+  esac
+  cents="${whole}${fraction}"
+  while [ "${#cents}" -gt 1 ] && [ "${cents#0}" != "$cents" ]; do
+    cents=${cents#0}
+  done
+  printf '%s\n' "$cents"
+}
+
+add_cents() {
+  left=$1
+  right=$2
+  carry=0
+  result=
+  while [ -n "$left" ] || [ -n "$right" ] || [ "$carry" -ne 0 ]; do
+    left_digit=0
+    right_digit=0
+    if [ -n "$left" ]; then
+      left_digit=${left#${left%?}}
+      left=${left%?}
+    fi
+    if [ -n "$right" ]; then
+      right_digit=${right#${right%?}}
+      right=${right%?}
+    fi
+    digit_total=$((left_digit + right_digit + carry))
+    result="$((digit_total % 10))$result"
+    carry=$((digit_total / 10))
+  done
+  while [ "${#result}" -gt 1 ] && [ "${result#0}" != "$result" ]; do
+    result=${result#0}
+  done
+  printf '%s\n' "${result:-0}"
 }
 
 next_id() {
@@ -86,8 +166,15 @@ init_ledger() {
   esac
   validate_text "terms source" "$terms_source"
   validate_date "created date" "$created"
-  [ ! -e "$root/INVOICES.md" ] || die "INVOICES.md already exists at $root"
-  sed \
+  [ ! -e "$root/INVOICES.md" ] && [ ! -L "$root/INVOICES.md" ] || die "INVOICES.md already exists or is symlinked at $root"
+  tmp=$(mktemp "$root/.invoice-ledger-init.XXXXXX")
+  init_tmp=$tmp
+  cleanup_init() { rm -f "$init_tmp"; }
+  trap cleanup_init EXIT
+  if [ "${ARCH_INVOICE_FAIL_AT:-}" = init-render-failure ]; then
+    printf '# incomplete render\n' > "$tmp"
+    render_ok=false
+  elif sed \
     -e "s|{{PROJECT_NAME}}|$(escape_sed "$project_name")|g" \
     -e "s|{{CURRENCY}}|$(escape_sed "$currency")|g" \
     -e "s|{{CADENCE}}|$(escape_sed "$cadence")|g" \
@@ -95,8 +182,47 @@ init_ledger() {
     -e "s|{{MAX_TOTAL}}|$(escape_sed "$max_total")|g" \
     -e "s|{{TERMS_SOURCE}}|$(escape_sed "$terms_source")|g" \
     -e "s|{{CREATED_DATE}}|$(escape_sed "$created")|g" \
-    "$TEMPLATE_DIR/INVOICES.md" > "$root/INVOICES.md"
+    "$TEMPLATE_DIR/INVOICES.md" > "$tmp"; then
+    render_ok=true
+  else
+    render_ok=false
+  fi
+  if [ "$render_ok" != true ]; then
+    die "ledger render failed; INVOICES.md unchanged"
+  fi
+  validate_ledger_file "$tmp"
+  [ ! -e "$root/INVOICES.md" ] && [ ! -L "$root/INVOICES.md" ] || die "INVOICES.md appeared during initialization; refusing to overwrite it"
+  if ! mv "$tmp" "$root/INVOICES.md"; then
+    die "ledger publish failed; INVOICES.md unchanged"
+  fi
+  trap - EXIT
   printf 'created ledger: %s/INVOICES.md\n' "$root"
+}
+
+validate_correction_target() {
+  root=$1
+  new_id=$2
+  correction=$3
+  [ "$correction" != - ] || return 0
+
+  target=${correction#Corrects }
+  target=${target%% *}
+  [ "$target" != "$new_id" ] || die "correction cannot target its own row id: $target"
+
+  target_state=$(awk -F'|' -v target="$target" '
+    function trim(s){gsub(/^[ \t]+|[ \t]+$/, "", s); return s}
+    /^\|/ {
+      id = trim($2)
+      correction = trim($12)
+      if (id == target) target_count++
+      if (correction ~ ("^Corrects " target " — ")) corrections++
+    }
+    END {printf "%d %d\n", target_count + 0, corrections + 0}
+  ' "$root/INVOICES.md")
+  target_count=${target_state%% *}
+  correction_count=${target_state#* }
+  [ "$target_count" = 1 ] || die "correction target must resolve to exactly one earlier row: $target"
+  [ "$correction_count" = 0 ] || die "correction target was already corrected: $target"
 }
 
 append_row() {
@@ -119,7 +245,10 @@ append_row() {
   validate_amount "base" "$base"
   validate_amount "expenses" "$expenses"
   validate_amount "total" "$total"
-  awk -v b="$base" -v e="$expenses" -v t="$total" 'BEGIN { exit (b + e == t) ? 0 : 1 }' || die "total must equal base + expenses"
+  base_cents=$(amount_to_cents "$base")
+  expense_cents=$(amount_to_cents "$expenses")
+  total_cents=$(amount_to_cents "$total")
+  [ "$(add_cents "$base_cents" "$expense_cents")" = "$total_cents" ] || die "total must equal base + expenses"
   case "$sent" in -) ;; *) validate_date "sent date" "$sent" ;; esac
   case "$paid" in -) ;; *) validate_date "paid date" "$paid" ;; esac
   case "$status" in
@@ -128,15 +257,20 @@ append_row() {
   esac
   case "$correction" in
     -) ;;
-    "Corrects I"[0-9][0-9][0-9][0-9]" — "*) ;;
+    "Corrects I"[0-9][0-9][0-9][0-9]" — "*)
+      correction_reason=${correction#* — }
+      validate_text "correction reason" "$correction_reason"
+      ;;
     *) die "correction must be '-' or 'Corrects I#### — reason'" ;;
   esac
 
   id=$(next_id "$root")
+  validate_correction_target "$root" "$id" "$correction"
   tmp=$(mktemp "$root/.invoice-ledger.XXXXXX")
   if ! awk -v row="| $id | $invoice_number | $period_start | $period_end | $base | $expenses | $total | $sent | $paid | $status | $correction |" '
-    /<!-- invoices:end -->/ {print row}
+    /<!-- invoices:end -->/ {print row; inserted=1}
     {print}
+    END {if (!inserted) exit 3}
   ' "$root/INVOICES.md" > "$tmp"; then
     rm -f "$tmp"
     die "ledger append failed; INVOICES.md unchanged"
@@ -152,6 +286,7 @@ set_lifecycle() {
   event_date=$4
   require_ledger "$root"
   validate_text "row id" "$id"
+  printf '%s' "$id" | grep -Eq '^I[0-9]{4}$' || die "row id must be I####: $id"
   validate_date "event date" "$event_date"
   case "$event" in
     sent|paid|void) ;;
@@ -168,17 +303,27 @@ set_lifecycle() {
       if (event == "paid") { paid = d; status = "paid" }
       if (event == "void") { status = "void" }
       print "| " trim($2) " | " trim($3) " | " trim($4) " | " trim($5) " | " trim($6) " | " trim($7) " | " trim($8) " | " sent " | " paid " | " status " | " trim($12) " |"
-      found=1
+      found++
       next
     }
     {print}
-    END {exit found ? 0 : 2}
+    END {exit found == 1 ? 0 : 2}
   ' "$root/INVOICES.md" > "$tmp"; then
     rm -f "$tmp"
-    die "row id is not in the ledger: $id"
+    die "row id must resolve to exactly one ledger row: $id"
   fi
-  mv "$tmp" "$root/INVOICES.md"
-  printf -- '- %s: %s marked %s\n' "$event_date" "$id" "$event" >> "$root/INVOICES.md"
+  if [ "${ARCH_INVOICE_FAIL_AT:-}" = lifecycle-before-history ]; then
+    rm -f "$tmp"
+    die "injected lifecycle failure; INVOICES.md unchanged"
+  fi
+  if ! printf -- '- %s: %s marked %s\n' "$event_date" "$id" "$event" >> "$tmp"; then
+    rm -f "$tmp"
+    die "lifecycle history update failed; INVOICES.md unchanged"
+  fi
+  if ! mv "$tmp" "$root/INVOICES.md"; then
+    rm -f "$tmp"
+    die "lifecycle publish failed; INVOICES.md unchanged"
+  fi
   printf 'lifecycle updated: %s -> %s (%s)\n' "$id" "$event" "$event_date"
 }
 
@@ -201,7 +346,7 @@ status_ledger() {
       totals[rows] = trim($8) + 0
       statuses[rows] = trim($11)
       corr = trim($12)
-      if (corr ~ /^Corrects I[0-9][0-9][0-9][0-9]/) corrected[substr(corr, 10, 5)] = 1
+      if (statuses[rows] != "void" && corr ~ /^Corrects I[0-9][0-9][0-9][0-9]/) corrected[substr(corr, 10, 5)] = 1
     }
     END {
       total = 0; outstanding = 0; periods = 0
@@ -215,7 +360,7 @@ status_ledger() {
       printf "currency=%s\n", currency
       printf "total=%.2f\n", total
       printf "outstanding=%.2f\n", outstanding
-      if (cap == "none" || cap == "") {
+      if (cap == "none") {
         printf "cap=none\n"
       } else {
         pct = (cap + 0 > 0) ? total / (cap + 0) * 100 : 0
@@ -229,11 +374,13 @@ status_ledger() {
         while (j > 0 && starts[j] > s) { starts[j+1] = starts[j]; ends[j+1] = ends[j]; j-- }
         starts[j+1] = s; ends[j+1] = e
       }
+      if (periods > 0) max_end = ends[1]
       for (i = 2; i <= periods; i++) {
-        if (datejdn(starts[i]) > datejdn(ends[i-1]) + 1)
-          printf "coverage gap: %s..%s\n", ends[i-1], starts[i]
+        if (datejdn(starts[i]) > datejdn(max_end) + 1)
+          printf "coverage gap: %s..%s\n", max_end, starts[i]
+        if (datejdn(ends[i]) > datejdn(max_end)) max_end = ends[i]
       }
-      if (periods > 0) printf "last period end: %s\n", ends[periods]
+      if (periods > 0) printf "last period end: %s\n", max_end
     }
   '
 }

@@ -1,6 +1,6 @@
 # /as:spec-writer
 
-CSI outline specification writer for Claude Code. Feed it a materials list, product schedule, or project description — get structured outline specs organized by MasterFormat 2020 divisions.
+CSI outline specification writer for Claude Code. Feed it a materials list, product schedule, or project description — get structured outline specs organized by a limited MasterFormat 2020 compatibility baseline. Verify selected numbers and titles against the project's licensed edition before issue.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../../LICENSE)
 

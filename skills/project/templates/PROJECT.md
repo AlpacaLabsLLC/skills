@@ -7,24 +7,16 @@
 
 | Field | Value | Source | Date |
 |---|---|---|---|
-| Format version | 2 | project setup | {{CREATED_DATE}} |
+| Format version | 3 | project setup | {{CREATED_DATE}} |
 | Project ID | {{PROJECT_ID}} | project setup | {{CREATED_DATE}} |
 | Project | {{PROJECT_NAME}} | project setup | {{CREATED_DATE}} |
-| Address / BBL | | | |
-| Client | | | |
-| Jurisdiction | | | |
+| Type | {{PROJECT_TYPE}} | project setup | {{CREATED_DATE}} |
+| Status | {{PROJECT_STATUS}} | project setup | {{CREATED_DATE}} |
+| Created | {{CREATED_DATE}} | project setup | {{CREATED_DATE}} |
+| Client code | {{CLIENT_CODE}} | project setup | {{CREATED_DATE}} |
+| Client | {{CLIENT}} | project setup | {{CREATED_DATE}} |
 
-## Site
-
-## Zoning
-
-## Program
-
-## Code
-
-| Item | Value | Source | Date |
-|---|---|---|---|
-| Building code edition | | | |
+<!-- Add Site, Zoning, Program, or Code sections only when they are relevant. -->
 
 ## Project records
 

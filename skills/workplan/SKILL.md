@@ -110,6 +110,8 @@ Use parallel research or specialist agents when the harness supports them and th
 
 ## Step 4 — Resolve AEC dependencies
 
+For neutral professional-practice terminology, AIA document-family orientation, or document purpose, consult `<plugin-root>/skills/architecture-knowledge/references/` as terminology context only. It is not record authority, a mutation path, permission, or gate; actual work and submission plans remain owned by `/as:workplan`.
+
 In AEC delivery mode, check whether the outcome depends on:
 
 - Project phase, milestone, and contractual deliverables

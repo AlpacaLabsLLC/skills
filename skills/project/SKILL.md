@@ -1,6 +1,6 @@
 ---
 name: project
-description: Create or maintain an Architecture Studio project — initialize its record bundle, remember sourced facts, capture or supersede decisions, inspect project status, or migrate a 1.x PROJECT.md. Use when the user says “set up the project,” “remember this,” “we decided,” asks about project context, or runs /as:project.
+description: Create or maintain a universal Architecture Studio project — initialize internal or client work, remember sourced facts, capture or supersede decisions, inspect project status, or migrate an older PROJECT.md to format 3. Use when the user says “set up the project,” “remember this,” “we decided,” asks about project context, or runs /as:project.
 allowed-tools:
   - Read
   - Write
@@ -40,6 +40,8 @@ allowed-tools:
 5. Every durable mutation is previewed and requires affirmative confirmation.
 6. Preserve malformed records. A parse failure means unknown, not absent or approved.
 7. Use project-relative links; never persist machine-specific absolute paths.
+8. A project’s immutable ID and directory are the same uppercase `YYYY-MM-CCC-PROJECT-NAME` value. Keep the display name in normal case.
+9. Project type (`internal` or `client`) and status are advisory context. Neither makes a valid project invisible or blocks a user-confirmed action.
 
 ## Resolve the project root
 
@@ -50,14 +52,16 @@ Run `<plugin-root>/skills/project/scripts/resolve-context.sh` from the current o
 1. If the current path resolves an existing `PROJECT.md`, show status and do not create a nested project.
 2. If a `STUDIO.md` is resolved, route creation to `/as:studio create-project`. Do not mutate the studio manifest and do not call back recursively after `/as:studio` has begun its confirmed orchestration.
 3. Outside a studio, ask whether to initialize a studio or create a standalone project. Standalone creation requires explicit confirmation.
-4. Gather the project name, optional ID, and exact target. Normalize the directory to lowercase kebab-case, prefixing a supplied ID. When no ID is supplied, use the folder slug as the stable local ID. Reject unsafe names, separators, dot segments, control characters, existing files, and non-empty directories. Never silently suffix a project identity.
-5. Preview the exact path and full bundle. State that no git repository, ALPA account, or cloud service will be created.
-6. After confirmation, run `<plugin-root>/skills/project/scripts/project-workspace.sh init <target> <name> <project-id> project` and verify every file and directory. Standalone projects always use a project-local task register; portfolio mode belongs to a studio.
-7. Report the exact created path plus the `.agents/skills/` (Codex) and `.claude/skills/` (Claude Code) extension paths. Explain that the active harness should be restarted from the intended project directory if new project-only skills are not visible.
+4. Gather the normal-case project display name, type (`internal` or `client`), current status, and a confirmed three-letter uppercase code. Client work uses its client code. Internal work uses the studio's own code or another user-confirmed internal code and may record the client as `—`; never substitute a reserved code. Keep the Project and Client fields distinct: when the user gives “client SOM, project Strategy consulting,” the project display name is `Strategy consulting`. Do not prefix the project display name or project-name slug with the client name merely because Client is recorded separately. Do not require client, site, zoning, program, code, proposal, agreement, or invoice facts that are irrelevant to the project.
+5. Build the permanent ID as `YYYY-MM-CCC-PROJECT-NAME`, using the creation month, confirmed code, and an uppercase ASCII kebab slug. The exact directory basename equals that ID. On collision, preview a meaningful user-confirmed disambiguator; never overwrite, silently suffix, renumber, or later rename the ID because a display name, client, or status changes.
+6. Preview the exact path, identity fields, and full bundle. State that no git repository, ALPA account, or cloud service will be created.
+7. After confirmation, run `<plugin-root>/skills/project/scripts/project-workspace.sh init <target> <name> <project-id> <internal|client> <status> <client-code> <client> project` and verify every file and directory. Standalone projects always use a project-local task register; portfolio mode belongs to a studio.
+8. `PROJECT.md` starts with universal identity and record links. Add the optional `Site`, `Zoning`, `Program`, or `Code` sections only when relevant; they are not a separate project type and are not required scaffolding for internal work.
+9. Report the exact created path plus the `.agents/skills/` (Codex) and `.claude/skills/` (Claude Code) extension paths. Explain that the active harness should be restarted from the intended project directory if new project-only skills are not visible.
 
 ## `/as:project status`
 
-Read `PROJECT.md`, scan `decisions/*.md` directly, and summarize known facts, record counts, decision statuses, open tasks, and recent dated records. When `agreement/AGREEMENT.md` exists, also report the agreement term (Effective date → Term end) and, when `INVOICES.md` exists, relay cap consumption from the invoice skill's status script read-only — never recompute its numbers. If an owning `STUDIO.md` declares portfolio task mode, read open tasks for this Project ID from the studio-root register; otherwise read the project register. Report duplicate decision numbers or malformed files. Do not consult or create a decision index.
+Read `PROJECT.md`, report its project type and status as advisory context, scan `decisions/*.md` directly, and summarize known facts, record counts, decision statuses, open tasks, and recent dated records. Resolve prospective, active, on-hold, lost, withdrawn, completed, and archived projects alike. An unusual status may produce a warning but never blocks a confirmed action. When `agreement/AGREEMENT.md` exists, also report the agreement term (Effective date → Term end) and, when `INVOICES.md` exists, relay cap consumption from the invoice skill's status script read-only — never recompute its numbers. If an owning `STUDIO.md` declares portfolio task mode, read open tasks for this Project ID from the studio-root register; otherwise read the project register. Report duplicate decision numbers or malformed files. Do not consult or create a decision index.
 
 ## Facts: `update` and `remember`
 
@@ -99,22 +103,23 @@ Discover `decisions/*.md` independently. Report number, title, status, and path 
 
 ## `/as:project migrate`
 
-Migration removes the legacy Decisions table only when it is lossless:
+Migration removes the legacy Decisions table only when it is lossless, and upgrades the project/studio identity contract to format version 3:
 
-1. Read `PROJECT.md` and discover all decision files.
-2. Parse every legacy table row conservatively and match it to exactly one decision file by number plus compatible identity/status.
-3. Missing files, duplicate numbers, malformed rows, or status disagreements block mutation. Report exact rows and paths.
-4. If every row is accounted for, preview replacing the entire legacy section/table with the stable `decisions/` link while preserving all unrelated content byte-for-byte.
-5. After confirmation, run the helper migration, re-read `PROJECT.md`, and verify the table is gone, the link exists, and all decision files are unchanged.
-6. A project already using the link-only contract reports “already migrated” without mutation.
+1. If the project belongs to a studio, route to the studio-owned migration so `STUDIO.md`, folder identities, and known structured references change in one recoverable transaction. Standalone migration uses the project helper directly.
+2. Ask the user to confirm the display name, created month/date, client code, client, type, and status. Never infer missing identity facts from tasks, time, commits, or other activity.
+3. Read `PROJECT.md` and discover all decision files. Parse every legacy Decisions row conservatively and match it to exactly one decision file by number plus compatible identity/status. Missing files, duplicate numbers, malformed rows, or status disagreements block mutation.
+4. Preview the complete old-to-new manifest, including the uppercase ID/directory rename, format and identity rows, legacy Decisions replacement when present, recognized generated version-2 `CLAUDE.md` replacement with the canonical `@AGENTS.md` import, studio registry row, known structured references such as the Project ID column in portfolio `TASKS.md`, and any studio-wide proposal records moving into project-local date/title/revision files. Preserve former proposal numbers only as legacy metadata. A custom `CLAUDE.md` blocks mutation until the user separately reviews and confirms how its Claude-specific content should be preserved. Report possible prose references without rewriting them.
+5. Back up only the confirmed files and directories, apply the manifest, then verify the format, exact directory/ID match, registry identity, structured Project ID fields, and unchanged durable decision/meeting/site-report/plan content. If any required mutation or verification fails, restore the confirmed backup rather than leaving a partial migration.
+6. For a standalone project, first check for the valid version-2 standalone ownership shape: a root `PROPOSALS.md` with files under `proposals/`. The project-only helper cannot safely convert that commercial register, so it stops before mutation and directs the user to a separately confirmed studio-owned migration rather than stranding it. Otherwise run `<plugin-root>/skills/project/scripts/project-workspace.sh migrate <root> <project-id> <name> <internal|client> <status> <client-code> <client> <created> --apply` only after confirmation. A studio migration uses `<plugin-root>/skills/studio/scripts/studio-workspace.sh migrate <studio-root> <confirmed-manifest.tsv> --apply`.
+7. A matching format-version-3 project reports “already migrated” without mutation.
 
 ## Typed record handoffs
 
 - Minutes and site reports may propose selected facts or decisions; `/as:project` re-reads and confirms them.
 - `/as:workplan` reads facts and decision files but writes only its plan.
 - `/as:tasklist` owns task rows in the canonical project or portfolio `TASKS.md`; `/as:studio` alone owns the studio task-mode setting; `/as:timetracker` owns `TIMELOG.md`.
-- Project registration state and archive belong to `/as:studio`, not `/as:project`.
-- `/as:proposal` owns `PROPOSALS.md` and `proposals/`; `/as:agreement` owns `agreement/`; `/as:invoice` owns `INVOICES.md`.
+- Project registration and status mutation belong to `/as:studio`, not `/as:project`.
+- `/as:proposal` owns project-local `proposals/`; `/as:agreement` owns `agreement/`; `/as:invoice` owns `INVOICES.md`. These links appear in `PROJECT.md` only when the corresponding records exist.
 
 ## Collaboration and harness boundary
 

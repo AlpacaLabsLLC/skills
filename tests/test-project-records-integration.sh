@@ -8,11 +8,17 @@ MENU="skills/tool-catalog/SKILL.md"
 README="skills/README.md"
 CI=".github/workflows/lint.yml"
 
+assert_catalog_entry() {
+  local skill="$1"
+  grep -q "^/as:$skill " "$MENU" || { echo "missing menu entry: /as:$skill" >&2; exit 1; }
+  local rows
+  rows="$(grep -Ec "^\| \[\`/as:$skill\`\]\(\./$skill\) \|" "$README")"
+  [ "$rows" -eq 1 ] || { echo "expected exactly one README catalog row for /$skill, found $rows" >&2; exit 1; }
+}
+
 for route in meeting-minutes site-visit-report tasklist timetracker; do
   grep -q "\`/as:$route\`" "$ROUTER" || { echo "missing router route: /as:$route" >&2; exit 1; }
-  grep -q "^/as:$route " "$MENU" || { echo "missing menu entry: /as:$route" >&2; exit 1; }
-  rows="$(grep -Ec "^\| \[\`/as:$route\`\]\(\./$route\) \|" "$README")"
-  [ "$rows" -eq 1 ] || { echo "expected exactly one README catalog row for /$route, found $rows" >&2; exit 1; }
+  assert_catalog_entry "$route"
 done
 
 # Static routing assertions validate the written precedence contract and its
@@ -24,7 +30,9 @@ grep -q 'Meeting transcript or minutes.*`/as:meeting-minutes`' "$ROUTER"
 grep -q 'Field notes or site-visit report.*`/as:site-visit-report`' "$ROUTER"
 grep -q 'Tasks or action register.*`/as:tasklist`' "$ROUTER"
 grep -q 'Daily/weekly time reconstruction.*`/as:timetracker`' "$ROUTER"
-grep -q 'Explicit work plan.*`/as:workplan`' "$ROUTER"
+grep -q 'Actual work or submission plan.*`/as:workplan`' "$ROUTER"
+grep -q 'Neutral professional-practice term.*`/as:architecture-knowledge`' "$ROUTER"
+assert_catalog_entry architecture-knowledge
 
 grep -q '^### Project Records$' "$MENU"
 grep -q '^### Project Records$' "$README"

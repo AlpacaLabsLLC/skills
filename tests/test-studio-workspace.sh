@@ -17,39 +17,105 @@ STUDIO="$ROOT/smith-architects"
 [ -f "$STUDIO/.mcp.json" ]
 [ -d "$STUDIO/.claude/skills" ]
 [ -d "$STUDIO/.agents/skills" ]
+[ -d "$STUDIO/standards" ]
+[ -d "$STUDIO/references" ]
+[ -f "$STUDIO/standards/README.md" ]
+[ -f "$STUDIO/references/README.md" ]
 [ -d "$STUDIO/projects" ]
+[ ! -e "$STUDIO/templates" ]
 node -e 'const fs=require("fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if (Object.keys(v).length!==1 || typeof v.mcpServers!=="object" || v.mcpServers===null || Array.isArray(v.mcpServers) || Object.keys(v.mcpServers).length!==0) process.exit(1)' "$STUDIO/.mcp.json"
 grep -Fq '| Working units | imperial |' "$STUDIO/STUDIO.md"
 grep -Fq '| Country | United States |' "$STUDIO/STUDIO.md"
 grep -Fq '| State / region | New York |' "$STUDIO/STUDIO.md"
 grep -Fq '| City | New York City |' "$STUDIO/STUDIO.md"
 grep -Fq '| Task register | project |' "$STUDIO/STUDIO.md"
-grep -Fq '| Format version | 2 |' "$STUDIO/STUDIO.md"
+grep -Fq '| Format version | 3 |' "$STUDIO/STUDIO.md"
+grep -Fq '| Project ID | Project | Client | Code | Type | Status | Folder | Opened |' "$STUDIO/STUDIO.md"
 grep -Fq 'does not send them to or store them with ALPA' "$STUDIO/STUDIO.md"
 grep -Fq 'The studio skill is the only writer of this registry.' "$STUDIO/STUDIO.md"
+grep -Fq 'Firm-wide standards and reusable templates: `standards/`' "$STUDIO/STUDIO.md"
+grep -Fq 'External references, including code references: `references/`' "$STUDIO/STUDIO.md"
 if grep -Fq '/as:' "$STUDIO/STUDIO.md"; then
   echo "generated studio record contains a host-specific slash command" >&2
   exit 1
 fi
 grep -Fq 'Firm-created Codex skills live in `.agents/skills/`.' "$STUDIO/AGENTS.md"
+grep -Fq 'Firm-wide standards and reusable templates live in `standards/`.' "$STUDIO/AGENTS.md"
+grep -Fq 'External references, including code references, live in `references/`.' "$STUDIO/AGENTS.md"
+grep -Fq 'Project work and project outputs stay inside `projects/`.' "$STUDIO/AGENTS.md"
+grep -Fq 'Firm-wide standards and reusable templates belong here.' "$STUDIO/standards/README.md"
+grep -Fq 'External source material, including code references, belongs here.' "$STUDIO/references/README.md"
 
-cp "$STUDIO/STUDIO.md" "$ROOT/studio-v2.md"
-sed '/| Format version | 2 |/d' "$ROOT/studio-v2.md" > "$STUDIO/STUDIO.md"
+# Writers reject a symlinked studio root.
+SYMLINK_STUDIO="$ROOT/linked/smith-architects"
+mkdir -p "$ROOT/linked"
+ln -s "$STUDIO" "$SYMLINK_STUDIO"
+if "$SCRIPT" task-mode "$SYMLINK_STUDIO" portfolio; then
+  echo "symlinked studio root unexpectedly accepted" >&2
+  exit 1
+fi
+grep -Fq '| Task register | project |' "$STUDIO/STUDIO.md"
+[ ! -e "$STUDIO/TASKS.md" ]
+
+# Writers reject a symlinked studio-owned projects directory.
+PROJECTS_LINK_STUDIO="$ROOT/projects-link-studio"
+PROJECTS_LINK_TARGET="$ROOT/external-projects"
+"$SCRIPT" init "$PROJECTS_LINK_STUDIO" "Projects Link Studio" metric US NY NYC >/dev/null
+rmdir "$PROJECTS_LINK_STUDIO/projects"
+mkdir -p "$PROJECTS_LINK_TARGET"
+ln -s "$PROJECTS_LINK_TARGET" "$PROJECTS_LINK_STUDIO/projects"
+if "$SCRIPT" task-mode "$PROJECTS_LINK_STUDIO" portfolio; then
+  echo "symlinked studio projects directory unexpectedly accepted" >&2
+  exit 1
+fi
+grep -Fq '| Task register | project |' "$PROJECTS_LINK_STUDIO/STUDIO.md"
+
+cp "$STUDIO/STUDIO.md" "$ROOT/studio-v3.md"
+sed '/| Format version | 3 |/d' "$ROOT/studio-v3.md" > "$STUDIO/STUDIO.md"
 if "$SCRIPT" status "$STUDIO"; then echo "unversioned studio unexpectedly accepted" >&2; exit 1; fi
-sed 's/| Format version | 2 |/| Format version | 99 |/' "$ROOT/studio-v2.md" > "$STUDIO/STUDIO.md"
+sed 's/| Format version | 3 |/| Format version | 99 |/' "$ROOT/studio-v3.md" > "$STUDIO/STUDIO.md"
 if "$SCRIPT" status "$STUDIO"; then echo "unknown studio version unexpectedly accepted" >&2; exit 1; fi
-cp "$ROOT/studio-v2.md" "$STUDIO/STUDIO.md"
+cp "$ROOT/studio-v3.md" "$STUDIO/STUDIO.md"
 
-PROJECT="$STUDIO/projects/2401-museum-expansion"
-mkdir -p "$PROJECT"
-printf '# Project — Museum Expansion\n\n| Field | Value |\n|---|---|\n| Format version | 2 |\n| Project ID | 2401 |\n| Project | Museum Expansion |\n' > "$PROJECT/PROJECT.md"
+PROJECT_ID=2026-08-SMI-MUSEUM-EXPANSION
+PROJECT="$STUDIO/projects/$PROJECT_ID"
+skills/project/scripts/project-workspace.sh init "$PROJECT" "Museum Expansion" "$PROJECT_ID" client active SMI "Smith Institution" >/dev/null
 
-"$SCRIPT" register "$STUDIO" 2401 "Museum Expansion" "projects/2401-museum-expansion"
-[ "$(grep -Fc '| 2401 | Museum Expansion | projects/2401-museum-expansion | active |' "$STUDIO/STUDIO.md")" -eq 1 ]
-if "$SCRIPT" register "$STUDIO" 2401 "Museum Expansion" "projects/2401-museum-expansion"; then
+printf '\n| Project ID | Project | Folder | Status |\n|---|---|---|---|\n| %s | Decoy | projects/%s | archived |\n' "$PROJECT_ID" "$PROJECT_ID" >> "$STUDIO/STUDIO.md"
+if "$SCRIPT" register "$STUDIO" 2026-08-SMI-WRONG-ID "Museum Expansion" "projects/$PROJECT_ID"; then
+  echo "registration accepted an ID that disagrees with PROJECT.md" >&2
+  exit 1
+fi
+if "$SCRIPT" register "$STUDIO" "$PROJECT_ID" "Wrong display name" "projects/$PROJECT_ID"; then
+  echo "registration accepted a display name that disagrees with PROJECT.md" >&2
+  exit 1
+fi
+"$SCRIPT" register "$STUDIO" "$PROJECT_ID" "Museum Expansion" "projects/$PROJECT_ID"
+[ "$(grep -Fc "| $PROJECT_ID | Museum Expansion | Smith Institution | SMI | client | active | projects/$PROJECT_ID |" "$STUDIO/STUDIO.md")" -eq 1 ]
+if "$SCRIPT" register "$STUDIO" "$PROJECT_ID" "Museum Expansion" "projects/$PROJECT_ID"; then
   echo "duplicate registration unexpectedly succeeded" >&2
   exit 1
 fi
+
+# Read-only status aggregates every identity drift instead of aborting through
+# the stricter writer guard on the first mismatch.
+cp "$PROJECT/PROJECT.md" "$ROOT/project-before-status-drift.md"
+sed \
+  -e 's/| Project ID | 2026-08-SMI-MUSEUM-EXPANSION |/| Project ID | 2026-08-SMI-DRIFTED-IDENTITY |/' \
+  -e 's/| Project | Museum Expansion |/| Project | Drifted Display Name |/' \
+  -e 's/| Client code | SMI |/| Client code | BAD |/' \
+  -e 's/| Status | active |/| Status | on-hold |/' \
+  "$ROOT/project-before-status-drift.md" > "$PROJECT/PROJECT.md"
+cp "$STUDIO/STUDIO.md" "$ROOT/studio-before-status-audit.md"
+STATUS_DRIFT=$($SCRIPT status "$STUDIO")
+printf '%s\n' "$STATUS_DRIFT" | grep -Fq "identity mismatch: projects/$PROJECT_ID field=Project ID manifest=$PROJECT_ID project=2026-08-SMI-DRIFTED-IDENTITY"
+printf '%s\n' "$STATUS_DRIFT" | grep -Fq "identity mismatch: projects/$PROJECT_ID field=Project manifest=Museum Expansion project=Drifted Display Name"
+printf '%s\n' "$STATUS_DRIFT" | grep -Fq "identity mismatch: projects/$PROJECT_ID field=Code manifest=SMI project=BAD"
+printf '%s\n' "$STATUS_DRIFT" | grep -Fq "identity mismatch: projects/$PROJECT_ID field=Status manifest=active project=on-hold"
+printf '%s\n' "$STATUS_DRIFT" | grep -Fq "identity mismatch: projects/$PROJECT_ID field=Folder manifest=projects/$PROJECT_ID project=projects/2026-08-SMI-DRIFTED-IDENTITY"
+printf '%s\n' "$STATUS_DRIFT" | grep -Fq $'status-summary\tregistered=1\tdrift=5\tinvalid=0\tunregistered=0'
+cmp -s "$STUDIO/STUDIO.md" "$ROOT/studio-before-status-audit.md"
+cp "$ROOT/project-before-status-drift.md" "$PROJECT/PROJECT.md"
 
 cp skills/project/templates/TASKS.md "$PROJECT/TASKS.md"
 
@@ -61,15 +127,15 @@ mv "$ROOT/project-tasks-real.md" "$PROJECT/TASKS.md"
 
 OUTSIDE="$ROOT/outside"
 mkdir -p "$OUTSIDE"
-printf '# Project\n\n| Field | Value |\n|---|---|\n| Format version | 2 |\n' > "$OUTSIDE/PROJECT.md"
+printf '# Project\n\n| Field | Value |\n|---|---|\n| Format version | 3 |\n' > "$OUTSIDE/PROJECT.md"
 ln -s "$OUTSIDE" "$STUDIO/projects/escape-link"
-if "$SCRIPT" register "$STUDIO" escape Escape projects/escape-link; then
+if "$SCRIPT" register "$STUDIO" 2026-08-ESC-ESCAPE Escape projects/escape-link; then
   echo "symlinked external project unexpectedly registered" >&2
   exit 1
 fi
 
 cp "$STUDIO/STUDIO.md" "$ROOT/studio-before-unsafe.md"
-awk '/<!-- projects:end -->/ {print "| escape | Escape | projects/../outside | active | 2026-07-22 |"} {print}' "$ROOT/studio-before-unsafe.md" > "$STUDIO/STUDIO.md"
+awk '/<!-- projects:end -->/ {print "| 2026-08-ESC-ESCAPE | Escape | Escape Client | ESC | client | active | projects/../outside | 2026-07-22 |"} {print}' "$ROOT/studio-before-unsafe.md" > "$STUDIO/STUDIO.md"
 if "$SCRIPT" task-mode "$STUDIO" portfolio; then
   echo "unsafe manifest path unexpectedly accepted for task transition" >&2
   exit 1
@@ -94,7 +160,7 @@ if "$SCRIPT" task-mode "$STUDIO" portfolio; then
   exit 1
 fi
 
-printf '%s\n' '| T0001 | 2401 | Existing portfolio task | Alex | — | open | 2026-07-22 | 2026-07-22 | — | — | conversation:2026-07-22#instruction-1 | — |' >> "$STUDIO/TASKS.md"
+printf '%s\n' "| T0001 | $PROJECT_ID | Existing portfolio task | Alex | — | open | 2026-07-22 | 2026-07-22 | — | — | conversation:2026-07-22#instruction-1 | — |" >> "$STUDIO/TASKS.md"
 if "$SCRIPT" task-mode "$STUDIO" project; then
   echo "populated portfolio register unexpectedly split" >&2
   exit 1
@@ -126,13 +192,70 @@ grep -Fq '| Task register | project |' "$STUDIO/STUDIO.md"
 [ -f "$PROJECT/TASKS.md" ]
 [ ! -f "$STUDIO/TASKS.md" ]
 
-"$SCRIPT" archive "$STUDIO" 2401
-grep -Fq '| 2401 | Museum Expansion | projects/2401-museum-expansion | archived |' "$STUDIO/STUDIO.md"
+awk -F'|' '
+  function trim(s){gsub(/^[ \t]+|[ \t]+$/, "", s); return s}
+  /<!-- projects:start -->/ {inside=1; print; next}
+  /<!-- projects:end -->/ {inside=0; print; next}
+  inside && trim($2)=="Project ID" {print "| Folder | Status | Project | Project ID | Opened | Type | Code | Client |"; next}
+  inside && trim($2)=="---" {print "|---|---|---|---|---|---|---|---|"; next}
+  inside && /^\|/ {print "| " trim($8) " | " trim($7) " | " trim($3) " | " trim($2) " | " trim($9) " | " trim($6) " | " trim($5) " | " trim($4) " |"; next}
+  {print}
+' "$STUDIO/STUDIO.md" > "$STUDIO/STUDIO.reordered"
+mv "$STUDIO/STUDIO.reordered" "$STUDIO/STUDIO.md"
 
-mkdir -p "$STUDIO/projects/2402-library"
-printf '# Project — Library\n\n| Field | Value |\n|---|---|\n| Format version | 2 |\n' > "$STUDIO/projects/2402-library/PROJECT.md"
+for project_status in prospective active on-hold lost withdrawn completed archived; do
+  "$SCRIPT" set-status "$STUDIO" "$PROJECT_ID" "$project_status"
+  grep -Fq "| $PROJECT_ID | Museum Expansion | Smith Institution | SMI | client | $project_status | projects/$PROJECT_ID |" "$STUDIO/STUDIO.md"
+  grep -Fq "| Status | $project_status | studio status update |" "$PROJECT/PROJECT.md"
+done
+
+# The legacy archive command remains a narrow alias for the general status mutation.
+"$SCRIPT" set-status "$STUDIO" "$PROJECT_ID" active
+"$SCRIPT" archive "$STUDIO" "$PROJECT_ID"
+grep -Fq "| $PROJECT_ID | Museum Expansion | Smith Institution | SMI | client | archived | projects/$PROJECT_ID |" "$STUDIO/STUDIO.md"
+grep -Fq '| Status | archived | studio status update |' "$PROJECT/PROJECT.md"
+
+cp "$STUDIO/STUDIO.md" "$ROOT/status-studio-before.md"
+cp "$PROJECT/PROJECT.md" "$ROOT/status-project-before.md"
+if "$SCRIPT" set-status "$STUDIO" "$PROJECT_ID" invalid; then
+  echo "invalid project status unexpectedly accepted" >&2
+  exit 1
+fi
+cmp -s "$STUDIO/STUDIO.md" "$ROOT/status-studio-before.md"
+cmp -s "$PROJECT/PROJECT.md" "$ROOT/status-project-before.md"
+
+if ARCH_STUDIO_FAIL_AT=status-after-manifest "$SCRIPT" set-status "$STUDIO" "$PROJECT_ID" active; then
+  echo "injected project status failure unexpectedly succeeded" >&2
+  exit 1
+fi
+cmp -s "$STUDIO/STUDIO.md" "$ROOT/status-studio-before.md"
+cmp -s "$PROJECT/PROJECT.md" "$ROOT/status-project-before.md"
+if find "$STUDIO" -mindepth 1 -maxdepth 1 -type d -name '.project-status-transaction.*' -print | grep -q .; then
+  echo "successful status rollback left a transaction snapshot" >&2
+  exit 1
+fi
+
+# A failed restore is reported and keeps its snapshots for manual recovery.
+set +e
+status_restore_output=$(ARCH_STUDIO_FAIL_AT=status-after-manifest ARCH_STUDIO_FAIL_RESTORE_AT=status-project "$SCRIPT" set-status "$STUDIO" "$PROJECT_ID" active 2>&1)
+status_restore_rc=$?
+set -e
+[ "$status_restore_rc" -ne 0 ] || { echo "injected status restore failure unexpectedly succeeded" >&2; exit 1; }
+printf '%s\n' "$status_restore_output" | grep -Fq 'rollback restore failed: status-project'
+printf '%s\n' "$status_restore_output" | grep -Fq 'rollback incomplete; transaction preserved:'
+status_transaction=$(find "$STUDIO" -mindepth 1 -maxdepth 1 -type d -name '.project-status-transaction.*' -print)
+[ "$(printf '%s\n' "$status_transaction" | sed '/^$/d' | wc -l | tr -d ' ')" -eq 1 ]
+cmp -s "$status_transaction/STUDIO.md" "$ROOT/status-studio-before.md"
+cmp -s "$status_transaction/PROJECT.md" "$ROOT/status-project-before.md"
+grep -Fq $'status-project\t' "$status_transaction/ROLLBACK-FAILURES.tsv"
+cp "$status_transaction/STUDIO.md" "$STUDIO/STUDIO.md"
+cp "$status_transaction/PROJECT.md" "$PROJECT/PROJECT.md"
+rm -rf "$status_transaction"
+
+UNREGISTERED_ID=2026-08-NYC-LIBRARY
+skills/project/scripts/project-workspace.sh init "$STUDIO/projects/$UNREGISTERED_ID" Library "$UNREGISTERED_ID" client prospective NYC "New York City" >/dev/null
 STATUS=$("$SCRIPT" status "$STUDIO")
-printf '%s' "$STATUS" | grep -q 'unregistered: projects/2402-library'
+printf '%s' "$STATUS" | grep -q "unregistered: projects/$UNREGISTERED_ID"
 printf '%s' "$STATUS" | grep -q 'connectors: empty-reserved'
 printf '%s' "$STATUS" | grep -q 'tasks: project'
 
@@ -165,20 +288,19 @@ if "$SCRIPT" init / "Unsafe" "metric" "No default" "No default" "No default"; th
   exit 1
 fi
 
-# These two valid paths collided under the retired slash-to-underscore backup
-# name. An injected failure must restore each distinct snapshot.
+# An injected task-mode failure must restore every distinct project snapshot.
 COLLISION_STUDIO="$ROOT/collision-studio"
 "$SCRIPT" init "$COLLISION_STUDIO" "Collision Studio" metric US NY NYC >/dev/null
-mkdir -p "$COLLISION_STUDIO/projects/alpha_beta" "$COLLISION_STUDIO/projects/alpha/beta"
-for spec in 'one projects/alpha_beta' 'two projects/alpha/beta'; do
+for spec in '2026-08-ONE-ALPHA projects/2026-08-ONE-ALPHA' '2026-08-TWO-BETA projects/2026-08-TWO-BETA'; do
   id=${spec%% *}; path=${spec#* }
-  printf '# Project\n\n| Field | Value |\n|---|---|\n| Format version | 2 |\n| Project ID | %s |\n' "$id" > "$COLLISION_STUDIO/$path/PROJECT.md"
+  code=$(printf '%s' "$id" | cut -d- -f3)
+  skills/project/scripts/project-workspace.sh init "$COLLISION_STUDIO/$path" "$id" "$id" client active "$code" "$id Client" >/dev/null
   cp skills/project/templates/TASKS.md "$COLLISION_STUDIO/$path/TASKS.md"
   printf '<!-- %s -->\n' "$id" >> "$COLLISION_STUDIO/$path/TASKS.md"
   "$SCRIPT" register "$COLLISION_STUDIO" "$id" "$id" "$path" >/dev/null
 done
 ARCH_STUDIO_FAIL_AT=after-manifest "$SCRIPT" task-mode "$COLLISION_STUDIO" portfolio && exit 1
-grep -Fq '<!-- one -->' "$COLLISION_STUDIO/projects/alpha_beta/TASKS.md"
-grep -Fq '<!-- two -->' "$COLLISION_STUDIO/projects/alpha/beta/TASKS.md"
+grep -Fq '<!-- 2026-08-ONE-ALPHA -->' "$COLLISION_STUDIO/projects/2026-08-ONE-ALPHA/TASKS.md"
+grep -Fq '<!-- 2026-08-TWO-BETA -->' "$COLLISION_STUDIO/projects/2026-08-TWO-BETA/TASKS.md"
 
-echo "✓ studio helper creates configured workspaces, reports connector state read-only, registers, archives, and refuses collisions"
+echo "✓ studio helper owns the section-bounded, header-keyed v3 project registry"

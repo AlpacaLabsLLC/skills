@@ -18,6 +18,8 @@ allowed-tools:
 
 Takes EPD data, GWP limits, or a materials list and generates CSI-formatted specification sections that require Environmental Product Declarations and set maximum Global Warming Potential thresholds. Output follows the same three-part CSI SectionFormat used by `/as:spec-writer`.
 
+For neutral terminology, consult `<plugin-root>/skills/architecture-knowledge/references/` as terminology context only. It is not record authority, a mutation path, permission, or gate; `/as:epd-to-spec` remains responsible for its specification output.
+
 EPD fields follow [`schema/epd-schema.md`](../../schema/epd-schema.md). Accept pasted structured values, direct handoffs from `/as:epd-parser` or `/as:epd-compare`, or a validated project-local `epd-library.csv`; do not require a library.
 
 ## Project context
