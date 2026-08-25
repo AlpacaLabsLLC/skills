@@ -22,7 +22,11 @@
 
 Firm-created skills remain in the user-owned studio workspace, outside the installed plugin cache. They can stay private to a firm or project, or be developed for contribution back to the open-source project.
 
-**One plugin**—`as` v1.4.3—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+**One plugin**—`as` v1.4.4—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+
+## What’s new in 1.4.4
+
+A maintenance hotfix for Claude Code hook enforcement. Missing JSON decoders and malformed hook payloads now fail open, so ordinary Bash, Write, and Edit operations continue; confirmed malformed CSI sections and missing required disclaimers still block. Upgrading from 1.4.3 requires nothing.
 
 ## What’s new in 1.4.3
 

@@ -52,10 +52,13 @@ grep -q '^### Project Records$' "$README"
 [ ! -d skills/decision ]
 
 plugin_version="$(python3 -c 'import json; print(json.load(open(".claude-plugin/plugin.json"))["version"])')"
+codex_plugin_version="$(python3 -c 'import json; print(json.load(open(".codex-plugin/plugin.json"))["version"])')"
 market_version="$(python3 -c 'import json; print(json.load(open(".claude-plugin/marketplace.json"))["metadata"]["version"])')"
-[ "$plugin_version" = "1.4.3" ]
+[ "$plugin_version" = "1.4.4" ]
+[ "$codex_plugin_version" = "$plugin_version" ]
 [ "$market_version" = "$plugin_version" ]
 grep -q '^## \[Unreleased\]$' CHANGELOG.md
+grep -q '^## \[1.4.4\] - 2026-08-25$' CHANGELOG.md
 grep -q '^## \[1.4.1\] - 2026-07-29$' CHANGELOG.md
 grep -q '^## \[1.4.0\] - 2026-07-26$' CHANGELOG.md
 

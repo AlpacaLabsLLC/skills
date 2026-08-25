@@ -18,8 +18,8 @@
 INPUT=$(cat)
 if command -v jq >/dev/null 2>&1; then
   if ! COMMAND=$(printf '%s' "$INPUT" | jq -er '.tool_input.command | strings' 2>/dev/null); then
-    printf 'Architecture Studio could not decode the Bash hook payload, so the pre-commit specification check stopped safely. Retry the command or verify the Claude Code hook configuration.\n' >&2
-    exit 2
+    printf 'Architecture Studio could not decode the Bash hook payload; allowing the command without the pre-commit specification check.\n' >&2
+    exit 0
   fi
 elif command -v python3 >/dev/null 2>&1; then
   if ! COMMAND=$(printf '%s' "$INPUT" | python3 -c 'import json,sys
@@ -31,12 +31,12 @@ try:
 except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
     print(f"invalid hook payload: {exc}", file=sys.stderr)
     raise SystemExit(2)' 2>/dev/null); then
-    printf 'Architecture Studio could not decode the Bash hook payload, so the pre-commit specification check stopped safely. Retry the command or verify the Claude Code hook configuration.\n' >&2
-    exit 2
+    printf 'Architecture Studio could not decode the Bash hook payload; allowing the command without the pre-commit specification check.\n' >&2
+    exit 0
   fi
 else
-  printf 'Architecture Studio needs jq or Python 3 to decode Bash hook payloads. The pre-commit specification check stopped safely; install one decoder and retry.\n' >&2
-  exit 2
+  printf 'Architecture Studio needs jq or Python 3 to decode Bash hook payloads; allowing the command without the pre-commit specification check.\n' >&2
+  exit 0
 fi
 
 GIT_COMMIT_RE='(^|[;&|[:space:]])git[[:space:]]+([^;&|]*[[:space:]])?commit([[:space:]]|$)'
