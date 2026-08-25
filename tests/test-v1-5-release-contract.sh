@@ -10,7 +10,7 @@ from pathlib import Path
 plugin = json.loads(Path('.claude-plugin/plugin.json').read_text())
 codex_plugin = json.loads(Path('.codex-plugin/plugin.json').read_text())
 marketplace = json.loads(Path('.claude-plugin/marketplace.json').read_text())
-assert plugin['version'] == '1.4.3'
+assert plugin['version'] == '1.5.0'
 assert codex_plugin['version'] == plugin['version']
 assert marketplace['metadata']['version'] == plugin['version']
 assert plugin['description'].startswith('Architecture Studio —')
@@ -18,13 +18,15 @@ assert marketplace['plugins'][0]['description'].startswith('Architecture Studio 
 PY
 
 grep -q '^## \[Unreleased\]$' CHANGELOG.md
+grep -q '^## \[1\.5\.0\] - 2026-08-28$' CHANGELOG.md
 ! grep -q '^## \[1\.4\.4\]' CHANGELOG.md
 grep -q '^## \[1\.4\.3\] - 2026-08-13$' CHANGELOG.md
 grep -q '^## \[1\.4\.2\] - 2026-08-10$' CHANGELOG.md
 grep -q '^## \[1\.4\.1\] - 2026-07-29$' CHANGELOG.md
 grep -q '^## \[1\.4\.0\] - 2026-07-26$' CHANGELOG.md
 grep -q 'sequential `major.minor.patch` release scheme' CHANGELOG.md
-grep -q '^\[Unreleased\]: .*compare/v1\.4\.3\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[Unreleased\]: .*compare/v1\.5\.0\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[1\.5\.0\]: .*compare/v1\.4\.3\.\.\.v1\.5\.0$' CHANGELOG.md
 ! grep -q '^\[1\.4\.4\]:' CHANGELOG.md
 grep -q '^\[1\.4\.3\]: .*releases/tag/v1\.4\.3$' CHANGELOG.md
 grep -q '^\[1\.4\.2\]: .*releases/tag/v1\.4\.2$' CHANGELOG.md
@@ -53,12 +55,13 @@ grep -q '/as:project migrate' README.md
 grep -q 'welcome and update-check preferences remain in place' README.md
 [ ! -e agents/README.md ]
 [ "$(find agents -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')" = 7 ]
-grep -q '4 hooks (handlers across 3 events)' README.md
-grep -Fq '**One plugin**—`as` v1.4.3' README.md
-grep -q '^## Unreleased changes$' README.md
+grep -Fq 'repository contains **5 hooks**' README.md
+grep -Fq 'Codex loads one ambient `SessionStart` hook' README.md
+grep -Fq '**One plugin**—`as` v1.5.0' README.md
+grep -q '^## What.s new in 1\.5\.0$' README.md
 ! grep -q '^## What.s new in 1\.4\.4$' README.md
 grep -qi 'format 2.*format 3.*breaking\|breaking.*format 2.*format 3' README.md
-grep -qi 'next minor' README.md
+grep -q 'Version 1\.5\.0' README.md
 ! rg -n '1\.4\.4|v1\.4\.4' .claude-plugin .codex-plugin README.md CHANGELOG.md docs/firm-deployment.md
 
 python3 - <<'PY'
@@ -136,13 +139,14 @@ python3 - <<'PY'
 from pathlib import Path
 
 text = Path("CHANGELOG.md").read_text()
-unreleased = text.split("## [Unreleased]", 1)[1].split("## [1.4.3]", 1)[0]
-assert "### Breaking" in unreleased
-assert "Architecture knowledge" in unreleased
-assert "Universal project and commercial records" in unreleased
-assert "format 2" in unreleased and "format 3" in unreleased
-assert "next minor" in unreleased.lower()
-assert "not patch-compatible" in unreleased
+release = text.split("## [1.5.0] - 2026-08-28", 1)[1].split("## [1.4.3]", 1)[0]
+assert "### Breaking" in release
+assert "Architecture knowledge" in release
+assert "Universal project and commercial records" in release
+assert "Commercial workflows" in release
+assert "Codex session ambience" in release
+assert "format 2" in release and "format 3" in release
+assert "not patch-compatible" in release
 PY
 
 python3 - <<'PY'
@@ -183,4 +187,4 @@ PY
 ! grep -Eqi 'download (the )?`?skills/?`?|copy.*repository.*skills/' README.md
 ! rg -n '2\.0\.0|2\.1\.0' .claude-plugin .codex-plugin README.md CHANGELOG.md skills hooks
 
-echo "✓ v1.4 release contract documents its local data, feedback, update, connector, and migration boundaries"
+echo "✓ v1.5 release contract documents its local data, feedback, update, connector, and migration boundaries"

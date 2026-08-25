@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 
 python3 - <<'PY'
 import json
+import subprocess
 from pathlib import Path
 
 claude = json.loads(Path('.claude-plugin/plugin.json').read_text(encoding='utf-8'))
@@ -15,7 +16,43 @@ codex_marketplace = json.loads(Path('.agents/plugins/marketplace.json').read_tex
 assert codex['name'] == claude['name'] == 'as'
 assert codex['version'] == claude['version'] == claude_marketplace['metadata']['version']
 assert codex['skills'] == './skills/'
+assert codex['hooks'] == './hooks/codex-hooks.json'
 assert codex['repository'] == 'https://github.com/AlpacaLabsLLC/skills-for-architects'
+
+codex_hooks = json.loads(Path('hooks/codex-hooks.json').read_text(encoding='utf-8'))['hooks']
+assert set(codex_hooks) == {'SessionStart'}
+session_start = codex_hooks['SessionStart']
+assert len(session_start) == 1
+assert set(session_start[0]['matcher'].split('|')) == {'startup', 'resume', 'clear', 'compact'}
+handlers = session_start[0]['hooks']
+assert handlers == [{
+    'type': 'command',
+    'command': '/bin/sh "${PLUGIN_ROOT}/hooks/session-start-ambient.sh"',
+    'timeout': 2,
+}]
+
+expected_ambient_context = (
+    '[Architecture Studio] Use Architecture Studio as the default operating layer for '
+    'architecture/AEC and firm/project work. Choose the narrowest relevant AS skill and '
+    'preserve project governance. If no AS skill owns the task, retain relevant AS context '
+    'and use the host-native capability. Ignore this for unrelated work, when the user opts '
+    'out, or when the user explicitly chooses another workflow.'
+)
+ambient = subprocess.run(
+    ['/bin/sh', 'hooks/session-start-ambient.sh'],
+    input='{"hook_event_name":"SessionStart","source":"startup"}',
+    text=True,
+    capture_output=True,
+    check=True,
+)
+ambient_output = json.loads(ambient.stdout)
+assert ambient_output == {
+    'hookSpecificOutput': {
+        'hookEventName': 'SessionStart',
+        'additionalContext': expected_ambient_context,
+    },
+}
+assert ambient.stderr == ''
 
 interface = codex['interface']
 for field in ('displayName', 'shortDescription', 'longDescription', 'developerName', 'category', 'capabilities', 'websiteURL', 'defaultPrompt'):

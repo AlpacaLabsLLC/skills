@@ -1,6 +1,6 @@
 {
   "name": "as",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "Architecture Studio — governed AEC skills and portable studio workflows for Codex and Claude Code: initialize a studio workspace, create registered projects, maintain linked project records, or route work across NYC due diligence, site planning, zoning, programming, specifications, sustainability, FF&E, materials research, and presentations.",
   "author": {
     "name": "ALPA",

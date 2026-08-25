@@ -22,13 +22,13 @@
 
 Firm-created skills remain in the user-owned studio workspace, outside the installed plugin cache. They can stay private to a firm or project, or be developed for contribution back to the open-source project.
 
-**One plugin**—`as` v1.4.3—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+**One plugin**—`as` v1.5.0—with a shared skill catalog for Codex and Claude Code. The repository contains **5 hooks**: Claude Code loads four handlers across three events, while Codex loads one ambient `SessionStart` hook. Claude Code also loads **7 agents** and **7 rules**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
 
-## Unreleased changes
+## What’s new in 1.5.0
 
 This branch adds a read-only, source-backed architecture-knowledge skill for shared US professional-practice vocabulary. Ask `$architecture-knowledge` on Codex or `/as:architecture-knowledge` on Claude Code about terms such as “CD set,” AIA document relationships, or CSI/NCS context. It gives concise orientation with sources and boundaries rather than contract text, legal interpretation, or project-specific conclusions.
 
-The workspace migration from format 2 to format 3 is breaking, not a compatible patch update. It is planned for the next minor release only after dogfood validates migration and rollback behavior; no final next-minor version has been assigned. The new format gives universal projects durable identity and moves commercial records into their owning project.
+The workspace migration from format 2 to format 3 is breaking, not a compatible patch update. Version 1.5.0 gives universal projects durable identity and moves commercial records into their owning project; release remains gated on dogfood validation of migration and rollback behavior.
 
 ## What’s new in 1.4.3
 

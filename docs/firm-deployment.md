@@ -1,6 +1,6 @@
 # Firm deployment guide
 
-Architecture Studio v1.4.3 is a local-first, one-writer pilot framework for Codex and Claude Code, not a hosted governance platform. A firm should assign a technology owner before distributing it and keep its studio workspace in firm-controlled storage.
+Architecture Studio v1.5.0 is a local-first, one-writer pilot framework for Codex and Claude Code, not a hosted governance platform. A firm should assign a technology owner before distributing it and keep its studio workspace in firm-controlled storage.
 
 ## Pilot ownership
 

@@ -1,11 +1,12 @@
 # Hooks
 
-Hooks are event-driven automations that run automatically during Claude Code sessions. Unlike skills (invoked manually) and rules (reference documents), hooks fire on lifecycle events — after a file is written or edited, before a commit, etc.
+Hooks are event-driven automations that run automatically during Codex or Claude Code sessions. Unlike skills (invoked manually) and rules (reference documents), hooks fire on lifecycle events — after a file is written or edited, before a commit, etc.
 
 ## Available Hooks
 
 | Hook | Event | What it does |
 |------|-------|-------------|
+| [session-start-ambient](./session-start-ambient.sh) | Codex `SessionStart` | Adds compact Architecture Studio routing context to root sessions without reading or writing state |
 | [session-start-welcome](./session-start-welcome.sh) | First session after install | Displays a short `/as:studio` and `/as:learn` discovery notice, then records that it was emitted |
 | [post-write-disclaimer-check](./post-write-disclaimer-check.sh) | After Write or Edit | Flags a regulatory output (zoning, occupancy, code analysis) that is missing the professional disclaimer |
 | [pre-commit-spec-lint](./pre-commit-spec-lint.sh) | Before git commit | Scans staged markdown files for malformed CSI section numbers and blocks the commit until they're fixed |
@@ -13,7 +14,7 @@ Hooks are event-driven automations that run automatically during Claude Code ses
 
 ## Installation
 
-None. The hooks ship with the Architecture Studio plugin (`as`) via [`hooks.json`](./hooks.json) and register automatically when the plugin is enabled:
+None. Claude Code hooks ship via [`hooks.json`](./hooks.json); the Codex-only ambient hook ships via [`codex-hooks.json`](./codex-hooks.json). Both register with their respective plugin package when enabled.
 
 ```bash
 claude plugin install as@skills-for-architects

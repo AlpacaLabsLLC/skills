@@ -6,13 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-08-28
+
 ### Breaking
 
-- **Universal project and commercial records.** The next minor release introduces an explicit workspace migration from format 2 to format 3, gives every internal or client project one durable identity, and keeps proposals, agreement context, and invoice ledgers inside that project. This migration is not patch-compatible and will not receive a final version until dogfood validates migration and rollback behavior. Status and scope context remain advisory and user-directed.
+- **Universal project and commercial records.** Version 1.5.0 introduces an explicit workspace migration from format 2 to format 3, gives every internal or client project one durable identity, and keeps proposals, agreement context, and invoice ledgers inside that project. This migration is not patch-compatible and remains release-gated on dogfood validation of migration and rollback behavior. Status and scope context remain advisory and user-directed.
 
 ### Added
 
 - **Architecture knowledge.** Added the read-only `$architecture-knowledge` / `/as:architecture-knowledge` skill with a compact, source-backed US professional-practice corpus for phases, CD terminology, roles, delivery methods, high-level AIA family relationships, and CSI/NCS context. It supplies original summaries and source links only; it does not reproduce licensed material, select forms, interpret clauses, or decide project obligations.
+- **Commercial workflows.** Added project-owned proposal, agreement, SOW, amendment, and invoice workflows with previewed mutations, issued-record preservation, advisory scope checks, billing-period gap detection, and running Maximum Total Cost context.
+- **Codex session ambience.** Added one stateless, local `SessionStart` hook that supplies compact Architecture Studio routing context for Codex on macOS. It performs no reads, writes, networking, installation, or persistent-state changes, and remains subject to Codex's native hook-trust review.
 
 ### Changed
 
@@ -254,7 +258,8 @@ First public release.
 - **3 hooks** — post-write disclaimer check, post-output metadata, pre-commit spec lint.
 - Marketplace install: `claude plugin marketplace add AlpacaLabsLLC/skills-for-architects`.
 
-[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.3...HEAD
+[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.3...v1.5.0
 [1.4.3]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.3
 [1.4.2]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.2
 [1.4.1]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.1

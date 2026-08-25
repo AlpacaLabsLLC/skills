@@ -1,6 +1,6 @@
 # Universal projects and commercial records
 
-**Status:** proposed · **Target:** undecided, after the current release · **Author:** ALPA · **Revised:** 2026-08-19
+**Status:** implemented · **Target:** v1.5.0 · **Author:** ALPA · **Revised:** 2026-08-22
 
 Architecture Studio will use one durable entity for every bounded body of studio work: the **project**. A project begins when the studio starts tracking meaningful work, whether that work is internal, prospective, or commissioned. It keeps one identity for its entire life.
 

@@ -106,7 +106,7 @@ If a single change touches both plugin behavior and marketplace-level state, bum
 |---|---|
 | `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json` | The three `version` fields |
 | `CHANGELOG.md` | The `## [X.Y.Z] - YYYY-MM-DD` heading **and** both link refs at the bottom — the `[Unreleased]: …compare/vX.Y.Z...HEAD` target moves to the new tag, and a `[X.Y.Z]: …releases/tag/vX.Y.Z` line is added |
-| `tests/test-v1-4-release-contract.sh` | Asserts the plugin and marketplace versions, the CHANGELOG headings, and the exact compare-link target. **Fails until updated.** |
+| `tests/test-v1-5-release-contract.sh` | Asserts the plugin and marketplace versions, the CHANGELOG headings, and the exact compare-link target. **Fails until updated.** |
 | `tests/test-project-records-integration.sh` | Asserts the installed plugin version. **Fails until updated.** |
 | `README.md` | The `as vX.Y.Z` identity line, and a "What's new" section for anything user-facing |
 | `docs/firm-deployment.md` | Opens by naming the current version |
