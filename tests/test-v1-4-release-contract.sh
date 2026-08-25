@@ -20,6 +20,7 @@ PY
 
 grep -q '^## \[Unreleased\]$' CHANGELOG.md
 grep -q '^## \[1\.4\.4\] - 2026-08-25$' CHANGELOG.md
+grep -Fq 'Thanks to [@Namine4](https://github.com/Namine4) for the original report and [@grigor-p](https://github.com/grigor-p) for extending the diagnosis and confirming the workaround.' CHANGELOG.md
 grep -q '^## \[1\.4\.3\] - 2026-08-13$' CHANGELOG.md
 grep -q '^## \[1\.4\.2\] - 2026-08-10$' CHANGELOG.md
 grep -q '^## \[1\.4\.1\] - 2026-07-29$' CHANGELOG.md
