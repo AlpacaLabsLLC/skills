@@ -30,6 +30,8 @@ A defect noticed but not fixed becomes an issue in the same session. Work turns 
 
 Read [PATTERNS.md](./PATTERNS.md) for naming, layout, dispatcher behavior, versioning, and lessons from prior defects.
 
+Maintainers preparing a release use the [release checklist](./docs/release-checklist.md), including its role-specific contribution-credit audit for issue reporters, investigators, implementers, and substantive reviewers.
+
 Do not include client data, firm secrets, credentials, or proprietary procedures in a pull request. Codex invokes catalog and private skills as `$name`; Claude Code uses namespaced catalog commands such as `/as:site-history` and local `/{name}` commands for private workspace skills.
 
 ## Documentation ownership

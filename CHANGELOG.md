@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - **CSI edition clarity.** The specification writer retains its limited MasterFormat 2020 compatibility mapping while shared terminology records current CSI edition context separately and requires project-edition verification for applied work.
+- **Release governance.** Added a canonical release checklist covering scope and tracker disposition, version surfaces, verification, immutable tagging, post-release correction, and role-specific credit for issue reporters, investigators, workaround confirmers, implementers, and substantive reviewers.
 
 ## [1.4.3] - 2026-08-13
 

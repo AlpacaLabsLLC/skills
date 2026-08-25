@@ -84,6 +84,8 @@ Rules are cross-cutting conventions that apply to multiple skills. Examples: voi
 
 Two version fields, two scopes — both pinned, both bumped on every shipped change.
 
+Use the [operational release checklist](./docs/release-checklist.md) for scope, tracker disposition, contribution credit, verification, publication, and post-release correction. This section remains authoritative for versioning invariants.
+
 | Field | Where | Bumps when |
 |---|---|---|
 | `.claude-plugin/plugin.json` `version` | Claude package | The plugin's behavior changes — new skill, edited skill body, MCP tool added, etc. |

@@ -38,6 +38,15 @@ grep -q 'epd-library.csv' README.md
 grep -q 'empty `mcpServers` object' README.md
 grep -q 'user-exported CSV' PATTERNS.md
 grep -q 'SIF is not a persistent schedule source' PATTERNS.md
+grep -Fq '[operational release checklist](./docs/release-checklist.md)' PATTERNS.md
+grep -Fq '[release checklist](./docs/release-checklist.md)' CONTRIBUTING.md
+[ -f docs/release-checklist.md ]
+grep -q '^# Architecture Studio Release Checklist$' docs/release-checklist.md
+grep -q '^## Contribution-credit audit$' docs/release-checklist.md
+grep -Fq 'original issue author' docs/release-checklist.md
+grep -Fq 'reproduction or diagnosis' docs/release-checklist.md
+grep -Fq 'confirmed a workaround' docs/release-checklist.md
+grep -Fq 'Do not move, delete, or recreate a published tag' docs/release-checklist.md
 grep -q '/as:master-schedule.*product-library.csv' skills/tool-catalog/SKILL.md
 grep -q '/as:studio-feedback' skills/tool-catalog/SKILL.md
 grep -q '/as:architecture-knowledge' skills/tool-catalog/SKILL.md
@@ -63,6 +72,7 @@ grep -q '^## What.s new in 1\.5\.0$' README.md
 ! grep -q '^## What.s new in 1\.4\.4$' README.md
 grep -qi 'format 2.*format 3.*breaking\|breaking.*format 2.*format 3' README.md
 grep -q 'Version 1\.5\.0' README.md
+grep -Fq '**Release governance.** Added a canonical release checklist' CHANGELOG.md
 ! rg -n '1\.4\.4|v1\.4\.4' .claude-plugin .codex-plugin README.md CHANGELOG.md docs/firm-deployment.md
 
 python3 - <<'PY'
