@@ -50,7 +50,7 @@ grep -Fq 'Do not move, delete, or recreate a published tag' docs/release-checkli
 grep -q '/as:master-schedule.*product-library.csv' skills/tool-catalog/SKILL.md
 grep -q '/as:studio-feedback' skills/tool-catalog/SKILL.md
 grep -q '/as:architecture-knowledge' skills/tool-catalog/SKILL.md
-grep -q '\[\`/as:architecture-knowledge\`\](./architecture-knowledge)' skills/README.md
+grep -Fq '[`/as:architecture-knowledge`](./architecture-knowledge)' skills/README.md
 grep -q 'Background update checking is disabled by default' README.md
 grep -q 'Opening the prefilled GitHub URL sends' README.md
 grep -q '^### Three ways to use Architecture Studio$' README.md
