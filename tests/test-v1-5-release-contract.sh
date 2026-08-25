@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+trap 'printf "release contract failed at line %s: %s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
 
 cd "$(dirname "$0")/.."
 
