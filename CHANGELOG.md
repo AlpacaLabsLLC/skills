@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
-- Claude Code hook payload decoding now fails open when neither `jq` nor Python is available or when a payload is malformed. The pre-commit CSI lint and post-write disclaimer check no longer block ordinary Bash, Write, or Edit operations in those conditions; confirmed malformed CSI sections and missing required disclaimers still block. Thanks to [@grigor-p](https://github.com/grigor-p) for the report and diagnosis.
+- Claude Code hook payload decoding now fails open when neither `jq` nor Python is available or when a payload is malformed. The pre-commit CSI lint and post-write disclaimer check no longer block ordinary Bash, Write, or Edit operations in those conditions; confirmed malformed CSI sections and missing required disclaimers still block. Thanks to [@Namine4](https://github.com/Namine4) for the original report and [@grigor-p](https://github.com/grigor-p) for extending the diagnosis and confirming the workaround.
 
 ## [1.4.3] - 2026-08-13
 
