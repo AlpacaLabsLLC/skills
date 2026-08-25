@@ -49,6 +49,6 @@ grep -q 'refuses a second promotion' "$SKILL"
 grep -q 'Read `agreement/AGREEMENT.md` before committing to new work; flag out-of-scope requests.' "$SKILL"
 grep -q 'never recompute them' "$SKILL"
 grep -Fq '<plugin-root>/skills/invoice/scripts/invoice-ledger.sh status <project-root>' "$SKILL"
-! grep -q '~/' "$SKILL"
+! grep -q '~[/]' "$SKILL"
 
 echo "✓ /as:agreement cites protected proposal terms as optional context and keeps scope verdicts advisory"

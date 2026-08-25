@@ -55,6 +55,6 @@ grep -q '## History' "$TEMPLATE"
 grep -q 'never from activity signals' "$TEMPLATE"
 
 # No absolute home paths in the body
-! grep -q '~/' "$SKILL"
+! grep -q '~[/]' "$SKILL"
 
 echo "✓ /as:invoice keeps an append-only, activity-firewalled ledger with script-computed balances"

@@ -101,7 +101,7 @@ grep -qF "$CAUTION" "$SKILL"
 grep -qF "$CAUTION" "$TC"
 grep -qF "$CAUTION" "$TEMPLATE"
 
-if grep -q '~/' "$SKILL"; then
+if grep -q '~[/]' "$SKILL"; then
   echo "home-relative path remains in $SKILL"
   exit 1
 fi
