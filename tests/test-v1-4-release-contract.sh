@@ -54,7 +54,7 @@ grep -q 'welcome and update-check preferences remain in place' README.md
 [ "$(find agents -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')" = 7 ]
 grep -q '4 hooks (handlers across 3 events)' README.md
 grep -q '`as` v1\.4\.4' README.md
-grep -q '^## What’s new in 1\.4\.4$' README.md
+grep -q "^## What’s new in 1\\.4\\.4$" README.md
 grep -q '^Architecture Studio v1\.4\.4 is' docs/firm-deployment.md
 [ -z "$(find docs/plans -maxdepth 1 -type f -name '*.md' -print 2>/dev/null)" ]
 
