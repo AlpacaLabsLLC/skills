@@ -8,20 +8,25 @@ import json
 from pathlib import Path
 
 plugin = json.loads(Path('.claude-plugin/plugin.json').read_text())
+codex_plugin = json.loads(Path('.codex-plugin/plugin.json').read_text())
 marketplace = json.loads(Path('.claude-plugin/marketplace.json').read_text())
-assert plugin['version'] == '1.4.3'
-assert marketplace['metadata']['version'] == '1.4.3'
+assert plugin['version'] == '1.4.4'
+assert codex_plugin['version'] == '1.4.4'
+assert marketplace['metadata']['version'] == '1.4.4'
 assert plugin['description'].startswith('Architecture Studio —')
+assert codex_plugin['description'].startswith('Architecture Studio —')
 assert marketplace['plugins'][0]['description'].startswith('Architecture Studio —')
 PY
 
 grep -q '^## \[Unreleased\]$' CHANGELOG.md
+grep -q '^## \[1\.4\.4\] - 2026-08-25$' CHANGELOG.md
 grep -q '^## \[1\.4\.3\] - 2026-08-13$' CHANGELOG.md
 grep -q '^## \[1\.4\.2\] - 2026-08-10$' CHANGELOG.md
 grep -q '^## \[1\.4\.1\] - 2026-07-29$' CHANGELOG.md
 grep -q '^## \[1\.4\.0\] - 2026-07-26$' CHANGELOG.md
 grep -q 'sequential `major.minor.patch` release scheme' CHANGELOG.md
-grep -q '^\[Unreleased\]: .*compare/v1\.4\.3\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[Unreleased\]: .*compare/v1\.4\.4\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[1\.4\.4\]: .*releases/tag/v1\.4\.4$' CHANGELOG.md
 grep -q '^\[1\.4\.3\]: .*releases/tag/v1\.4\.3$' CHANGELOG.md
 grep -q '^\[1\.4\.2\]: .*releases/tag/v1\.4\.2$' CHANGELOG.md
 grep -q '^\[1\.4\.1\]: .*releases/tag/v1\.4\.1$' CHANGELOG.md
@@ -48,6 +53,9 @@ grep -q 'welcome and update-check preferences remain in place' README.md
 [ ! -e agents/README.md ]
 [ "$(find agents -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')" = 7 ]
 grep -q '4 hooks (handlers across 3 events)' README.md
+grep -q '`as` v1\.4\.4' README.md
+grep -q '^## What’s new in 1\.4\.4$' README.md
+grep -q '^Architecture Studio v1\.4\.4 is' docs/firm-deployment.md
 [ -z "$(find docs/plans -maxdepth 1 -type f -name '*.md' -print 2>/dev/null)" ]
 
 python3 - <<'PY'
@@ -76,8 +84,11 @@ import json
 from pathlib import Path
 
 plugin = json.loads(Path(".claude-plugin/plugin.json").read_text())
+codex_plugin = json.loads(Path(".codex-plugin/plugin.json").read_text())
 marketplace = json.loads(Path(".claude-plugin/marketplace.json").read_text())
 assert plugin["name"] == "as"
+assert codex_plugin["name"] == "as"
+assert codex_plugin["version"] == plugin["version"]
 assert marketplace["name"] == "skills-for-architects"
 assert len(marketplace["plugins"]) == 1
 assert marketplace["plugins"][0]["name"] == "as"

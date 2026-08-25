@@ -23,7 +23,6 @@
 INPUT=$(cat)
 if command -v jq >/dev/null 2>&1; then
   if ! FILE_PATH=$(printf '%s' "$INPUT" | jq -er '.tool_input.file_path | strings' 2>/dev/null); then
-    printf '{"decision":"block","reason":"Architecture Studio could not decode the Write/Edit hook payload, so disclaimer enforcement stopped safely. Retry the file operation or verify the Claude Code hook configuration."}\n'
     exit 0
   fi
 elif command -v python3 >/dev/null 2>&1; then
@@ -36,11 +35,9 @@ try:
 except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
     print(f"invalid hook payload: {exc}", file=sys.stderr)
     raise SystemExit(2)' 2>/dev/null); then
-    printf '{"decision":"block","reason":"Architecture Studio could not decode the Write/Edit hook payload, so disclaimer enforcement stopped safely. Retry the file operation or verify the Claude Code hook configuration."}\n'
     exit 0
   fi
 else
-  printf '{"decision":"block","reason":"Architecture Studio needs jq or Python 3 to decode the Write/Edit hook payload. Disclaimer enforcement stopped safely; install one decoder and retry."}\n'
   exit 0
 fi
 

@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.4.4] - 2026-08-25
+
+### Fixed
+
+- Claude Code hook payload decoding now fails open when neither `jq` nor Python is available or when a payload is malformed. The pre-commit CSI lint and post-write disclaimer check no longer block ordinary Bash, Write, or Edit operations in those conditions; confirmed malformed CSI sections and missing required disclaimers still block. Thanks to [@grigor-p](https://github.com/grigor-p) for the report and diagnosis.
+
 ## [1.4.3] - 2026-08-13
 
 ### Fixed
@@ -242,7 +248,8 @@ First public release.
 - **3 hooks** — post-write disclaimer check, post-output metadata, pre-commit spec lint.
 - Marketplace install: `claude plugin marketplace add AlpacaLabsLLC/skills-for-architects`.
 
-[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.3...HEAD
+[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.4...HEAD
+[1.4.4]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.4
 [1.4.3]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.3
 [1.4.2]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.2
 [1.4.1]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.1
