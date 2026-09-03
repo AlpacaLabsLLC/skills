@@ -14,13 +14,14 @@ grep -q 'installed plugin cache is never a private-skill target' "$SKILL"
 grep -q 'Catalog detection has highest priority' "$SKILL"
 grep -q 'Do not let a nearer project silently override a resolved studio' "$SKILL"
 grep -q 'validate-skill.sh' "$SKILL"
+grep -q '<plugin-root>/assets/skill-maker-template/' "$SKILL"
 [ -x skills/skill-maker/scripts/validate-skill.sh ]
 
 ROOT=$(mktemp -d)
 trap 'rm -rf "$ROOT"' EXIT
 mkdir -p "$ROOT/example-skill"
-cp skills/skill-maker/templates/example-skill/SKILL.md "$ROOT/example-skill/SKILL.md"
-cp skills/skill-maker/templates/example-skill/README.md "$ROOT/example-skill/README.md"
+cp assets/skill-maker-template/SKILL.example.md "$ROOT/example-skill/SKILL.md"
+cp assets/skill-maker-template/README.md "$ROOT/example-skill/README.md"
 sed -i.bak 's/^name:.*/name: example-skill/' "$ROOT/example-skill/SKILL.md"
 rm -f "$ROOT/example-skill/SKILL.md.bak"
 bash skills/skill-maker/scripts/validate-skill.sh "$ROOT/example-skill"

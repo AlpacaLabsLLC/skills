@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.4.5] - 2026-09-03
+
+### Removed
+
+- `ascii-name` and `clean-downloads`, which 1.4.4 documented as commands even though they were course examples, are now non-installable source examples under `assets/learn-examples/`. Users who relied on either command can copy its example directory into their user-owned skills directory, rename `SKILL.example.md` to `SKILL.md`, and adapt it as a custom skill. This correction does not migrate or change project or studio data.
+
+### Fixed
+
+- Claude Desktop installation no longer rejects the plugin because of recursively discovered teaching and template manifests. The two distinct learning examples and the Skill Maker template now live under `assets/` with non-installable `SKILL.example.md` filenames; the course references the canonical `/as:tasklist` skill instead of bundling a second `tasklist`; and recursive lint coverage rejects misplaced installable manifests, malformed examples, duplicate example names, and canonical/example name overlap. Thanks to [@antonchitana](https://github.com/antonchitana) for the report, diagnosis, and verified workaround.
+
 ## [1.4.4] - 2026-08-25
 
 ### Fixed
@@ -248,7 +258,8 @@ First public release.
 - **3 hooks** — post-write disclaimer check, post-output metadata, pre-commit spec lint.
 - Marketplace install: `claude plugin marketplace add AlpacaLabsLLC/skills-for-architects`.
 
-[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.4...HEAD
+[Unreleased]: https://github.com/AlpacaLabsLLC/skills-for-architects/compare/v1.4.5...HEAD
+[1.4.5]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.5
 [1.4.4]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.4
 [1.4.3]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.3
 [1.4.2]: https://github.com/AlpacaLabsLLC/skills-for-architects/releases/tag/v1.4.2

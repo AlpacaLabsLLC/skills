@@ -23,7 +23,7 @@ On Claude Code, the first-session notice points to `/as:studio` or `/as:learn`. 
 - **Module 6 closes with real work** — a source-check drill (trace claims to their lines, then ask about what the document *doesn't* say), a short professional checklist (firm policy, low-stakes, work on a copy — recommended, never imposed), and one real task end to end. Data privacy is taught back in Module 2, where consent is taught. The learner can quit `$learn` or `/as:learn` at any moment, no questions asked.
 - The sandbox files are engineered: the CSV has a duplicate row, mixed units, and a TBD; `IMG_4032.txt` is a mislabeled voice memo; `Scan_001.txt` is a regulatory excerpt with enough specifics to make an invented claim plausible — and deliberate silences to plant it in.
 
-An advanced track — bigger jobs, plan mode, subagents, skill authorship in depth, running the office skill library — is planned as a follow-on course; the `examples/` skills below are its precedent material.
+An advanced track — bigger jobs, plan mode, subagents, skill authorship in depth, running the office skill library — is planned as a follow-on course. Its precedent material keeps distinct teaching examples outside the installable `skills/` tree and points task-management lessons to the canonical `/as:tasklist` implementation instead of duplicating it.
 
 ## Bundled material
 
@@ -31,4 +31,5 @@ An advanced track — bigger jobs, plan mode, subagents, skill authorship in dep
 |-----------|---------|----------|
 | `sandbox/` | Modules 1–6 | The fictional Greenpoint Museum of Art — six deliberately messy files with engineered flaws |
 | `templates/` | Module 3 | `office-CLAUDE.md`, copied as `AGENTS.md` on Codex or `CLAUDE.md` on Claude Code |
-| `examples/` | Advanced track (planned) | Three finished skills to study and modify; invoke them as `$ascii-name`, `$clean-downloads`, `$tasklist` on Codex or `/ascii-name`, `/clean-downloads`, `/as:tasklist` on Claude Code |
+| [`../../assets/learn-examples/`](../../assets/learn-examples/) | Advanced track (planned) | Two distinct, non-installable example skills to study and modify: `ascii-name` and `clean-downloads` |
+| [`../tasklist/`](../tasklist/) | Advanced track (planned) | The canonical task-management skill to study and invoke as `$tasklist` on Codex or `/as:tasklist` on Claude Code; it is referenced rather than copied |

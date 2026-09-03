@@ -120,6 +120,7 @@ def active_retired_identifier_text(relative: str, text: str) -> str:
 
 def validate(root: Path) -> list[str]:
     errors: list[str] = []
+    repo_files = repository_files(root)
     plugin_path = root / ".claude-plugin" / "plugin.json"
     marketplace_path = root / ".claude-plugin" / "marketplace.json"
     plugin = read_json(plugin_path, errors)
@@ -146,6 +147,19 @@ def validate(root: Path) -> list[str]:
         )
 
     skills_root = root / "skills"
+    misplaced_skill_files = sorted(
+        path
+        for path in repo_files
+        if path.name == "SKILL.md"
+        if path.parent.parent != skills_root
+    )
+    for skill_file in misplaced_skill_files:
+        relative = skill_file.relative_to(root).as_posix()
+        errors.append(
+            f"{relative}: SKILL.md is allowed only at skills/<name>/SKILL.md; "
+            "store non-installable examples under assets/ as SKILL.example.md"
+        )
+
     skill_dirs = {
         path.name
         for path in skills_root.iterdir()
@@ -173,6 +187,40 @@ def validate(root: Path) -> list[str]:
                 f"{skill_dir}: retired namespace wrapper/alias directories are forbidden"
             )
 
+    assets_root = root / "assets"
+    example_skill_files = sorted(
+        assets_root.rglob("SKILL.example.md")
+    ) if assets_root.is_dir() else []
+    example_names: dict[str, Path] = {}
+    for example_file in example_skill_files:
+        name = frontmatter_name(example_file)
+        relative = example_file.relative_to(root).as_posix()
+        if name is None:
+            errors.append(
+                f"{relative}: example skill must declare a frontmatter name"
+            )
+            continue
+        if (
+            relative.startswith("assets/learn-examples/")
+            and name != example_file.parent.name
+        ):
+            errors.append(
+                f"{relative}: example skill name '{name}' must match "
+                f"directory '{example_file.parent.name}'"
+            )
+        if name in example_names:
+            errors.append(
+                f"{relative}: duplicate example skill name '{name}' also used by "
+                f"{example_names[name].relative_to(root).as_posix()}"
+            )
+        else:
+            example_names[name] = example_file
+        if name in names:
+            errors.append(
+                f"{relative}: example skill name '{name}' overlaps canonical skill "
+                f"{names[name].relative_to(root).as_posix()}"
+            )
+
     # The negative lookbehind excludes path fragments such as
     # ~/Documents/as:project-epds/ while still covering prose, fenced command
     # examples, shell strings, JSON, and hook output.
@@ -184,7 +232,7 @@ def validate(root: Path) -> list[str]:
     bare_command_re = re.compile(
         r"(?<![A-Za-z0-9._~/:=-])/([a-z][a-z0-9-]*)(?![:A-Za-z0-9-])"
     )
-    for path in repository_files(root):
+    for path in repo_files:
         relative = path.relative_to(root).as_posix()
         if path.suffix.lower() not in TEXT_SUFFIXES:
             continue
@@ -218,8 +266,8 @@ def validate(root: Path) -> list[str]:
                         "keep the .architecture-studio-* filename"
                     )
 
-        learn_example = relative.startswith("skills/learn/examples/")
-        if migration_history or validator_fixture or learn_example:
+        example_material = relative.startswith("assets/learn-examples/")
+        if migration_history or validator_fixture or example_material:
             continue
         for match in command_re.finditer(text):
             namespace, command = match.groups()
@@ -244,7 +292,7 @@ def validate(root: Path) -> list[str]:
     # The state prefix is intentionally stable across the command rename.
     all_text = "\n".join(
         path.read_text(encoding="utf-8", errors="ignore")
-        for path in repository_files(root)
+        for path in repo_files
         if path.suffix.lower() in TEXT_SUFFIXES
         and path.relative_to(root).as_posix() not in VALIDATOR_ALLOWLIST
     )

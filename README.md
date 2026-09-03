@@ -22,7 +22,13 @@
 
 Firm-created skills remain in the user-owned studio workspace, outside the installed plugin cache. They can stay private to a firm or project, or be developed for contribution back to the open-source project.
 
-**One plugin**—`as` v1.4.4—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+**One plugin**—`as` v1.4.5—with a shared skill catalog for Codex and Claude Code. Claude Code also loads **7 agents**, **7 rules**, and **4 hooks (handlers across 3 events)**. Created by Federico Negro in 2026 and built by [ALPA](https://alpa.llc) (`hello@alpa.llc`). Copyright © 2026 Alpaca Design Lab LLC; MIT-licensed.
+
+## What’s new in 1.4.5
+
+A packaging fix for Claude Desktop installation. Teaching examples and the Skill Maker template now live outside the installable `skills/` tree, and the learning material points to the canonical `/as:tasklist` skill instead of bundling a second skill with the same name. Recursive checks prevent misplaced skill manifests and canonical/example name overlap from returning.
+
+Compatibility note: `ascii-name` and `clean-downloads` were documented as commands in 1.4.4 even though they were course examples stored inside the installable tree. They are source examples, not installed commands, in 1.4.5. If you used either command, copy its directory from `assets/learn-examples/` into your user-owned skills directory, rename `SKILL.example.md` to `SKILL.md`, and adapt it as a custom skill. No project or studio data migration is required.
 
 ## What’s new in 1.4.4
 

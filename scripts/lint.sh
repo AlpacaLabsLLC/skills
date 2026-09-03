@@ -77,8 +77,8 @@ else
   skip_or_fail "jq"
 fi
 
-# 3. SKILL.md frontmatter
-echo "→ SKILL.md frontmatter"
+# 3. Skill manifest frontmatter
+echo "→ skill manifest frontmatter"
 python3 - <<'PYEOF'
 import os, re, sys, pathlib, subprocess
 try:
@@ -91,7 +91,8 @@ except ImportError:
     print("  ! PyYAML not installed; using structural frontmatter checks locally — CI enforces full YAML parsing")
 
 files = subprocess.check_output([
-    'git', 'ls-files', '--cached', '--others', '--exclude-standard', '--', '*SKILL.md'
+    'git', 'ls-files', '--cached', '--others', '--exclude-standard', '--',
+    '*SKILL.md', '*SKILL.example.md'
 ]).decode().splitlines()
 files = [f for f in files if pathlib.Path(f).is_file()]
 errors = 0
@@ -489,6 +490,7 @@ RC=$?
 echo "→ active product-data boundary"
 ACTIVE_PRODUCT_PATHS=(
   agents
+  assets
   README.md
   PATTERNS.md
   schema

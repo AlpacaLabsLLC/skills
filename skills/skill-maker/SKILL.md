@@ -42,7 +42,7 @@ A skill is a procedure card. Four load-bearing parts:
 
 ## Step 1 — Scaffold from the template
 
-Resolve the bundled template from `<plugin-root>/skills/skill-maker/templates/example-skill/` and adapt every line. **This skill's output is files on disk, not a proposal**: for a new, safely resolved target, state the exact path and write both `SKILL.md` and `README.md` without presenting a draft first. Do not promise that a permission prompt will appear; permission behavior depends on the active Claude Code settings. If the bundled template can't be located, scaffold from the Anatomy table above.
+Resolve `SKILL.example.md` and `README.md` from the non-installable bundled template at `<plugin-root>/assets/skill-maker-template/`, adapting `SKILL.example.md` into the target's `SKILL.md` and changing every line that describes the example. **This skill's output is files on disk, not a proposal**: for a new, safely resolved target, state the exact path and write both `SKILL.md` and `README.md` without presenting a draft first. Do not promise that a permission prompt will appear; permission behavior depends on the active Claude Code settings. If the bundled template can't be located, scaffold from the Anatomy table above.
 
 - **Name**: kebab-case, derived from the request. Directory name and frontmatter `name` must match.
 - **Description**: trigger-phrased — what the skill does AND when to invoke it, with phrases the user would actually say. A description that only labels never fires.
