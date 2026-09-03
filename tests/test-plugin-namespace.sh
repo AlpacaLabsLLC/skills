@@ -83,9 +83,78 @@ printf '\nRun /tasklist.\n' >> "$FIXTURE/skills/studio/SKILL.md"
 expect_failure "bare bundled command '/tasklist'"
 
 make_fixture
-mkdir -p "$FIXTURE/skills/learn/examples/sandbox"
+mkdir -p "$FIXTURE/skills/learn/examples/tasklist"
+printf '%s\n' \
+  '---' \
+  'name: tasklist' \
+  'description: nested fixture' \
+  '---' > "$FIXTURE/skills/learn/examples/tasklist/SKILL.md"
+expect_failure "SKILL.md is allowed only at skills/<name>/SKILL.md"
+
+make_fixture
+mkdir -p "$FIXTURE/assets/learn-examples/tasklist"
+printf '%s\n' \
+  '---' \
+  'name: tasklist-example' \
+  'description: misplaced installable fixture' \
+  '---' > "$FIXTURE/assets/learn-examples/tasklist/SKILL.md"
+expect_failure "SKILL.md is allowed only at skills/<name>/SKILL.md"
+
+make_fixture
+mkdir -p "$FIXTURE/assets/learn-examples/ascii-name"
+printf '%s\n' \
+  '---' \
+  'name: ascii-name' \
+  'description: distinct example fixture' \
+  '---' > "$FIXTURE/assets/learn-examples/ascii-name/SKILL.example.md"
+python3 "$CHECKER" "$FIXTURE" >/dev/null
+
+make_fixture
+mkdir -p "$FIXTURE/assets/learn-examples/unnamed"
+printf '%s\n' \
+  '---' \
+  'description: missing name fixture' \
+  '---' > "$FIXTURE/assets/learn-examples/unnamed/SKILL.example.md"
+expect_failure "example skill must declare a frontmatter name"
+
+make_fixture
+mkdir -p "$FIXTURE/assets/learn-examples/wrong-directory"
+printf '%s\n' \
+  '---' \
+  'name: different-name' \
+  'description: mismatched example fixture' \
+  '---' > "$FIXTURE/assets/learn-examples/wrong-directory/SKILL.example.md"
+expect_failure "example skill name 'different-name' must match directory 'wrong-directory'"
+
+make_fixture
+mkdir -p \
+  "$FIXTURE/assets/learn-examples/first-example" \
+  "$FIXTURE/assets/skill-maker-template"
+printf '%s\n' \
+  '---' \
+  'name: first-example' \
+  'description: first duplicate fixture' \
+  '---' > "$FIXTURE/assets/learn-examples/first-example/SKILL.example.md"
+printf '%s\n' \
+  '---' \
+  'name: first-example' \
+  'description: second duplicate fixture' \
+  '---' > "$FIXTURE/assets/skill-maker-template/SKILL.example.md"
+expect_failure "duplicate example skill name 'first-example'"
+
+make_fixture
+mkdir -p "$FIXTURE/assets/learn-examples/tasklist"
+printf '%s\n' \
+  '---' \
+  'name: tasklist' \
+  'description: colliding example fixture' \
+  '---' > "$FIXTURE/assets/learn-examples/tasklist/SKILL.example.md"
+expect_failure "example skill name 'tasklist' overlaps canonical skill"
+
+make_fixture
+mkdir -p "$FIXTURE/assets/learn-examples/sandbox"
 printf '\nThe sandbox teaches `/project` and `/tasklist`.\n' \
-  > "$FIXTURE/skills/learn/examples/sandbox/README.md"
+  > "$FIXTURE/assets/learn-examples/sandbox/README.md"
 python3 "$CHECKER" "$FIXTURE" >/dev/null
 
 python3 - "$FIXTURE/.claude-plugin/plugin.json" <<'PY'

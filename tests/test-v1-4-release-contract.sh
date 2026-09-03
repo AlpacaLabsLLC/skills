@@ -10,15 +10,16 @@ from pathlib import Path
 plugin = json.loads(Path('.claude-plugin/plugin.json').read_text())
 codex_plugin = json.loads(Path('.codex-plugin/plugin.json').read_text())
 marketplace = json.loads(Path('.claude-plugin/marketplace.json').read_text())
-assert plugin['version'] == '1.4.4'
-assert codex_plugin['version'] == '1.4.4'
-assert marketplace['metadata']['version'] == '1.4.4'
+assert plugin['version'] == '1.4.5'
+assert codex_plugin['version'] == '1.4.5'
+assert marketplace['metadata']['version'] == '1.4.5'
 assert plugin['description'].startswith('Architecture Studio —')
 assert codex_plugin['description'].startswith('Architecture Studio —')
 assert marketplace['plugins'][0]['description'].startswith('Architecture Studio —')
 PY
 
 grep -q '^## \[Unreleased\]$' CHANGELOG.md
+grep -q '^## \[1\.4\.5\] - 2026-09-03$' CHANGELOG.md
 grep -q '^## \[1\.4\.4\] - 2026-08-25$' CHANGELOG.md
 grep -Fq 'Thanks to [@Namine4](https://github.com/Namine4) for the original report and [@grigor-p](https://github.com/grigor-p) for extending the diagnosis and confirming the workaround.' CHANGELOG.md
 grep -q '^## \[1\.4\.3\] - 2026-08-13$' CHANGELOG.md
@@ -26,7 +27,8 @@ grep -q '^## \[1\.4\.2\] - 2026-08-10$' CHANGELOG.md
 grep -q '^## \[1\.4\.1\] - 2026-07-29$' CHANGELOG.md
 grep -q '^## \[1\.4\.0\] - 2026-07-26$' CHANGELOG.md
 grep -q 'sequential `major.minor.patch` release scheme' CHANGELOG.md
-grep -q '^\[Unreleased\]: .*compare/v1\.4\.4\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[Unreleased\]: .*compare/v1\.4\.5\.\.\.HEAD$' CHANGELOG.md
+grep -q '^\[1\.4\.5\]: .*releases/tag/v1\.4\.5$' CHANGELOG.md
 grep -q '^\[1\.4\.4\]: .*releases/tag/v1\.4\.4$' CHANGELOG.md
 grep -q '^\[1\.4\.3\]: .*releases/tag/v1\.4\.3$' CHANGELOG.md
 grep -q '^\[1\.4\.2\]: .*releases/tag/v1\.4\.2$' CHANGELOG.md
@@ -54,9 +56,12 @@ grep -q 'welcome and update-check preferences remain in place' README.md
 [ ! -e agents/README.md ]
 [ "$(find agents -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')" = 7 ]
 grep -q '4 hooks (handlers across 3 events)' README.md
-grep -q '`as` v1\.4\.4' README.md
-grep -q "^## What’s new in 1\\.4\\.4$" README.md
-grep -q '^Architecture Studio v1\.4\.4 is' docs/firm-deployment.md
+grep -q '`as` v1\.4\.5' README.md
+grep -q "^## What’s new in 1\\.4\\.5$" README.md
+grep -Fq 'Compatibility note: `ascii-name` and `clean-downloads` were documented as commands in 1.4.4' README.md
+grep -Fq 'rename `SKILL.example.md` to `SKILL.md`' README.md
+grep -Fq '`ascii-name` and `clean-downloads`, which 1.4.4 documented as commands' CHANGELOG.md
+grep -q '^Architecture Studio v1\.4\.5 is' docs/firm-deployment.md
 [ -z "$(find docs/plans -maxdepth 1 -type f -name '*.md' -print 2>/dev/null)" ]
 
 python3 - <<'PY'
@@ -98,6 +103,6 @@ PY
 ! rg -n '^name: (skills|feedback)$' skills/*/SKILL.md
 ! grep -q 'claude "/studio"' README.md
 ! grep -Eqi 'download (the )?`?skills/?`?|copy.*repository.*skills/' README.md
-! rg -n '2\.0\.0|2\.1\.0' .claude-plugin README.md CHANGELOG.md skills hooks
+! rg -n '2\.0\.0|2\.1\.0' .claude-plugin README.md CHANGELOG.md assets skills hooks
 
-echo "✓ v1.4 release contract documents its local data, feedback, update, connector, and migration boundaries"
+echo "✓ v1.4.5 release contract documents its packaging, local data, feedback, update, connector, and migration boundaries"
